@@ -20,9 +20,10 @@ const Navigation = ({ toggleColorMode }) => {
     <NavigationContainer>
       <NavHeader>
         <NavLinkHeader href="/">Home</NavLinkHeader>
-        <NavLinkHeader href="/matches">Matches</NavLinkHeader>
-        <NavLinkHeader href="/standings">Standings</NavLinkHeader>
-        <NavLinkHeader href="/tickets">Tickets</NavLinkHeader>
+        <NavLinkHeader href="/admin">Dashboard</NavLinkHeader>
+        <NavLinkHeader href="/Matches">Matches</NavLinkHeader>
+        <NavLinkHeader href="/Standings">Standings</NavLinkHeader>
+        <NavLinkHeader href="/Tickets">Tickets</NavLinkHeader>
       </NavHeader>
       {!auth.isLoggedIn && (
         <AuthLinks>

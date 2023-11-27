@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -10,6 +10,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
 import CopyRight from "Components/CopyRight/CopyRight";
+import { useNavigate } from "react-router-dom";
+
+import AuthContext from "Contexts/Auth-Context";
 
 const roles = [
   { value: "manager", label: "Manager" },
@@ -17,21 +20,36 @@ const roles = [
 ];
 
 const SignUp = () => {
+  // States for all the fields
+  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [gender, setGender] = useState("");
+  const [city, setCity] = useState("");
+  const [address, setAddress] = useState("");
+  const [role, setRole] = useState("");
+  const navigate = useNavigate();
+
+  const auth = useContext(AuthContext);
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
     console.log({
-      username: data.get("username"),
-      password: data.get("password"),
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-      birthDate: data.get("birthDate"),
-      gender: data.get("gender"),
-      city: data.get("city"),
-      address: data.get("address"),
-      email: data.get("email"),
-      role: data.get("role"),
+      username,
+      firstName,
+      lastName,
+      email,
+      password,
+      birthDate,
+      gender,
+      city,
+      address,
+      role,
     });
+    auth.setLoggedIn();
+    navigate("/");
   };
 
   return (
@@ -60,6 +78,8 @@ const SignUp = () => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 autoComplete="username"
                 name="username"
                 required
@@ -71,6 +91,8 @@ const SignUp = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 fullWidth
                 id="email"
@@ -81,6 +103,8 @@ const SignUp = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 fullWidth
                 name="password"
@@ -92,6 +116,8 @@ const SignUp = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 autoComplete="given-name"
                 name="firstName"
                 required
@@ -102,6 +128,8 @@ const SignUp = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 required
                 fullWidth
                 id="lastName"
@@ -112,6 +140,8 @@ const SignUp = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={birthDate}
+                onChange={(e) => setBirthDate(e.target.value)}
                 id="birthDate"
                 label="Birth Date"
                 type="date"
@@ -124,6 +154,8 @@ const SignUp = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
                 id="gender"
                 select
                 label="Gender"
@@ -137,6 +169,8 @@ const SignUp = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
                 required
                 fullWidth
                 id="city"
@@ -146,6 +180,8 @@ const SignUp = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
                 fullWidth
                 id="address"
                 label="Address"
@@ -153,7 +189,15 @@ const SignUp = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField id="role" select label="Role" fullWidth name="role">
+              <TextField
+                id="role"
+                select
+                label="Role"
+                fullWidth
+                name="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+              >
                 {roles.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
@@ -173,6 +217,7 @@ const SignUp = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={(e) => handleSubmit(e)}
           >
             Sign Up
           </Button>

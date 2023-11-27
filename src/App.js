@@ -15,6 +15,8 @@ import Navigation from "Layouts/Navigation/Navigation";
 import useLocalStorage from "Hooks/useLocalStorage";
 import SignUp from "Pages/SignUp/SignUp";
 import SignIn from "Pages/Login/Login";
+import Admin from "Pages/Admin/Admin";
+import Profile from "Pages/Profile/Profile";
 
 function App() {
   const [theme, setTheme] = useLocalStorage(
@@ -51,6 +53,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<SignIn />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="profile" element={<Profile />} />
             <Route path="*" element={<h1>Not Found</h1>} />
           </Routes>
         </div>

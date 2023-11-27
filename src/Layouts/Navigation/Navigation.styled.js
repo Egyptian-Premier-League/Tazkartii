@@ -1,12 +1,10 @@
 import styled from "styled-components";
 
-
 export const NavigationContainer = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-around;
   background-color: #282c34;
-  padding: 0 2rem;
   height: 4rem;
   width: 100%;
 `;
