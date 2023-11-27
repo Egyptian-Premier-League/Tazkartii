@@ -1,6 +1,7 @@
 import "./App.css";
 // Import react and hooks
 import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
 // Import themes
@@ -9,12 +10,13 @@ import defaultTheme from "Theme/defaultTheme";
 import lightTheme from "Theme/lightTheme";
 
 // Imports
-import HomePage from "Pages/HomePage";
-import Navigation from "Layouts/Navigation";
+import HomePage from "Pages/HomePage/HomePage";
+import Navigation from "Layouts/Navigation/Navigation";
 import useLocalStorage from "Hooks/useLocalStorage";
+import SignUp from "Pages/SignUp/SignUp";
+import SignIn from "Pages/Login/Login";
 
 function App() {
-  // State to store the current theme of the website
   const [theme, setTheme] = useLocalStorage(
     "theme",
     JSON.stringify({
@@ -42,10 +44,17 @@ function App() {
   };
   return (
     <ThemeProvider theme={JSON.parse(theme)}>
-      <div className="App">
-        <Navigation toggleColorMode={handleToggleTheme} />
-        <HomePage />
-      </div>
+      <Router>
+        <div className="App">
+          <Navigation toggleColorMode={handleToggleTheme} />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<SignIn />} />
+            <Route path="*" element={<h1>Not Found</h1>} />
+          </Routes>
+        </div>
+      </Router>
     </ThemeProvider>
   );
 }

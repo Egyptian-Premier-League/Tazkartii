@@ -1,5 +1,10 @@
 import React from "react";
-import { Container, NavHeader, NavLinkHeader } from "./Header.styled";
+import {
+  Container,
+  NavHeader,
+  NavLinkHeader,
+  AuthLinks,
+} from "./Header.styled";
 
 const Header = () => {
   return (
@@ -10,6 +15,10 @@ const Header = () => {
         <NavLinkHeader href="/standings">Standings</NavLinkHeader>
         <NavLinkHeader href="/tickets">Tickets</NavLinkHeader>
       </NavHeader>
+      <AuthLinks>
+        <NavLinkHeader href="/login">Login</NavLinkHeader>
+        <NavLinkHeader href="/signup">Signup</NavLinkHeader>
+      </AuthLinks>
     </Container>
   );
 };

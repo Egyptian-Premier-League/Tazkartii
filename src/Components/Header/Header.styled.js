@@ -26,3 +26,8 @@ export const NavLinkHeader = styled.a`
     transition: background-color 0.3s;
   }
 `;
+
+export const AuthLinks = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
