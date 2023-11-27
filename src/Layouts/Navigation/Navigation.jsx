@@ -1,8 +1,12 @@
 import React from "react";
 import Button from "@mui/material/Button";
 
-import { Link } from "react-router-dom";
-import { NavigationContainer, NavigationItem } from "./Navigation.styled.js";
+import {
+  NavigationContainer,
+  NavHeader,
+  NavLinkHeader,
+  AuthLinks,
+} from "./Navigation.styled.js";
 
 const Navigation = ({ toggleColorMode }) => {
   const handleToggleMode = () => {
@@ -10,20 +14,19 @@ const Navigation = ({ toggleColorMode }) => {
   };
   return (
     <NavigationContainer>
-      <ul>
-        {/* <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/about">About</Link>
-        </li>
-        <li>
-          <Link to="/contact">Contact</Link>
-        </li> */}
-        <Button variant="contained" onClick={handleToggleMode}>
-          Toggle Theme
-        </Button>
-      </ul>
+      <NavHeader>
+        <NavLinkHeader href="/">Home</NavLinkHeader>
+        <NavLinkHeader href="/matches">Matches</NavLinkHeader>
+        <NavLinkHeader href="/standings">Standings</NavLinkHeader>
+        <NavLinkHeader href="/tickets">Tickets</NavLinkHeader>
+      </NavHeader>
+      <AuthLinks>
+        <NavLinkHeader href="/login">Login</NavLinkHeader>
+        <NavLinkHeader href="/signup">Signup</NavLinkHeader>
+      </AuthLinks>
+      <Button variant="contained" onClick={handleToggleMode}>
+        Toggle Theme
+      </Button>
     </NavigationContainer>
   );
 };

@@ -38,7 +38,10 @@ const SignUp = () => {
     <Container
       component="main"
       maxWidth="xs"
-      sx={{ backgroundColor: "#ffffff", borderRadius: "10px" }}
+      sx={{
+        backgroundColor: "#ffffff",
+        borderRadius: "10px",
+      }}
     >
       <Box
         sx={{
@@ -180,7 +183,7 @@ const SignUp = () => {
           </Grid>
         </Box>
       </Box>
-      <CopyRight sx={{ mt: 5 }} />
+      <CopyRight sx={{ mt: 3 }} />
     </Container>
   );
 };
