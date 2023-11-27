@@ -1,12 +1,53 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ProfileContainer = styled.div`
-  max-width: 800px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 90%;
   margin: auto;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   background: #fff;
+`;
+export const PhotoContainer = styled.div`
+  flex: 1; // Take up 1/3 of the space
+  padding: 10px;
+`;
+export const InfoContainer = styled.div`
+  flex: 2; // Take up 2/3 of the space
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const PersonalInfoSection = styled.section`
+  margin-bottom: 20px;
+`;
+
+export const AccountInfoSection = styled.section`
+  margin-bottom: 20px;
+`;
+export const ProfileInput = styled.input`
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  &:hover &:focus-visible {
+  border-color: #007bff;
+  }
+  
+`;
+
+export const ProfileImage = styled.img`
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 20px auto;
 `;
 
 export const ProfileHeading = styled.h2`
@@ -20,11 +61,15 @@ export const ProfileSection = styled.section`
 `;
 
 export const FieldContainer = styled.div`
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 `;
 
 export const ProfileField = styled.span`
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   color: #555;
   margin-bottom: 5px;
 `;
@@ -34,14 +79,11 @@ export const ProfileValue = styled.span`
   color: #000;
   font-size: 1.2rem;
 `;
-
-export const ProfileImage = styled.img`
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-  margin: 20px auto;
+export const FieldRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
 `;
 
 export const EditButton = styled.button`

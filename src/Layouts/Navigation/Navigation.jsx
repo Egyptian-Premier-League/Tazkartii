@@ -33,6 +33,7 @@ const Navigation = ({ toggleColorMode }) => {
       )}
       {auth.isLoggedIn && (
         <AuthLinks>
+          <NavLinkHeader href="/profile">My Profile</NavLinkHeader>
           <NavLinkHeader href="/login" onClick={() => auth.setLoggedOut}>
             Logout
           </NavLinkHeader>
