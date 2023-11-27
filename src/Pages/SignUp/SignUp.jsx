@@ -41,18 +41,20 @@ const SignUp = () => {
       sx={{
         backgroundColor: "#ffffff",
         borderRadius: "10px",
+        margin: "auto",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <Box
         sx={{
-          marginTop: 5,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
         <Typography component="h1" variant="h5" sx={{ marginTop: "10px" }}>
-          Sign up
+          Register
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -183,7 +185,7 @@ const SignUp = () => {
           </Grid>
         </Box>
       </Box>
-      <CopyRight sx={{ mt: 3 }} />
+      <CopyRight sx={{ mt: 3, mb: 2 }} />
     </Container>
   );
 };

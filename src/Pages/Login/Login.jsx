@@ -1,6 +1,5 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -11,33 +10,45 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import CopyRight from "Components/CopyRight/CopyRight";
 
+import AuthContext from "Contexts/Auth-Context";
+import { useNavigate } from "react-router-dom";
+
 const SignIn = () => {
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    auth.setLoggedIn();
+    // const data = new FormData(event.currentTarget);
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
+    navigate("/");
   };
 
   return (
     <Container
       component="main"
       maxWidth="xs"
-      sx={{ backgroundColor: "#ffffff", borderRadius: "10px" }}
+      sx={{
+        backgroundColor: "#ffffff",
+        borderRadius: "10px",
+        margin: "auto",
+        display: "flex",
+        flexDirection: "column",
+      }}
     >
-      <CssBaseline />
       <Box
         sx={{
-          marginTop: 5,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <Typography component="h1" variant="h5">
-          Sign in
+        <Typography component="h1" variant="h5" sx={{ marginTop: "15px" }}>
+          Login
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -69,6 +80,7 @@ const SignIn = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={(e) => handleSubmit(e)}
           >
             Sign In
           </Button>
