@@ -48,7 +48,7 @@ const SignUp = () => {
       address,
       role,
     });
-    auth.setLoggedIn();
+    auth.loginUser();
     navigate("/");
   };
 

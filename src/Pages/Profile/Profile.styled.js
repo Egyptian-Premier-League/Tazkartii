@@ -101,3 +101,9 @@ export const EditButton = styled.button`
     background-color: #0056b3;
   }
 `;
+
+export const EditButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end; 
+  padding: 10px 0;
+`;

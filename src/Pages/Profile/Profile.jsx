@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
+
 import Ball from "Assets/Images/ball.ico";
 import {
   ProfileContainer,
@@ -12,6 +14,7 @@ import {
   ProfileImage,
   FieldRow,
   FieldContainer,
+  EditButtonContainer,
 } from "./Profile.styled";
 
 import MediaProfile from "Components/MediaProfile/MediaProfile";
@@ -19,6 +22,11 @@ import MediaProfile from "Components/MediaProfile/MediaProfile";
 const Profile = ({ userId }) => {
   const [user, setUser] = useState(null);
   const [imageUrl, setImageUrl] = useState(Ball);
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  const toggleEditMode = () => {
+    setIsEditMode(!isEditMode);
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -56,6 +64,12 @@ const Profile = ({ userId }) => {
       </PhotoContainer>
       <InfoContainer>
         <PersonalInfoSection>
+          <EditButtonContainer>
+            <Button variant="contained" onClick={toggleEditMode}>
+              Edit
+            </Button>
+          </EditButtonContainer>
+
           <ProfileHeading>Personal Information</ProfileHeading>
           <FieldRow>
             <FieldContainer>
@@ -64,17 +78,29 @@ const Profile = ({ userId }) => {
             </FieldContainer>
             <FieldContainer>
               <ProfileField>Phone Number</ProfileField>
-              <ProfileInput type="tel" value={user.phoneNumber} readOnly />
+              <ProfileInput
+                type="tel"
+                value={user.phoneNumber}
+                readOnly={!isEditMode}
+              />
             </FieldContainer>
           </FieldRow>
           <FieldRow>
             <FieldContainer>
               <ProfileField>First Name</ProfileField>
-              <ProfileInput type="text" value={user.firstName} readOnly />
+              <ProfileInput
+                type="text"
+                value={user.firstName}
+                readOnly={!isEditMode}
+              />
             </FieldContainer>
             <FieldContainer>
               <ProfileField>Last Name</ProfileField>
-              <ProfileInput type="text" value={user.lastName} readOnly />
+              <ProfileInput
+                type="text"
+                value={user.lastName}
+                readOnly={!isEditMode}
+              />
             </FieldContainer>
           </FieldRow>
         </PersonalInfoSection>
@@ -88,20 +114,29 @@ const Profile = ({ userId }) => {
             </FieldContainer>
             <FieldContainer>
               <ProfileField>Address</ProfileField>
-              <ProfileInput type="text" value={user.address} readOnly />
+              <ProfileInput
+                type="text"
+                value={user.address}
+                readOnly={!isEditMode}
+              />
             </FieldContainer>
           </FieldRow>
           <FieldRow>
             <FieldContainer>
               <ProfileField>Password</ProfileField>
-              <ProfileInput type="password" value={user.password} placeholder="Passowrd" readOnly />
+              <ProfileInput
+                type="password"
+                value={user.password}
+                placeholder="Passowrd"
+                readOnly={!isEditMode}
+              />
             </FieldContainer>
             <FieldContainer>
               <ProfileField>Confirm Password</ProfileField>
               <ProfileInput
                 type="password"
                 value={user.confirmPassword}
-                readOnly
+                readOnly={!isEditMode}
                 placeholder="Confirm Password"
               />
             </FieldContainer>
@@ -109,11 +144,19 @@ const Profile = ({ userId }) => {
           <FieldRow>
             <FieldContainer>
               <ProfileField>City</ProfileField>
-              <ProfileInput type="text" value={user.city} readOnly />
+              <ProfileInput
+                type="text"
+                value={user.city}
+                readOnly={!isEditMode}
+              />
             </FieldContainer>
             <FieldContainer>
               <ProfileField>Language</ProfileField>
-              <ProfileInput type="text" value={user.language} readOnly />
+              <ProfileInput
+                type="text"
+                value={user.language}
+                readOnly={!isEditMode}
+              />
             </FieldContainer>
           </FieldRow>
         </AccountInfoSection>
