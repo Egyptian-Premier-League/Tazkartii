@@ -60,5 +60,8 @@ export const AuthContextProvider = (props) => {
     <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
   );
 };
-
+// const useAuth = () => {
+//   return useContext(AuthContext);
+// };
+// export { useAuth, AuthProvider };
 export default AuthContext;

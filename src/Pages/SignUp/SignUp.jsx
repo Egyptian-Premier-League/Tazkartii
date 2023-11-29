@@ -13,6 +13,8 @@ import CopyRight from "Components/CopyRight/CopyRight";
 import { useNavigate } from "react-router-dom";
 
 import AuthContext from "Contexts/Auth-Context";
+import useFetchFunction from "Hooks/useFetchFunction";
+import signup from "Services/Authentication/Signup";
 
 const roles = [
   { value: "manager", label: "Manager" },
@@ -20,6 +22,8 @@ const roles = [
 ];
 
 const SignUp = () => {
+  const [data, error, isLoading, dataFetch] = useFetchFunction();
+
   // States for all the fields
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -36,6 +40,21 @@ const SignUp = () => {
   const auth = useContext(AuthContext);
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (validateData) {
+      signup(dataFetch, {
+        username,
+        firstName,
+        lastName,
+        email,
+        password,
+        birthDate,
+        gender,
+        city,
+        address,
+        role,
+      });
+    }
+
     console.log({
       username,
       firstName,
@@ -50,6 +69,30 @@ const SignUp = () => {
     });
     auth.loginUser();
     navigate("/");
+  };
+
+  const validateData = () => {
+    const isUsernameValid = username.trim() !== "";
+    const isFirstNameValid = firstName.trim() !== "";
+    const isLastNameValid = lastName.trim() !== "";
+    const isEmailValid = email.trim() !== "";
+    const isPasswordValid = password.trim() !== "";
+    const isBirthDateValid = birthDate.trim() !== "";
+    const isGenderValid = gender.trim() !== "";
+    const isCityValid = city.trim() !== "";
+    const isRoleValid = role.trim() !== "";
+
+    return (
+      isUsernameValid &&
+      isFirstNameValid &&
+      isLastNameValid &&
+      isEmailValid &&
+      isPasswordValid &&
+      isBirthDateValid &&
+      isGenderValid &&
+      isCityValid &&
+      isRoleValid
+    );
   };
 
   return (

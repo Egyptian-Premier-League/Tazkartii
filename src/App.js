@@ -1,6 +1,6 @@
 import "./App.css";
 // Import react and hooks
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
@@ -17,11 +17,9 @@ import SignUp from "Pages/SignUp/SignUp";
 import SignIn from "Pages/Login/Login";
 import Admin from "Pages/Admin/Admin";
 import Profile from "Pages/Profile/Profile";
-
+import ErrorPage from "Pages/ErrorPage/ErrorPage";
 
 function App() {
-  const [editMode, setEditMode] = useState(false);
-
   const [theme, setTheme] = useLocalStorage(
     "theme",
     JSON.stringify({
@@ -58,9 +56,8 @@ function App() {
             <Route path="/login" element={<SignIn />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="*" element={<h1>Not Found</h1>} />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
-          {/* <ConfirmModal open={}  /> */}
         </div>
       </Router>
     </ThemeProvider>

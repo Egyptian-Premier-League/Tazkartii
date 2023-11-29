@@ -13,7 +13,7 @@ const lightTheme = {
   },
   // The colors of the backgrounds in the website
   background: {
-    primary: "#f2f2f2",
+    primary: "#282c34",
     hoverOfNav: "#414754",
   },
   // Border colors
