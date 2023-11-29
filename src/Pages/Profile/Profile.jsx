@@ -18,15 +18,26 @@ import {
 } from "./Profile.styled";
 
 import MediaProfile from "Components/MediaProfile/MediaProfile";
+import ConfirmModal from "Components/ConfirmModal/ConfirmModal";
 
 const Profile = ({ userId }) => {
+  //* States for user data
   const [user, setUser] = useState(null);
   const [imageUrl, setImageUrl] = useState(Ball);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  const toggleEditMode = () => {
-    setIsEditMode(!isEditMode);
-  };
+  //* States for editable fields
+  const [phoneNumber, setPhoneNumber] = useState("01146188908");
+  const [firstName, setFirstName] = useState("Ziad");
+  const [lastName, setLastName] = useState("Sherif");
+  const [address, setAddress] = useState("El Haram");
+  const [city, setCity] = useState("Giza");
+  const [language, setLanguage] = useState("Arabic");
+
+  //! Password and confirm password
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -52,6 +63,32 @@ const Profile = ({ userId }) => {
     };
   };
 
+  const handleCancel = () => {
+    setPhoneNumber(user.phoneNumber);
+    setFirstName(user.firstName);
+    setLastName(user.lastName);
+    setAddress(user.address);
+    setCity(user.city);
+    setLanguage(user.language);
+    setIsEditMode(false);
+  };
+  const handleSave = () => {
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmSave = () => {
+    setShowConfirmModal(false);
+    setIsEditMode(false);
+    console.log("Saving Data:", {
+      firstName,
+      lastName,
+      phoneNumber,
+      address,
+      city,
+      language,
+    });
+  };
+
   if (!user) {
     return <ProfileContainer>Loading...</ProfileContainer>;
   }
@@ -64,10 +101,21 @@ const Profile = ({ userId }) => {
       </PhotoContainer>
       <InfoContainer>
         <PersonalInfoSection>
-          <EditButtonContainer>
-            <Button variant="contained" onClick={toggleEditMode}>
-              Edit
-            </Button>
+          <EditButtonContainer isEditMode={isEditMode}>
+            {isEditMode ? (
+              <>
+                <Button variant="contained" onClick={handleSave}>
+                  Save
+                </Button>
+                <Button variant="contained" onClick={handleCancel}>
+                  Cancel
+                </Button>
+              </>
+            ) : (
+              <Button variant="contained" onClick={() => setIsEditMode(true)}>
+                Edit
+              </Button>
+            )}
           </EditButtonContainer>
 
           <ProfileHeading>Personal Information</ProfileHeading>
@@ -80,8 +128,9 @@ const Profile = ({ userId }) => {
               <ProfileField>Phone Number</ProfileField>
               <ProfileInput
                 type="tel"
-                value={user.phoneNumber}
+                value={phoneNumber}
                 readOnly={!isEditMode}
+                onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </FieldContainer>
           </FieldRow>
@@ -90,16 +139,18 @@ const Profile = ({ userId }) => {
               <ProfileField>First Name</ProfileField>
               <ProfileInput
                 type="text"
-                value={user.firstName}
+                value={firstName}
                 readOnly={!isEditMode}
+                onChange={(e) => setFirstName(e.target.value)}
               />
             </FieldContainer>
             <FieldContainer>
               <ProfileField>Last Name</ProfileField>
               <ProfileInput
                 type="text"
-                value={user.lastName}
+                value={lastName}
                 readOnly={!isEditMode}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </FieldContainer>
           </FieldRow>
@@ -116,8 +167,9 @@ const Profile = ({ userId }) => {
               <ProfileField>Address</ProfileField>
               <ProfileInput
                 type="text"
-                value={user.address}
+                value={address}
                 readOnly={!isEditMode}
+                onChange={(e) => setAddress(e.target.value)}
               />
             </FieldContainer>
           </FieldRow>
@@ -126,18 +178,20 @@ const Profile = ({ userId }) => {
               <ProfileField>Password</ProfileField>
               <ProfileInput
                 type="password"
-                value={user.password}
+                value={password}
                 placeholder="Passowrd"
                 readOnly={!isEditMode}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </FieldContainer>
             <FieldContainer>
               <ProfileField>Confirm Password</ProfileField>
               <ProfileInput
                 type="password"
-                value={user.confirmPassword}
+                value={confirmPassword}
                 readOnly={!isEditMode}
                 placeholder="Confirm Password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </FieldContainer>
           </FieldRow>
@@ -146,21 +200,28 @@ const Profile = ({ userId }) => {
               <ProfileField>City</ProfileField>
               <ProfileInput
                 type="text"
-                value={user.city}
+                value={city}
                 readOnly={!isEditMode}
+                onChange={(e) => setCity(e.target.value)}
               />
             </FieldContainer>
             <FieldContainer>
               <ProfileField>Language</ProfileField>
               <ProfileInput
                 type="text"
-                value={user.language}
+                value={language}
                 readOnly={!isEditMode}
+                onChange={(e) => setLanguage(e.target.value)}
               />
             </FieldContainer>
           </FieldRow>
         </AccountInfoSection>
       </InfoContainer>
+      <ConfirmModal
+        open={showConfirmModal}
+        handleClose={() => setShowConfirmModal(false)}
+        handleConfirm={handleConfirmSave}
+      />
     </ProfileContainer>
   );
 };

@@ -11,11 +11,11 @@ export const ProfileContainer = styled.div`
   background: #fff;
 `;
 export const PhotoContainer = styled.div`
-  flex: 1; // Take up 1/3 of the space
+  flex: 1; 
   padding: 10px;
 `;
 export const InfoContainer = styled.div`
-  flex: 2; // Take up 2/3 of the space
+  flex: 2; 
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -104,6 +104,6 @@ export const EditButton = styled.button`
 
 export const EditButtonContainer = styled.div`
   display: flex;
-  justify-content: flex-end; 
+  justify-content: ${({isEditMode}) => isEditMode ? 'space-between' : 'flex-end'};
   padding: 10px 0;
 `;

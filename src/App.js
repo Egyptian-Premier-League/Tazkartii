@@ -18,7 +18,10 @@ import SignIn from "Pages/Login/Login";
 import Admin from "Pages/Admin/Admin";
 import Profile from "Pages/Profile/Profile";
 
+
 function App() {
+  const [editMode, setEditMode] = useState(false);
+
   const [theme, setTheme] = useLocalStorage(
     "theme",
     JSON.stringify({
@@ -57,6 +60,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<h1>Not Found</h1>} />
           </Routes>
+          {/* <ConfirmModal open={}  /> */}
         </div>
       </Router>
     </ThemeProvider>
