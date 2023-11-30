@@ -1,4 +1,4 @@
-import React, { useContext,useState } from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -10,11 +10,11 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import CopyRight from "Components/CopyRight/CopyRight";
 
-import AuthContext from "Contexts/Auth-Context";
+import { useAuth } from "Contexts/Auth-Context";
 import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const auth = useContext(AuthContext);
+  const auth = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");

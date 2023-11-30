@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 
-import AuthContext from "Contexts/Auth-Context";
+import {useAuth} from "Contexts/Auth-Context";
 
 import {
   NavigationContainer,
@@ -15,7 +15,7 @@ const Navigation = ({ toggleColorMode }) => {
     toggleColorMode();
   };
 
-  const auth = useContext(AuthContext);
+  const auth = useAuth();
   return (
     <NavigationContainer>
       <NavHeader>

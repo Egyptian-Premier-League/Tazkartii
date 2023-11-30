@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import formatBirthDate from "Utils/FormatDate";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -13,7 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import CopyRight from "Components/CopyRight/CopyRight";
 import { useNavigate } from "react-router-dom";
 
-import AuthContext from "Contexts/Auth-Context";
+import { useAuth } from "Contexts/Auth-Context";
 import useFetchFunction from "Hooks/useFetchFunction";
 import signup from "Services/Authentication/Signup";
 import Progress from "Components/Progress/Progress";
@@ -46,7 +46,7 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const auth = useContext(AuthContext);
+  const auth = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -57,7 +57,7 @@ const SignUp = () => {
     }
 
     try {
-      const res = await signup(dataFetch, {
+      signup(dataFetch, {
         username,
         firstName,
         lastName,
@@ -70,8 +70,6 @@ const SignUp = () => {
         address,
         role,
       });
-      if (res) console.log("data here: ", data);
-      else console.log("error here: ", error);
 
       auth.loginUser(username, password);
       navigate("/");

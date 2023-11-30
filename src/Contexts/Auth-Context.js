@@ -1,4 +1,4 @@
-import React, { useState, useCallback, createContext } from "react";
+import React, { useState, useCallback, createContext,useContext } from "react";
 import AddMinutes from "Utils/AddMinutes";
 import useLocalStorage from "Hooks/useLocalStorage";
 
@@ -11,7 +11,7 @@ const AuthContext = createContext({
   expirationDate: null,
 });
 
-export const AuthContextProvider = (props) => {
+const AuthContextProvider = (props) => {
   const [user, setUser] = useLocalStorage("user", null);
 
   const isUserLoggedIn = () => {
@@ -60,8 +60,7 @@ export const AuthContextProvider = (props) => {
     <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
   );
 };
-// const useAuth = () => {
-//   return useContext(AuthContext);
-// };
-// export { useAuth, AuthProvider };
-export default AuthContext;
+const useAuth = () => {
+  return useContext(AuthContext);
+};
+export { useAuth, AuthContextProvider };
