@@ -71,13 +71,13 @@ const Team = styled.span`
   color: ${({ theme }) => theme.color.clubName};
 `;
 const LeagueLogo = styled.img`
-  height: 50px;
+  height: 80px;
   width: auto;
   margin-right: 10px;
 `;
 
 const TeamLogo = styled.img`
-  height: 30px;
+  height: 50px;
   width: auto;
   margin-right: 5px;
 `;

@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const ScheduleContainer = styled.div`
   padding: 20px;
+  width: 80%;
 `;
 const Title = styled.h1`
   color: #d32f21;

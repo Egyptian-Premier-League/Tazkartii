@@ -17,41 +17,7 @@ import SignUp from "Pages/SignUp/SignUp";
 import SignIn from "Pages/Login/Login";
 import Admin from "Pages/Admin/Admin";
 import Profile from "Pages/Profile/Profile";
-import MatchSchedule from "Layouts/MatchSchedule/MatchSchedule";
 import ErrorPage from "Pages/ErrorPage/ErrorPage";
-
-const matchData = [
-  {
-    id: 1,
-    homeTeam: "Al Ahly",
-    awayTeam: "Zamalek",
-    venue: "Education City Stadium, Al Rayyan, 7km north-west of central Doha",
-    date: "Today",
-    time: "21:00",
-    mainReferee: "Fahem Omar",
-    linesmen: ["Linesman One", "Linesman Two"],
-  },
-  {
-    id: 2,
-    homeTeam: "Pyramids",
-    awayTeam: "Ceramica Cleopatra",
-    venue: "Cairo Stadium",
-    date: "Today",
-    time: "19:00",
-    mainReferee: "Referee Name",
-    linesmen: ["Linesman One", "Linesman Two"],
-  },
-  {
-    id: 3,
-    homeTeam: "Future FC",
-    awayTeam: "Al Esmaily",
-    venue: "Borg El Arab",
-    date: "Tomorrow",
-    time: "22:00",
-    mainReferee: "Samir Osman",
-    linesmen: ["Linesman One", "Linesman Two"],
-  },
-];
 
 function App() {
   const [theme, setTheme] = useLocalStorage(
@@ -85,7 +51,6 @@ function App() {
         <div className="App">
           <Navigation toggleColorMode={handleToggleTheme} />
           <Routes>
-            <Route path="/" element={<MatchSchedule matchData={matchData} />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<SignIn />} />
