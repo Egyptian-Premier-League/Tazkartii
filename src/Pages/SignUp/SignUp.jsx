@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import formatBirthDate from "Utils/FormatDate";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -15,13 +16,18 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "Contexts/Auth-Context";
 import useFetchFunction from "Hooks/useFetchFunction";
 import signup from "Services/Authentication/Signup";
+import Progress from "Components/Progress/Progress";
+
+// stylesd components
+import { ErrorMsg } from "./SignUp.styled";
 
 const roles = [
-  { value: "manager", label: "Manager" },
-  { value: "fan", label: "Fan" },
+  { value: "Manager", label: "Manager" },
+  { value: "Fan", label: "Fan" },
 ];
 
 const SignUp = () => {
+  // Fetching data from the backend
   const [data, error, isLoading, dataFetch] = useFetchFunction();
 
   // States for all the fields
@@ -35,41 +41,51 @@ const SignUp = () => {
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
   const [role, setRole] = useState("");
+
+  const [errorMessage, setErrorMessage] = useState("");
+
   const navigate = useNavigate();
 
   const auth = useContext(AuthContext);
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validateData) {
-      signup(dataFetch, {
+
+    if (!validateData()) {
+      setErrorMessage("Please fill in all required fields.");
+      return;
+    }
+
+    try {
+      const res = await signup(dataFetch, {
         username,
         firstName,
         lastName,
         email,
         password,
-        birthDate,
+        confirmPassword: password,
+        birthdate: formatBirthDate(birthDate),
         gender,
-        city,
+        city: "Cairo (القاهرة)",
         address,
         role,
       });
-    }
+      if (res) console.log("data here: ", data);
+      else console.log("error here: ", error);
 
-    console.log({
-      username,
-      firstName,
-      lastName,
-      email,
-      password,
-      birthDate,
-      gender,
-      city,
-      address,
-      role,
-    });
-    auth.loginUser();
-    navigate("/");
+      auth.loginUser(username, password);
+      navigate("/");
+    } catch (err) {
+      if (error.response && error.response?.data) {
+        setErrorMessage(error.response?.data.message);
+      } else {
+        setErrorMessage("An error occurred during signup.");
+      }
+    }
   };
+  useEffect(() => {
+    console.log("data hereeeeeee: ", data);
+  }, [data]);
 
   const validateData = () => {
     const isUsernameValid = username.trim() !== "";
@@ -107,6 +123,8 @@ const SignUp = () => {
         flexDirection: "column",
       }}
     >
+      {errorMessage && <ErrorMsg>{errorMessage}</ErrorMsg>}
+
       <Box
         sx={{
           display: "flex",
@@ -187,6 +205,7 @@ const SignUp = () => {
                 onChange={(e) => setBirthDate(e.target.value)}
                 id="birthDate"
                 label="Birth Date"
+                required
                 type="date"
                 fullWidth
                 name="birthDate"
@@ -200,14 +219,14 @@ const SignUp = () => {
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
                 id="gender"
+                required
                 select
                 label="Gender"
                 fullWidth
                 name="gender"
               >
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
+                <MenuItem value="Male">Male</MenuItem>
+                <MenuItem value="Female">Female</MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -235,6 +254,7 @@ const SignUp = () => {
               <TextField
                 id="role"
                 select
+                required
                 label="Role"
                 fullWidth
                 name="role"
@@ -255,15 +275,18 @@ const SignUp = () => {
               />
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={(e) => handleSubmit(e)}
-          >
-            Sign Up
-          </Button>
+          {!isLoading && (
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={(e) => handleSubmit(e)}
+            >
+              Sign Up
+            </Button>
+          )}
+          {isLoading && <Progress />}
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/login" variant="body2">

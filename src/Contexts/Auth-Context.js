@@ -22,8 +22,8 @@ export const AuthContextProvider = (props) => {
       return false;
     }
   };
-  console.log("isUserLoggedIn: ", isUserLoggedIn());
-  console.log("Test!: ", isUserLoggedIn === null ? true : false);
+  // console.log("isUserLoggedIn: ", isUserLoggedIn());
+  // console.log("Test!: ", isUserLoggedIn === null ? true : false);
 
   const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn);
 
@@ -54,7 +54,7 @@ export const AuthContextProvider = (props) => {
     token: user && JSON.parse(user)?.token,
     expirationDate: user && JSON.parse(user)?.expiresIn,
   };
-  console.log("State: ", isLoggedIn);
+  // console.log("State: ", isLoggedIn);
 
   return (
     <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
