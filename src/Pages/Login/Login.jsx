@@ -50,8 +50,8 @@ const SignIn = () => {
     if (error) {
       setErrorMessage(badRequestMsg);
     } else if (userData && userData.accessToken) {
-      auth.loginUser(username, userData.accessToken);
-      navigate("/profile");
+      auth.loginUser(username, userData.role, userData.accessToken);
+      navigate("/");
     }
   }, [userData, error, auth, navigate, username]);
 

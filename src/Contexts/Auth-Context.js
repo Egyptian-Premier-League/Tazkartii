@@ -7,6 +7,7 @@ const AuthContext = createContext({
   loginUser: () => {},
   logoutUser: () => {},
   username: null,
+  role: null,
   token: null,
   expirationDate: null,
 });
@@ -27,11 +28,12 @@ const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn);
 
   const loginUserHandler = useCallback(
-    (username = "zsherif308", token, expiresIn = 12) => {
+    (username = "zsherif308",role, token, expiresIn = 12) => {
       // const expirationDate = AddMinutes(new Date(), expiresIn).toISOString();
       const userInfo = {
         username,
-        token: token,
+        role,
+        token,
         // expiresIn: expirationDate,
       };
       setUser(JSON.stringify(userInfo));
@@ -50,6 +52,7 @@ const AuthContextProvider = (props) => {
     loginUser: loginUserHandler,
     logoutUser: logoutUserHandler,
     username: user && JSON.parse(user)?.username,
+    role: user && JSON.parse(user)?.role,
     token: user && JSON.parse(user)?.accessToken,
     expirationDate: user && JSON.parse(user)?.expiresIn,
   };

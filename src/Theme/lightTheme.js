@@ -11,6 +11,7 @@ const lightTheme = {
   color: {
     primary: "#61dafb",
     clubName: "#1a237e",
+    brand: "#0077b5",
   },
   // The colors of the backgrounds in the website
   background: {

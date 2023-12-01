@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 
-import {useAuth} from "Contexts/Auth-Context";
+import { useAuth } from "Contexts/Auth-Context";
 
 import {
   NavigationContainer,
@@ -20,7 +20,9 @@ const Navigation = ({ toggleColorMode }) => {
     <NavigationContainer>
       <NavHeader>
         <NavLinkHeader href="/">Home</NavLinkHeader>
-        <NavLinkHeader href="/admin">Dashboard</NavLinkHeader>
+        {auth.isLoggedIn && auth.role === "Admin" && (
+          <NavLinkHeader href="/admin">Dashboard</NavLinkHeader>
+        )}
         <NavLinkHeader href="/Matches">Matches</NavLinkHeader>
         <NavLinkHeader href="/Standings">Standings</NavLinkHeader>
         <NavLinkHeader href="/Tickets">Tickets</NavLinkHeader>

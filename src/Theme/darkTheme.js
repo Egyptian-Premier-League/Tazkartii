@@ -8,7 +8,7 @@ const darkTheme = {
   id: "dark",
 
   // The colors of the text on the website
-  color: { primary: "#FF0000" },
+  color: { primary: "#FF0000", clubName: "#1a237e", brand: "#0077b5" },
   // The colors of the backgrounds in the website
   background: {
     primary: "#282c34;",
