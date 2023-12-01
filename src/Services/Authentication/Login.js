@@ -8,7 +8,7 @@ const login = (dataFetch, objectData) => {
     dataFetch({
       axiosInstance: axios,
       method: "POST",
-      url: "/api/auth/login",
+      url: "/auth/signin",
       requestConfig: { data: objectData },
     });
     return true;

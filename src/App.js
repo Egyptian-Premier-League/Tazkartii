@@ -19,6 +19,10 @@ import Admin from "Pages/Admin/Admin";
 import Profile from "Pages/Profile/Profile";
 import ErrorPage from "Pages/ErrorPage/ErrorPage";
 
+// Protected Routes
+import RequireAuth from "Contexts/RequireAuth";
+import { AuthContextProvider } from "Contexts/Auth-Context";
+
 function App() {
   const [theme, setTheme] = useLocalStorage(
     "theme",
@@ -47,19 +51,35 @@ function App() {
   };
   return (
     <ThemeProvider theme={JSON.parse(theme)}>
-      <Router>
-        <div className="App">
-          <Navigation toggleColorMode={handleToggleTheme} />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<SignIn />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
-        </div>
-      </Router>
+      <AuthContextProvider>
+        <Router>
+          <div className="App">
+            <Navigation toggleColorMode={handleToggleTheme} />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<SignIn />} />
+              <Route
+                path="/admin"
+                element={
+                  <RequireAuth>
+                    <Admin />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <RequireAuth>
+                    <Profile />
+                  </RequireAuth>
+                }
+              />
+              <Route path="*" element={<ErrorPage />} />
+            </Routes>
+          </div>
+        </Router>
+      </AuthContextProvider>
     </ThemeProvider>
   );
 }

@@ -1,5 +1,5 @@
-import React, { useState, useCallback, createContext,useContext } from "react";
-import AddMinutes from "Utils/AddMinutes";
+import React, { useState, useCallback, createContext, useContext } from "react";
+// import AddMinutes from "Utils/AddMinutes";
 import useLocalStorage from "Hooks/useLocalStorage";
 
 const AuthContext = createContext({
@@ -17,23 +17,22 @@ const AuthContextProvider = (props) => {
   const isUserLoggedIn = () => {
     try {
       const userData = JSON.parse(user);
-      return userData !== null && new Date(userData.expiresIn) > new Date();
+      // return userData !== null && new Date(userData.expiresIn) > new Date();
+      return userData !== null
     } catch (err) {
       return false;
     }
   };
-  // console.log("isUserLoggedIn: ", isUserLoggedIn());
-  // console.log("Test!: ", isUserLoggedIn === null ? true : false);
 
   const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn);
 
   const loginUserHandler = useCallback(
-    (username = "zsherif308", password, expiresIn = 12) => {
-      const expirationDate = AddMinutes(new Date(), expiresIn).toISOString();
+    (username = "zsherif308", token, expiresIn = 12) => {
+      // const expirationDate = AddMinutes(new Date(), expiresIn).toISOString();
       const userInfo = {
         username,
-        token: "myToken",
-        expiresIn: expirationDate,
+        token: token,
+        // expiresIn: expirationDate,
       };
       setUser(JSON.stringify(userInfo));
       setIsLoggedIn(true);
@@ -51,10 +50,9 @@ const AuthContextProvider = (props) => {
     loginUser: loginUserHandler,
     logoutUser: logoutUserHandler,
     username: user && JSON.parse(user)?.username,
-    token: user && JSON.parse(user)?.token,
+    token: user && JSON.parse(user)?.accessToken,
     expirationDate: user && JSON.parse(user)?.expiresIn,
   };
-  // console.log("State: ", isLoggedIn);
 
   return (
     <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -13,18 +13,70 @@ import CopyRight from "Components/CopyRight/CopyRight";
 import { useAuth } from "Contexts/Auth-Context";
 import { useNavigate } from "react-router-dom";
 
+import useFetchFunction from "Hooks/useFetchFunction";
+import login from "Services/Authentication/Login";
+import Progress from "Components/Progress/Progress";
+import { ErrorMsg, ProgressContainer } from "./Login.styled";
+
 const SignIn = () => {
+  const [userData, error, isLoading, dataFetch] = useFetchFunction();
   const auth = useAuth();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
+  useEffect(() => {
+    if (userData) {
+      console.log("User Data: ", userData);
+    }
+  }, [userData]);
+
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const badRequestMsg = "Wrong username and password";
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    auth.loginUser(email, password);
+    // Clear any previous error messages
+    setErrorMessage("");
 
-    navigate("/profile");
+    if (!validateData()) return;
+
+    // Start the login process
+    login(dataFetch, { username, password });
+  };
+
+  useEffect(() => {
+    if (error) {
+      setErrorMessage(badRequestMsg);
+    } else if (userData && userData.accessToken) {
+      auth.loginUser(username, userData.accessToken);
+      navigate("/profile");
+    }
+  }, [userData, error, auth, navigate, username]);
+
+  const validateData = () => {
+    const usernameRegex = /^[a-zA-Z0-9_]+$/;
+    const passwordRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
+    const isUsernameValid = usernameRegex.test(username);
+    const isPasswordValid = passwordRegex.test(password);
+
+    if (!isUsernameValid) {
+      setErrorMessage(
+        "Username is not valid. Only alphanumeric and underscores are allowed."
+      );
+      return false;
+    }
+    if (isPasswordValid) {
+      setErrorMessage(
+        "Password is not valid. It must contain at least 8 characters, including one letter, one number, and one special character."
+      );
+      return false;
+    }
+
+    return true;
   };
 
   return (
@@ -49,18 +101,18 @@ const SignIn = () => {
         <Typography component="h1" variant="h5" sx={{ marginTop: "15px" }}>
           Login
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="User Name"
+            name="username"
+            autoComplete="username"
             autoFocus
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -78,15 +130,21 @@ const SignIn = () => {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={(e) => handleSubmit(e)}
-          >
-            Sign In
-          </Button>
+          {isLoading ? (
+            <ProgressContainer>
+              <Progress />
+            </ProgressContainer>
+          ) : (
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={(e) => handleSubmit(e)}
+            >
+              Sign In
+            </Button>
+          )}
+          <ErrorMsg>{errorMessage}</ErrorMsg>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">

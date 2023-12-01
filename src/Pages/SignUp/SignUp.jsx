@@ -19,7 +19,7 @@ import signup from "Services/Authentication/Signup";
 import Progress from "Components/Progress/Progress";
 
 // stylesd components
-import { ErrorMsg } from "./SignUp.styled";
+import { ErrorMsg, ProgressContainer } from "./SignUp.styled";
 
 const roles = [
   { value: "Manager", label: "Manager" },
@@ -28,7 +28,13 @@ const roles = [
 
 const SignUp = () => {
   // Fetching data from the backend
-  const [data, error, isLoading, dataFetch] = useFetchFunction();
+  const [userData, error, isLoading, dataFetch] = useFetchFunction();
+
+  useEffect(() => {
+    if (userData) {
+      console.log("User Data: ", userData);
+    }
+  }, [userData]);
 
   // States for all the fields
   const [username, setUsername] = useState("");
@@ -48,50 +54,63 @@ const SignUp = () => {
 
   const auth = useAuth();
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     if (!validateData()) {
-      setErrorMessage("Please fill in all required fields.");
       return;
     }
 
-    try {
-      signup(dataFetch, {
-        username,
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmPassword: password,
-        birthdate: formatBirthDate(birthDate),
-        gender,
-        city: "Cairo (القاهرة)",
-        address,
-        role,
-      });
-
-      auth.loginUser(username, password);
-      navigate("/");
-    } catch (err) {
-      if (error.response && error.response?.data) {
-        setErrorMessage(error.response?.data.message);
-      } else {
-        setErrorMessage("An error occurred during signup.");
-      }
-    }
+    signup(dataFetch, {
+      username,
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword: password,
+      birthdate: birthDate,
+      gender,
+      city: "Cairo (القاهرة)",
+      address,
+      role,
+    });
   };
+
   useEffect(() => {
-    console.log("data hereeeeeee: ", data);
-  }, [data]);
+    if (error) {
+      setErrorMessage("Username or Email are in use");
+    } else if (userData && userData.accessToken) {
+      auth.loginUser(username, userData.accessToken);
+      navigate("/");
+    }
+  }, [userData, error, auth, navigate, username]);
 
   const validateData = () => {
-    const isUsernameValid = username.trim() !== "";
+    const usernameRegex = /^[a-zA-Z0-9_]+$/;
+    const passwordRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
+    const isUsernameValid = usernameRegex.test(username);
+    const isPasswordValid = passwordRegex.test(password);
+
+    if (!isUsernameValid) {
+      setErrorMessage(
+        "Username is not valid. Only alphanumeric and underscores are allowed."
+      );
+      return false;
+    }
+
+    if (!isPasswordValid) {
+      setErrorMessage(
+        "Password is not valid. It must contain at least 8 characters, including one letter, one number, and one special character."
+      );
+      return false;
+    }
+
     const isFirstNameValid = firstName.trim() !== "";
     const isLastNameValid = lastName.trim() !== "";
     const isEmailValid = email.trim() !== "";
-    const isPasswordValid = password.trim() !== "";
-    const isBirthDateValid = birthDate.trim() !== "";
+    const isBirthDateValid = formatBirthDate(birthDate);
     const isGenderValid = gender.trim() !== "";
     const isCityValid = city.trim() !== "";
     const isRoleValid = role.trim() !== "";
@@ -273,9 +292,13 @@ const SignUp = () => {
               />
             </Grid>
           </Grid>
-          {!isLoading && (
+          {isLoading ? (
+            <ProgressContainer>
+              {" "}
+              <Progress />
+            </ProgressContainer>
+          ) : (
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
@@ -284,7 +307,6 @@ const SignUp = () => {
               Sign Up
             </Button>
           )}
-          {isLoading && <Progress />}
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/login" variant="body2">
