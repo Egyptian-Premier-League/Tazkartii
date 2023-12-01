@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "Contexts/Auth-Context";
 import useFetchFunction from "Hooks/useFetchFunction";
 import signup from "Services/Authentication/Signup";
+import getCities from "Services/GetCities";
 import Progress from "Components/Progress/Progress";
 
 // stylesd components
@@ -29,12 +30,8 @@ const roles = [
 const SignUp = () => {
   // Fetching data from the backend
   const [userData, error, isLoading, dataFetch] = useFetchFunction();
-
-  useEffect(() => {
-    if (userData) {
-      console.log("User Data: ", userData);
-    }
-  }, [userData]);
+  const [citiesData, errorOfCities, isLoadingCity, cityDataFetch] =
+    useFetchFunction();
 
   // States for all the fields
   const [username, setUsername] = useState("");
@@ -47,7 +44,7 @@ const SignUp = () => {
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
   const [role, setRole] = useState("");
-
+  const [cityOptions, setCityOptions] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
@@ -70,10 +67,26 @@ const SignUp = () => {
       confirmPassword: password,
       birthdate: birthDate,
       gender,
-      city: "Cairo (القاهرة)",
+      city,
       address,
       role,
     });
+  };
+  useEffect(() => {
+    getCities(cityDataFetch);
+  }, []);
+
+  useEffect(() => {
+    if (citiesData) {
+      const formattedCities = citiesData.map((cityName) => ({
+        value: cityName,
+        label: cityName,
+      }));
+      setCityOptions(formattedCities);
+    }
+  }, [citiesData]);
+  const handleCityChange = (event) => {
+    setCity(event.target.value);
   };
 
   useEffect(() => {
@@ -249,13 +262,20 @@ const SignUp = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 value={city}
-                onChange={(e) => setCity(e.target.value)}
+                onChange={handleCityChange}
                 required
+                select
                 fullWidth
                 id="city"
                 label="City"
                 name="city"
-              />
+              >
+                {cityOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
