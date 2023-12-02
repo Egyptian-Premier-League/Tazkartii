@@ -23,8 +23,8 @@ const Navigation = ({ toggleColorMode }) => {
         {auth.isLoggedIn && auth.role === "Admin" && (
           <NavLinkHeader href="/admin">Dashboard</NavLinkHeader>
         )}
-        <NavLinkHeader href="/Matches">Matches</NavLinkHeader>
-        <NavLinkHeader href="/Standings">Standings</NavLinkHeader>
+        <NavLinkHeader href="/matches">Matches</NavLinkHeader>
+        <NavLinkHeader href="/standings">Standings</NavLinkHeader>
         <NavLinkHeader href="/Tickets">Tickets</NavLinkHeader>
       </NavHeader>
       {!auth.isLoggedIn && (

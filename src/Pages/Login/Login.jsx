@@ -7,7 +7,6 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import CopyRight from "Components/CopyRight/CopyRight";
 
 import { useAuth } from "Contexts/Auth-Context";
@@ -16,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import useFetchFunction from "Hooks/useFetchFunction";
 import login from "Services/Authentication/Login";
 import Progress from "Components/Progress/Progress";
-import { ErrorMsg, ProgressContainer } from "./Login.styled";
+import { ErrorMsg, ProgressContainer, ContainerLogin } from "./Login.styled";
 
 const SignIn = () => {
   const [userData, error, isLoading, dataFetch] = useFetchFunction();
@@ -80,17 +79,7 @@ const SignIn = () => {
   };
 
   return (
-    <Container
-      component="main"
-      maxWidth="xs"
-      sx={{
-        backgroundColor: "#ffffff",
-        borderRadius: "10px",
-        margin: "auto",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <ContainerLogin component="main" maxWidth="xs">
       <Box
         sx={{
           display: "flex",
@@ -160,7 +149,7 @@ const SignIn = () => {
         </Box>
       </Box>
       <CopyRight sx={{ mt: 8, mb: 4 }} />
-    </Container>
+    </ContainerLogin>
   );
 };
 
