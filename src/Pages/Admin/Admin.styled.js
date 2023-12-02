@@ -20,11 +20,15 @@ export const Th = styled.th`
   background-color: #555;
   color: white;
   padding: 10px;
+  text-align: center;
+  vertical-align: middle;
 `;
 
 export const Td = styled.td`
   padding: 10px;
   border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
 `;
 
 export const UserRow = styled.tr`

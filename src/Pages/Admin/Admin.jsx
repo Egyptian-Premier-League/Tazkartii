@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import useFetchFunction from "Hooks/useFetchFunction";
+import getUsers from "Services/Admins/GetUsers";
+import approveUser from "Services/Admins/ApproveUser";
+import { useAuth } from "Contexts/Auth-Context";
 import {
   AdminContainer,
   Heading,
@@ -11,50 +15,41 @@ import {
 } from "./Admin.styled";
 
 const Admin = () => {
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      username: "user1",
-      firstName: "John",
-      lastName: "Doe",
-      email: "johndoe@example.com",
-      authority: false,
-    },
-    {
-      id: 2,
-      username: "user2",
-      firstName: "Jane",
-      lastName: "Doe",
-      email: "janedoe@example.com",
-      authority: true,
-    },
-    {
-      id: 3,
-      username: "user3",
-      firstName: "Bob",
-      lastName: "Doe",
-      email: "BobDoe12@gmail.com",
-      authority: false,
-    },
-    {
-      id: 4,
-      username: "user4",
-      firstName: "Ziad",
-      lastName: "Sherif",
-      email: "ziadsherif@gmail.com",
-      authority: false,
-    },
-    {
-      id: 5,
-      username: "user5",
-      firstName: "Abdelrhman",
-      lastName: "Fathy",
-      email: "to7a@gmail.com",
-      authority: false,
-    },
-  ]);
+  // use this snippet to fetch data from the backend
+  const [usersData, error, isLoading, dataFetch] = useFetchFunction();
+  const [
+    responseOfApprove,
+    errorOfApprove,
+    isLoadingApprovement,
+    dataFetchOfApprovement,
+  ] = useFetchFunction();
 
-  const approveUser = (userId) => {
+  const auth = useAuth();
+  console.log("auth in admin", auth);
+
+  // use states
+  const [users, setUsers] = useState([]);
+  const [errorMessages, setErrorMessages] = useState();
+  const [numberOfPages, setNumberOfPages] = useState(1);
+
+  // effect to fetch data from the backend
+  useEffect(() => {
+    getUsers(dataFetch, auth, numberOfPages, "All", "Manager");
+  }, []);
+
+  useEffect(() => {
+    if (error) setErrorMessages(error);
+    else if (usersData && usersData.length > 0) {
+      setNumberOfPages(Math.ceil(usersData[0].count / 10));
+      setUsers(usersData);
+      console.log("usersData", usersData);
+    }
+    console.log("users", usersData);
+  }, [usersData, error]);
+
+  // handling fuctions
+  const handleApproveUser = (userId) => {
+    approveUser(dataFetchOfApprovement, userId);
     const updatedUsers = users.map((user) => {
       if (user.id === userId) {
         return { ...user, authority: true };
@@ -64,7 +59,7 @@ const Admin = () => {
     setUsers(updatedUsers);
   };
 
-  const removeUser = (userId) => {
+  const handleRemoveUser = (userId) => {
     const updatedUsers = users.filter((user) => user.id !== userId);
     setUsers(updatedUsers);
   };
@@ -93,7 +88,9 @@ const Admin = () => {
                 <Td>{`${user.firstName} ${user.lastName}`}</Td>
                 <Td>{user.email}</Td>
                 <Td>
-                  <Button onClick={() => removeUser(user.id)}>Remove</Button>
+                  <Button onClick={() => handleRemoveUser(user.id)}>
+                    Remove
+                  </Button>
                 </Td>
               </UserRow>
             ))}
@@ -118,10 +115,16 @@ const Admin = () => {
                 <Td>{`${user.firstName} ${user.lastName}`}</Td>
                 <Td>{user.email}</Td>
                 <Td>
-                  <Button flag={true} onClick={() => approveUser(user.id)}>
+                  <Button
+                    flag={true}
+                    onClick={() => handleApproveUser(user.id)}
+                  >
                     Approve
                   </Button>
-                  <Button flag={false} onClick={() => removeUser(user.id)}>
+                  <Button
+                    flag={false}
+                    onClick={() => handleRemoveUser(user.id)}
+                  >
                     Remove
                   </Button>
                 </Td>

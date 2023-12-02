@@ -3,44 +3,40 @@
  *
  * @type {{id:string}}
  */
+// Define the light theme properties
 const lightTheme = {
-  // The id of the theme
   id: "light",
-
-  // The colors of the text on the website
   color: {
-    primary: "#61dafb",
-    clubName: "#1a237e",
-    brand: "#0077b5",
+    primary: "#61dafb", // Primary text color
+    clubName: "#1a237e", // Club name text color
+    brand: "#0077b5", // Brand color for logos or highlights
+    danger: "#dc3545", // Danger color for errors
+    warning: "#ffc107", // Warning color for alerts
+    success: "#28a745", // Success color for success messages
+    info: "#17a2b8", // Info color for information messages
+    white: "#ffffff", // White color
+    black: "#000000", // Black color
   },
-  // The colors of the backgrounds in the website
   background: {
-    primary: "#282c34",
-    hoverOfNav: "#414754",
+    primary: "#ffffff", // Main background color
+    hoverOfNav: "#f2f2f2", // Background color for navbar hover
+    hoverOfCell: "#e0e0e0", // Background color for table cell hover
   },
-  // Border colors
+  header: {
+    background: "#f7f7f7", // Light theme header background
+    color: "#333", // Light theme header text color
+  },
   borderColor: {
-    // Primary border color
-    primary: "#878a8c",
+    primary: "#878a8c", // Main border color
   },
-  // The colors of the lines in the website
   lineColor: {
-    primary: "#edeff1",
+    primary: "#edeff1", // Main line color
   },
-  // The colors of the buttons in the website
   button: {
-    //The border color of hover card
-    secondary: "#f0f0f0",
+    primary: "#0079d3", // Main button color
+    secondary: "#f0f0f0", // Secondary button color (possibly for hover state)
   },
-  // The colors of the arrows in the leadboard
-  arrowColor: {},
-  btnColor: {
-    primary: "#0079d3",
-  },
-  categoryColor: {},
-  reportModalExp: {},
-  //To change Linear Gradient Degree according to theme
-  degree: {},
 };
 
+// Export the themes
 export default lightTheme;

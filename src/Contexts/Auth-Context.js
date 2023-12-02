@@ -8,7 +8,7 @@ const AuthContext = createContext({
   logoutUser: () => {},
   username: null,
   role: null,
-  token: null,
+  accessToken: null,
   expirationDate: null,
 });
 
@@ -19,7 +19,7 @@ const AuthContextProvider = (props) => {
     try {
       const userData = JSON.parse(user);
       // return userData !== null && new Date(userData.expiresIn) > new Date();
-      return userData !== null
+      return userData !== null;
     } catch (err) {
       return false;
     }
@@ -28,14 +28,15 @@ const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn);
 
   const loginUserHandler = useCallback(
-    (username = "zsherif308",role, token, expiresIn = 12) => {
+    (username, role, accessToken) => {
       // const expirationDate = AddMinutes(new Date(), expiresIn).toISOString();
       const userInfo = {
-        username,
-        role,
-        token,
+        username: username,
+        role: role,
+        accessToken: accessToken,
         // expiresIn: expirationDate,
       };
+      
       setUser(JSON.stringify(userInfo));
       setIsLoggedIn(true);
     },
@@ -53,7 +54,7 @@ const AuthContextProvider = (props) => {
     logoutUser: logoutUserHandler,
     username: user && JSON.parse(user)?.username,
     role: user && JSON.parse(user)?.role,
-    token: user && JSON.parse(user)?.accessToken,
+    accessToken: user && JSON.parse(user)?.accessToken,
     expirationDate: user && JSON.parse(user)?.expiresIn,
   };
 

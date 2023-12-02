@@ -12,10 +12,13 @@ const StandingsContainer = styled.div`
   @media (max-width: 768px) {
     padding: 10px;
   }
+  background-color: ${({ theme }) => theme.background.primary};
 `;
 const HeaderContainer = styled.h1`
   display: flex;
   justify-content: center;
+  background-color: ${({ theme }) => theme.header.background};
+  color: ${({ theme }) => theme.header.color};
 `;
 
 const Table = styled.table`
@@ -37,11 +40,6 @@ const Td = styled.td`
   vertical-align: middle;
 `;
 
-const StandingRow = styled.tr`
-  &:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-`;
 const LastMatchesContainer = styled.div`
   display: flex;
   justify-content: space-around;
@@ -68,6 +66,20 @@ const TeamContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+const StandingRow = styled.tr`
+  &:nth-child(even) {
+    background-color: ${({ theme }) => theme.background.hoverOfNav};
+  }
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.background.hoverOfCell};
+    color: white;
+
+    ${WinnerIcon}, ${LoserIcon}, ${DrawIcon} {
+      fill: white;
+    }
+  }
 `;
 export {
   StandingsContainer,
