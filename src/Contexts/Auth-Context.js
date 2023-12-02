@@ -36,7 +36,7 @@ const AuthContextProvider = (props) => {
         accessToken: accessToken,
         // expiresIn: expirationDate,
       };
-      
+
       setUser(JSON.stringify(userInfo));
       setIsLoggedIn(true);
     },
@@ -58,9 +58,7 @@ const AuthContextProvider = (props) => {
     expirationDate: user && JSON.parse(user)?.expiresIn,
   };
 
-  return (
-    <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>;
 };
 const useAuth = () => {
   return useContext(AuthContext);

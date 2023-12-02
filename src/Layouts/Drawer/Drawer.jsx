@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Drawer as MUIDrawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
+import { Drawer as MUIDrawer, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { Link } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import InfoIcon from "@mui/icons-material/Info";

@@ -8,19 +8,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 const ConfirmModal = ({ open, handleClose, handleConfirm }) => {
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">
-        {"Confirm your changes"}
-      </DialogTitle>
+    <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+      <DialogTitle id="alert-dialog-title">{"Confirm your changes"}</DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          Do you agree to save all your changes?
-        </DialogContentText>
+        <DialogContentText id="alert-dialog-description">Do you agree to save all your changes?</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Disagree</Button>

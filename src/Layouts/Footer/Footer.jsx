@@ -1,17 +1,6 @@
 import React from "react";
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaInstagram,
-  FaLinkedinIn,
-} from "react-icons/fa";
-import {
-  FooterContainer,
-  FooterContent,
-  FooterLink,
-  SocialMediaIcons,
-  CopyRightText,
-} from "./Footer.styled";
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { FooterContainer, FooterContent, FooterLink, SocialMediaIcons, CopyRightText } from "./Footer.styled";
 
 const Footer = () => {
   return (
@@ -36,9 +25,7 @@ const Footer = () => {
           </FooterLink>
         </SocialMediaIcons>
       </FooterContent>
-      <CopyRightText>
-        &copy; {new Date().getFullYear()} EFA. All Rights Reserved.
-      </CopyRightText>
+      <CopyRightText>&copy; {new Date().getFullYear()} EFA. All Rights Reserved.</CopyRightText>
     </FooterContainer>
   );
 };

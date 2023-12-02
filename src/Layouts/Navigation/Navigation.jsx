@@ -3,12 +3,7 @@ import Button from "@mui/material/Button";
 
 import { useAuth } from "Contexts/Auth-Context";
 
-import {
-  NavigationContainer,
-  NavHeader,
-  NavLinkHeader,
-  AuthLinks,
-} from "./Navigation.styled.js";
+import { NavigationContainer, NavHeader, NavLinkHeader, AuthLinks } from "./Navigation.styled.js";
 
 const Navigation = ({ toggleColorMode }) => {
   const handleToggleMode = () => {
@@ -20,9 +15,7 @@ const Navigation = ({ toggleColorMode }) => {
     <NavigationContainer>
       <NavHeader>
         <NavLinkHeader href="/">Home</NavLinkHeader>
-        {auth.isLoggedIn && auth.role === "Admin" && (
-          <NavLinkHeader href="/admin">Dashboard</NavLinkHeader>
-        )}
+        {auth.isLoggedIn && auth.role === "Admin" && <NavLinkHeader href="/admin">Dashboard</NavLinkHeader>}
         <NavLinkHeader href="/matches">Matches</NavLinkHeader>
         <NavLinkHeader href="/standings">Standings</NavLinkHeader>
         <NavLinkHeader href="/Tickets">Tickets</NavLinkHeader>

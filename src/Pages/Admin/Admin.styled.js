@@ -52,3 +52,44 @@ export const Button = styled.button`
 export const Section = styled.section`
   margin-bottom: 40px;
 `;
+
+
+
+
+export const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+export const PaginationButton = styled.button`
+  padding: 10px 15px;
+  margin: 0 10px;
+  background-color: ${({ theme }) => theme.button.primary};
+  color: ${({ theme }) => theme.color.primary};
+  border: 1px solid ${({ theme }) => theme.borderColor.primary};
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.button.hover};
+    color: ${({ theme }) => theme.color.hover};
+  }
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.button.disabled};
+    color: ${({ theme }) => theme.color.disabled};
+    cursor: not-allowed;
+  }
+
+  // Add media queries if you need responsiveness
+  @media (max-width: 768px) {
+    padding: 8px 12px;
+  }
+`;
+
+

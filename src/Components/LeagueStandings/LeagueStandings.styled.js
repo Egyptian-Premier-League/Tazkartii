@@ -28,14 +28,14 @@ const Table = styled.table`
 
 const Th = styled.th`
   background-color: #004d99;
-  color: white;
+  color: ${({ theme }) => theme.lineColor.primary};
   padding: 10px;
   text-align: center;
 `;
 
 const Td = styled.td`
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid ${({ theme }) => theme.borderColor.primary};
   text-align: center;
   vertical-align: middle;
 `;
@@ -46,10 +46,10 @@ const LastMatchesContainer = styled.div`
 `;
 
 const WinnerIcon = styled(PiCheckCircle)`
-  fill: green;
+  fill: ${({ theme }) => theme.color.success};
 `;
 const LoserIcon = styled(IoIosCloseCircleOutline)`
-  fill: red;
+  fill: ${({ theme }) => theme.color.danger};
 `;
 const DrawIcon = styled(AiOutlineMinusCircle)`
   color: yellow;
@@ -74,7 +74,7 @@ const StandingRow = styled.tr`
   cursor: pointer;
   &:hover {
     background-color: ${({ theme }) => theme.background.hoverOfCell};
-    color: white;
+    /* color: ${({ theme }) => theme.lineColor.primary}; */
 
     ${WinnerIcon}, ${LoserIcon}, ${DrawIcon} {
       fill: white;

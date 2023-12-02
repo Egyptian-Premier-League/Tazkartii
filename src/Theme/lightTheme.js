@@ -16,6 +16,7 @@ const lightTheme = {
     info: "#17a2b8", // Info color for information messages
     white: "#ffffff", // White color
     black: "#000000", // Black color
+    disabled: "#666666", // Text color for disabled buttons
   },
   background: {
     primary: "#ffffff", // Main background color
@@ -31,10 +32,13 @@ const lightTheme = {
   },
   lineColor: {
     primary: "#edeff1", // Main line color
+    secondary: "#e0e0e0", // Secondary line color
   },
   button: {
     primary: "#0079d3", // Main button color
     secondary: "#f0f0f0", // Secondary button color (possibly for hover state)
+    hover: "#0056b3", // Button hover state color
+    disabled: "#cccccc", // Button disabled state color
   },
 };
 

@@ -12,10 +12,8 @@ const RequireAuth = ({ children }) => {
   //   }
 
   if (!auth.isLoggedIn) {
-    console.log("Token expired", auth.isLoggedIn);
     return <Navigate to="/login"></Navigate>;
   }
-  console.log("Token not expired", auth.isLoggedIn);
   return children;
 };
 
