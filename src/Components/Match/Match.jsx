@@ -42,18 +42,25 @@ const getTeamLogo = (teamName) => {
   };
   return logos[teamName];
 };
+const handleMatchClick = (match, setSelectedMatch) => {
+  console.log("Match clicked:", match);
+  setSelectedMatch(match);
+};
 
-const Match = ({
-  homeTeam,
-  awayTeam,
-  venue,
-  date,
-  time,
-  mainReferee,
-  linesmen,
-}) => {
+const Match = ({ homeTeam, awayTeam, venue, date, time, mainReferee, linesmen, setSelectedMatch }) => {
+  const matchData = {
+    homeTeam,
+    awayTeam,
+    venue,
+    date,
+    time,
+    mainReferee,
+    linesmen,
+    logoOfHome: getTeamLogo(homeTeam),
+    logoOfAway: getTeamLogo(awayTeam),
+  };
   return (
-    <MatchCard>
+    <MatchCard onClick={() => handleMatchClick(matchData, setSelectedMatch)}>
       <MatchHeader>
         <LeagueLogo src={leagueLogo} alt="Egyptian Premier League" />
         <span>Egyptian Premier League 2023</span>

@@ -40,7 +40,7 @@ export const UserRow = styled.tr`
 export const Button = styled.button`
   padding: 5px 10px;
   margin-right: 5px;
-  color: ${({ flag }) => (flag ? "green" : "red")};
+  color: ${({ $flag }) => ($flag==="true" ? "green" : "red")};
   border: none;
   border-radius: 4px;
   cursor: pointer;

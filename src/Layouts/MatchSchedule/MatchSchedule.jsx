@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Match from "Components/Match/Match";
+import MatchModal from "Components/MatchModal/MatchModal";
 import { ScheduleContainer, Title } from "./MatchSchedule.styled";
 
 const matchData = [
@@ -7,7 +8,7 @@ const matchData = [
     id: 1,
     homeTeam: "Al Ahly",
     awayTeam: "Zamalek",
-    venue: "Education City Stadium, Al Rayyan, 7km north-west of central Doha",
+    venue: "Education City Stadium, Al Rayyan, Doha",
     date: "Today",
     time: "21:00",
     mainReferee: "Fahem Omar",
@@ -35,6 +36,12 @@ const matchData = [
   },
 ];
 const MatchSchedule = () => {
+  const [selectedMatch, setSelectedMatch] = useState(null);
+
+  const handleCloseModal = () => {
+    setSelectedMatch(null);
+  };
+
   return (
     <ScheduleContainer>
       <Title>Football Schedule Fixtures</Title>
@@ -48,8 +55,10 @@ const MatchSchedule = () => {
           time={match.time}
           mainReferee={match.mainReferee}
           linesmen={match.linesmen}
+          setSelectedMatch={setSelectedMatch}
         />
       ))}
+      <MatchModal match={selectedMatch} onClose={handleCloseModal} />
     </ScheduleContainer>
   );
 };

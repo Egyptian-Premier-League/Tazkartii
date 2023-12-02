@@ -126,10 +126,10 @@ const Admin = () => {
                   <Td>{`${user.firstName} ${user.lastName}`}</Td>
                   <Td>{user.email}</Td>
                   <Td>
-                    <Button flag={true} onClick={(e) => handleApproveUser(e, user.id)}>
+                    <Button $flag={"true"} onClick={(e) => handleApproveUser(e, user.id)}>
                       Approve
                     </Button>
-                    <Button flag={false} onClick={() => handleRemoveUser(user.id)}>
+                    <Button $flag={"false"} onClick={() => handleRemoveUser(user.id)}>
                       Remove
                     </Button>
                   </Td>
