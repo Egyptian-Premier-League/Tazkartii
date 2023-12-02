@@ -11,39 +11,45 @@ const Admin = () => {
   const [pendingUsersData, errorPendingUsers, isLoadingPendingUsers, dataFetchPendingUsersData] = useFetchFunction();
   const [responseOfApprove, errorOfApprove, isLoadingApprovement, dataFetchOfApprovement] = useFetchFunction();
 
+  // use this snippet to get the user from the context
   const auth = useAuth();
 
   // use states
   const [users, setUsers] = useState([]);
   const [errorMessages, setErrorMessages] = useState();
-  const [currentPageApproving, setCurrentPageApproving] = useState(1);
+
+  // States for pagination
+  const [currentPageApproved, setCurrentPageApproved] = useState(1);
   const [currentPagePending, setCurrentPagePending] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
 
   // effect to fetch data from the backend
   useEffect(() => {
     getUsers(dataFetchPendingUsersData, auth, currentPagePending, false, "Manager");
-    getUsers(dataFetchApprovedUsersData, auth, currentPageApproving, true, "Manager");
-  }, []);
+    getUsers(dataFetchApprovedUsersData, auth, currentPageApproved, true, "Manager");
+  }, [currentPagePending, currentPageApproved]);
 
+  // effect to set the users
   useEffect(() => {
     if (errorApprovedUsers && errorPendingUsers) {
       setErrorMessages(errorApprovedUsers);
       return;
     } else if (approvedUsersData && approvedUsersData.length > 0 && pendingUsersData && pendingUsersData.length > 0) {
-      setTotalPages(Math.ceil((approvedUsersData.length + approvedUsersData.length) / 10));
-
       const combinedUsers = [...approvedUsersData, ...pendingUsersData];
       setUsers(combinedUsers);
     }
   }, [approvedUsersData, errorPendingUsers, errorApprovedUsers, pendingUsersData]);
 
+  // effect to handle the response of the approvement
   useEffect(() => {
     if (errorOfApprove) setErrorMessages(errorOfApprove);
-    else if (responseOfApprove && responseOfApprove.message) alert(responseOfApprove.message, "success");
+    else if (responseOfApprove && responseOfApprove.message) {
+      getUsers(dataFetchPendingUsersData, auth, currentPagePending, false, "Manager");
+      getUsers(dataFetchApprovedUsersData, auth, currentPageApproved, true, "Manager");
+      alert(responseOfApprove.message, "success");
+    }
   }, [responseOfApprove, errorOfApprove]);
 
-  // handling fuctions
+  // handler to approve the user
   const handleApproveUser = (event, userId) => {
     event.preventDefault();
     approveUser(dataFetchOfApprovement, auth, userId);
@@ -51,6 +57,7 @@ const Admin = () => {
     setUsers([...approvedUsersData, ...pendingUsersData]);
   };
 
+  // handler to remove the user
   const handleRemoveUser = (userId) => {
     const updatedUsers = users.filter((user) => user.id !== userId);
     setUsers(updatedUsers);
@@ -60,11 +67,11 @@ const Admin = () => {
   const approvedUsers = users.filter((user) => approvedUsersData && user.approved);
   const pendingUsers = users.filter((user) => pendingUsersData && !user.approved);
 
-  const goToNextPageApproved = () => setCurrentPageApproving((prev) => (prev < totalPages ? prev + 1 : prev));
-  const goToPreviousPageApproved = () => setCurrentPageApproving((prev) => (prev > 1 ? prev - 1 : prev));
-
-  const goToNextPagePending = () => setCurrentPagePending((prev) => (prev < totalPages ? prev + 1 : prev));
-  const goToPreviousPagePending = () => setCurrentPagePending((prev) => (prev > 1 ? prev - 1 : prev));
+  // Pagination handlers
+  const goToNextPageApproved = () => setCurrentPageApproved((prev) => prev + 1);
+  const goToPreviousPageApproved = () => setCurrentPageApproved((prev) => prev - 1);
+  const goToNextPagePending = () => setCurrentPagePending((prev) => prev + 1);
+  const goToPreviousPagePending = () => setCurrentPagePending((prev) => prev - 1);
 
   return (
     <AdminContainer>
@@ -98,12 +105,10 @@ const Admin = () => {
       </Section>
       {approvedUsersData && (
         <PaginationContainer>
-          <PaginationButton onClick={goToPreviousPageApproved} disabled={currentPageApproving === 1}>
+          <PaginationButton onClick={goToPreviousPageApproved} disabled={currentPageApproved === 1}>
             Previous
           </PaginationButton>
-          <PaginationButton onClick={goToNextPageApproved} disabled={currentPageApproving === totalPages}>
-            Next
-          </PaginationButton>
+          <PaginationButton onClick={goToNextPageApproved}>Next</PaginationButton>
         </PaginationContainer>
       )}
       <Section>
@@ -143,9 +148,7 @@ const Admin = () => {
           <PaginationButton onClick={goToPreviousPagePending} disabled={currentPagePending === 1}>
             Previous
           </PaginationButton>
-          <PaginationButton onClick={goToNextPagePending} disabled={currentPagePending === totalPages}>
-            Next
-          </PaginationButton>
+          <PaginationButton onClick={goToNextPagePending}>Next</PaginationButton>
         </PaginationContainer>
       )}
     </AdminContainer>
