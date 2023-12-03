@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import useFetchFunction from "Hooks/useFetchFunction";
 import login from "Services/Authentication/Login";
 import Progress from "Components/Progress/Progress";
-import { ErrorMsg, ProgressContainer, ContainerLogin } from "./Login.styled";
+import { ErrorMsg, ProgressContainer, ContainerLogin, BoxContainer } from "./Login.styled";
 
 const SignIn = () => {
   const [userData, error, isLoading, dataFetch] = useFetchFunction();
@@ -56,16 +56,13 @@ const SignIn = () => {
 
   const validateData = () => {
     const usernameRegex = /^[a-zA-Z0-9_]+$/;
-    const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
     const isUsernameValid = usernameRegex.test(username);
     const isPasswordValid = passwordRegex.test(password);
 
     if (!isUsernameValid) {
-      setErrorMessage(
-        "Username is not valid. Only alphanumeric and underscores are allowed."
-      );
+      setErrorMessage("Username is not valid. Only alphanumeric and underscores are allowed.");
       return false;
     }
     if (isPasswordValid) {
@@ -80,13 +77,7 @@ const SignIn = () => {
 
   return (
     <ContainerLogin component="main" maxWidth="xs">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+      <BoxContainer>
         <Typography component="h1" variant="h5" sx={{ marginTop: "15px" }}>
           Login
         </Typography>
@@ -115,21 +106,13 @@ const SignIn = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+          <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
           {isLoading ? (
             <ProgressContainer>
               <Progress />
             </ProgressContainer>
           ) : (
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={(e) => handleSubmit(e)}
-            >
+            <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={(e) => handleSubmit(e)}>
               Sign In
             </Button>
           )}
@@ -147,7 +130,7 @@ const SignIn = () => {
             </Grid>
           </Grid>
         </Box>
-      </Box>
+      </BoxContainer>
       <CopyRight sx={{ mt: 8, mb: 4 }} />
     </ContainerLogin>
   );

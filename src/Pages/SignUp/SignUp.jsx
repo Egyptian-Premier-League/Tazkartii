@@ -6,9 +6,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
 import CopyRight from "Components/CopyRight/CopyRight";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +18,7 @@ import getCities from "Services/GetCities";
 import Progress from "Components/Progress/Progress";
 
 // stylesd components
-import { ErrorMsg, ProgressContainer } from "./SignUp.styled";
+import { ErrorMsg, ProgressContainer, SignUpContainer, BoxContainer } from "./SignUp.styled";
 
 const roles = [
   { value: "Manager", label: "Manager" },
@@ -30,8 +28,7 @@ const roles = [
 const SignUp = () => {
   // Fetching data from the backend
   const [userData, error, isLoading, dataFetch] = useFetchFunction();
-  const [citiesData, errorOfCities, isLoadingCity, cityDataFetch] =
-    useFetchFunction();
+  const [citiesData, errorOfCities, isLoadingCity, cityDataFetch] = useFetchFunction();
 
   // States for all the fields
   const [username, setUsername] = useState("");
@@ -100,16 +97,13 @@ const SignUp = () => {
 
   const validateData = () => {
     const usernameRegex = /^[a-zA-Z0-9_]+$/;
-    const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
     const isUsernameValid = usernameRegex.test(username);
     const isPasswordValid = passwordRegex.test(password);
 
     if (!isUsernameValid) {
-      setErrorMessage(
-        "Username is not valid. Only alphanumeric and underscores are allowed."
-      );
+      setErrorMessage("Username is not valid. Only alphanumeric and underscores are allowed.");
       return false;
     }
 
@@ -117,6 +111,22 @@ const SignUp = () => {
       setErrorMessage(
         "Password is not valid. It must contain at least 8 characters, including one letter, one number, and one special character."
       );
+      return false;
+    }
+    if (city === "") {
+      setErrorMessage("Please choose a city");
+      return false;
+    }
+    if (role === "") {
+      setErrorMessage("Please choose a role");
+      return false;
+    }
+    if (!birthDate) {
+      setErrorMessage("Please choose a birth date");
+      return false;
+    }
+    if (gender === "") {
+      setErrorMessage("Please enter your gender");
       return false;
     }
 
@@ -142,30 +152,14 @@ const SignUp = () => {
   };
 
   return (
-    <Container
-      component="main"
-      maxWidth="xs"
-      sx={{
-        backgroundColor: "#ffffff",
-        borderRadius: "10px",
-        margin: "auto",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <SignUpContainer  maxWidth="xs">
       {errorMessage && <ErrorMsg>{errorMessage}</ErrorMsg>}
 
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
+      <BoxContainer>
         <Typography component="h1" variant="h5" sx={{ marginTop: "10px" }}>
           Register
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <BoxContainer component="form"  onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -260,16 +254,7 @@ const SignUp = () => {
               </TextField>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                value={city}
-                onChange={handleCityChange}
-                required
-                select
-                fullWidth
-                id="city"
-                label="City"
-                name="city"
-              >
+              <TextField value={city} onChange={handleCityChange} required select fullWidth id="city" label="City" name="city">
                 {cityOptions.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
@@ -318,12 +303,7 @@ const SignUp = () => {
               <Progress />
             </ProgressContainer>
           ) : (
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={(e) => handleSubmit(e)}
-            >
+            <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={(e) => handleSubmit(e)}>
               Sign Up
             </Button>
           )}
@@ -334,10 +314,10 @@ const SignUp = () => {
               </Link>
             </Grid>
           </Grid>
-        </Box>
-      </Box>
+        </BoxContainer>
+      </BoxContainer>
       <CopyRight sx={{ mt: 3, mb: 2 }} />
-    </Container>
+    </SignUpContainer>
   );
 };
 
