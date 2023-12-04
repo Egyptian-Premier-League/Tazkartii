@@ -152,14 +152,14 @@ const SignUp = () => {
   };
 
   return (
-    <SignUpContainer  maxWidth="xs">
+    <SignUpContainer maxWidth="xs">
       {errorMessage && <ErrorMsg>{errorMessage}</ErrorMsg>}
 
       <BoxContainer>
         <Typography component="h1" variant="h5" sx={{ marginTop: "10px" }}>
           Register
         </Typography>
-        <BoxContainer component="form"  onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <BoxContainer component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
