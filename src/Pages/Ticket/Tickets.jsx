@@ -1,9 +1,64 @@
 import React from "react";
-import { TicketsContainer, TicketCard } from "./Tickets.styled";
+import { TicketsContainer, TicketCard, TeamLogo, Details, TicketInfo, MatchDetails, StatusIndicator } from "./Tickets.styled";
+
+import ahlyLogo from "Assets/Images/ahly.png";
+import zamalekLogo from "Assets/Images/zamalek.png";
+import wadiDeglaLogo from "Assets/Images/wadiDegla.png";
+import moqawloonLogo from "Assets/Images/mokawlon.png";
+import pyramidsLogo from "Assets/Images/pyramids.png";
+import ceramica from "Assets/Images/ceramica.png";
+import esmailyLogo from "Assets/Images/esmaily.png";
+import futureLogo from "Assets/Images/future.png";
 
 const mockTickets = [
-  { id: 1, match: "Match 1", date: "2023-05-15", status: "reserved" },
-  { id: 2, match: "Match 2", date: "2023-06-20", status: "canceled" },
+  {
+    id: 1,
+    match: "Match 1",
+    teams: "Ahly vs Zamalek",
+    location: "Stadium A",
+    date: "2023-05-15",
+    status: "reserved",
+    seat: "A1",
+    price: "$30",
+    logoTeamOne: ahlyLogo,
+    logoTeamTwo: zamalekLogo,
+  },
+  {
+    id: 2,
+    match: "Match 2",
+    teams: "Pyramids vs Future FC",
+    location: "Stadium B",
+    date: "2023-06-20",
+    status: "canceled",
+    seat: "B2",
+    price: "$35",
+    logoTeamOne: pyramidsLogo,
+    logoTeamTwo: futureLogo,
+  },
+  {
+    id: 3,
+    match: "Match 3",
+    date: "2023-07-25",
+    status: "reserved",
+    seat: "C3",
+    price: "$20",
+    logoTeamOne: wadiDeglaLogo,
+    logoTeamTwo: moqawloonLogo,
+    location: "Stadium C",
+    teams: "Wadi Degla vs Moqawloon Al Arab",
+  },
+  {
+    id: 4,
+    match: "Match 4",
+    date: "2023-08-30",
+    status: "canceled",
+    seat: "D4",
+    price: "$25",
+    logoTeamOne: ceramica,
+    logoTeamTwo: esmailyLogo,
+    location: "Stadium D",
+    teams: "Ceramica Cleopatra vs Al Esmaily",
+  },
 ];
 
 const Tickets = ({ tickets = mockTickets }) => {
@@ -11,9 +66,27 @@ const Tickets = ({ tickets = mockTickets }) => {
     <TicketsContainer>
       {tickets.map((ticket) => (
         <TicketCard key={ticket.id} $status={ticket.status}>
-          <h3>{ticket.match}</h3>
-          <p>Date: {ticket.date}</p>
-          <p>Status: {ticket.status}</p>
+          <MatchDetails>
+            {ticket.logoTeamOne && <TeamLogo src={ticket.logoTeamOne} alt={`${ticket.teams}`} />}
+            {ticket.logoTeamTwo && <TeamLogo src={ticket.logoTeamTwo} alt={`${ticket.teams}`} />}
+            <TicketInfo>
+              <strong>Match:</strong> {ticket.match}
+              <br />
+              <strong>Teams:</strong> {ticket.teams}
+            </TicketInfo>
+          </MatchDetails>
+          <Details>
+            <TicketInfo>
+              <strong>Date:</strong> {ticket.date}
+            </TicketInfo>
+            <TicketInfo>
+              <strong>Seat:</strong> {ticket.seat}
+            </TicketInfo>
+            <TicketInfo>
+              <strong>Price:</strong> {ticket.price}
+            </TicketInfo>
+          </Details>
+          <StatusIndicator $status={ticket.status}>{ticket.status}</StatusIndicator>
         </TicketCard>
       ))}
     </TicketsContainer>
