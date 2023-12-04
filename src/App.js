@@ -27,6 +27,7 @@ import Footer from "Layouts/Footer/Footer";
 import LeagueStandings from "Components/LeagueStandings/LeagueStandings";
 import Stadium from "Components/Stadium/Stadium";
 import PaymentForm from "Components/PaymentForm/PaymentForm";
+import Tickets from "Pages/Ticket/Tickets";
 
 function App() {
   const [theme, setTheme] = useLocalStorage(
@@ -73,7 +74,14 @@ function App() {
               }
             />
             <Route path="/matches" element={<MatchSchedule />} />
-            <Route path="/reservation" element={  <RequireAuth><Stadium rows={8} cols={15} /></RequireAuth>} />
+            <Route
+              path="/reservation"
+              element={
+                <RequireAuth>
+                  <Stadium rows={8} cols={15} />
+                </RequireAuth>
+              }
+            />
             {/* <Route path=":userId" element={<PaymentForm />} /> */}
 
             <Route
@@ -90,7 +98,7 @@ function App() {
               path="/tickets"
               element={
                 <RequireAuth>
-                  <h1>My Tickets</h1>
+                  <Tickets />
                 </RequireAuth>
               }
             />
