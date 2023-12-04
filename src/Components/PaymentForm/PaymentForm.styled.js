@@ -1,16 +1,25 @@
 import styled from "styled-components";
 
 export const FormContainer = styled.div`
-  padding: 30px;
+  padding: 20px;
   background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 450px;
+  max-width: 500px;
   margin: 40px auto;
   box-sizing: border-box;
 `;
+export const FormHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 20px;
+`;
 
+export const SponsorLogo = styled.img`
+  height: 50px;
+`;
 export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;

@@ -73,8 +73,17 @@ function App() {
               }
             />
             <Route path="/matches" element={<MatchSchedule />} />
-            <Route path="/stadium" element={<Stadium rows={10} cols={15} />} />
-            <Route path="/reservation/:id" element={<PaymentForm />} />
+            <Route path="/reservation" element={  <RequireAuth><Stadium rows={8} cols={15} /></RequireAuth>} />
+            {/* <Route path=":userId" element={<PaymentForm />} /> */}
+
+            <Route
+              path="/payment"
+              element={
+                <RequireAuth>
+                  <PaymentForm />
+                </RequireAuth>
+              }
+            />
 
             <Route path="/standings" element={<LeagueStandings />} />
             <Route

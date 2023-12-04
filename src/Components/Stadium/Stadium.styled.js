@@ -41,3 +41,43 @@ export const SeatContainer = styled.div`
   padding: 20px;
   box-shadow: 8px 0px 8px 8px rgba(0, 0, 0, 0.2);
 `;
+
+export const SeatSummary = styled.div`
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #e3f2fd; // Light blue background for visual appeal
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #0d47a1; // Dark blue for contrast
+  font-size: 1rem;
+  font-weight: bold;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    background-color: #ffffff; // White background for individual seat tags
+    border: 1px solid #0d47a1;
+    border-radius: 5px;
+    padding: 5px 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+`;
+
+export const ConfirmButton = styled.button`
+  padding: 10px 15px;
+  margin-top: 20px;
+  border-radius: 6px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;

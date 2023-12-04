@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { FormContainer, StyledForm, FormLabel, StyledInput, SubmitButton } from "./PaymentForm.styled";
+import { FormContainer, StyledForm, FormLabel, StyledInput, SubmitButton, FormHeader, SponsorLogo } from "./PaymentForm.styled";
+
+import sponsorLogo1 from "Assets/Images/mastercard.jpg";
+import sponsorLogo2 from "Assets/Images/paypal.png";
 
 const PaymentForm = ({ onConfirmPayment }) => {
   const [creditCardNumber, setCreditCardNumber] = useState("");
@@ -13,6 +16,11 @@ const PaymentForm = ({ onConfirmPayment }) => {
 
   return (
     <FormContainer>
+      <FormHeader>
+        <SponsorLogo src={sponsorLogo1} alt="mastercard" />
+        <h2>Secure Payment</h2>
+        <SponsorLogo src={sponsorLogo2} alt="paypal" />
+      </FormHeader>
       <StyledForm onSubmit={handleSubmit}>
         <FormLabel>
           Credit Card Number:

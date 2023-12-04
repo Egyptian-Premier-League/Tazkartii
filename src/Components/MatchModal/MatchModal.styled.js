@@ -103,3 +103,18 @@ export const CloseButton = styled.button`
   top: 10px;
   right: 10px;
 `;
+export const ReserveButton = styled.button`
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;

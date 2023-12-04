@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   ModalContainer,
   ModalContent,
@@ -14,10 +16,17 @@ import {
   TeamName,
   TeamsContainer,
   Vs,
+  ReserveButton,
 } from "./MatchModal.styled";
 
 const MatchModal = ({ match, onClose }) => {
+  const navigate = useNavigate();
+
   if (!match) return null;
+
+  const handleReserveSeat = () => {
+    navigate("/reservation");
+  };
 
   return (
     <ModalContainer>
@@ -56,6 +65,7 @@ const MatchModal = ({ match, onClose }) => {
           <ModalDetailLabel>Linesmen:</ModalDetailLabel>
           <ModalDetailValue>{match.linesmen.join(", ")}</ModalDetailValue>
         </ModalDetailItem>
+        <ReserveButton onClick={handleReserveSeat}>Reserve Seat</ReserveButton>
       </ModalContent>
     </ModalContainer>
   );
