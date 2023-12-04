@@ -1,11 +1,7 @@
 // Import react and hooks
-import React,{useState} from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Typography from '@mui/material/Typography';
+
 import { ThemeProvider } from "styled-components";
 
 // Import themes
@@ -23,13 +19,14 @@ import Admin from "Pages/Admin/Admin";
 import Profile from "Pages/Profile/Profile";
 import ErrorPage from "Pages/ErrorPage/ErrorPage";
 import MatchSchedule from "Layouts/MatchSchedule/MatchSchedule";
-import Drawer from "Layouts/Drawer/Drawer";
 
 // Protected Routes
 import RequireAuth from "Contexts/RequireAuth";
 import { AuthContextProvider } from "Contexts/Auth-Context";
 import Footer from "Layouts/Footer/Footer";
 import LeagueStandings from "Components/LeagueStandings/LeagueStandings";
+import Stadium from "Components/Stadium/Stadium";
+import PaymentForm from "Components/PaymentForm/PaymentForm";
 
 function App() {
   const [theme, setTheme] = useLocalStorage(
@@ -57,31 +54,11 @@ function App() {
       );
     }
   };
-  
-  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const toggleDrawer = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-    setDrawerOpen(open);
-  };
   return (
     <ThemeProvider theme={JSON.parse(theme)}>
       <AuthContextProvider>
         <Router>
-        {/* <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" style={{ flexGrow: 1 }}>
-            My App
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
-
-      {/* <Drawer isOpen={drawerOpen} toggleDrawer={toggleDrawer} /> */}
           <Navigation toggleColorMode={handleToggleTheme} />
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -96,6 +73,9 @@ function App() {
               }
             />
             <Route path="/matches" element={<MatchSchedule />} />
+            <Route path="/stadium" element={<Stadium rows={10} cols={15} />} />
+            <Route path="/reservation/:id" element={<PaymentForm />} />
+
             <Route path="/standings" element={<LeagueStandings />} />
             <Route
               path="/tickets"
