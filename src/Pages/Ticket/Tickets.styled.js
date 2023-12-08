@@ -5,6 +5,7 @@ export const TicketsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-bottom: 120px;
 `;
 
 export const TicketCard = styled.div`

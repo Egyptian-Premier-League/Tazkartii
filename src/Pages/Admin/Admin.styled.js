@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const AdminContainer = styled.div`
   padding: 20px;
   background-color: #f0f2f5;
+  margin-bottom: 120px;
 `;
 
 export const Heading = styled.h1`

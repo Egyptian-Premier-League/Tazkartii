@@ -58,7 +58,7 @@ const Drawer = () => {
               <MenuItem onClick={handleMatchCreate}>Create Match</MenuItem>
             </>
           )}
-          <MenuItem>About</MenuItem>
+          <MenuItem onClick={() => navigate("/about")}>About</MenuItem>
           {!auth.isLoggedIn && (
             <>
               {" "}

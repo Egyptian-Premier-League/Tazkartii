@@ -2,24 +2,43 @@ import styled from "styled-components";
 
 export const ProfileContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
   max-width: 90%;
   margin: auto;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   background: #fff;
+  margin-bottom: 120px;
+  margin-top: 30px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 export const PhotoContainer = styled.div`
-  flex: 1; 
+  width: 100%;
+  display: flex;
+  justify-content: center;
   padding: 10px;
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+    flex: 1;
+  }
 `;
 export const InfoContainer = styled.div`
-  flex: 2; 
+  width: 100%;
   padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media (min-width: 768px) {
+    flex: 2;
+  }
 `;
 
 export const PersonalInfoSection = styled.section`
@@ -35,9 +54,8 @@ export const ProfileInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   &:hover &:focus-visible {
-  border-color: #007bff;
+    border-color: #007bff;
   }
-  
 `;
 
 export const ProfileImage = styled.img`
@@ -84,6 +102,10 @@ export const FieldRow = styled.div`
   justify-content: space-between;
   gap: 20px;
   margin-bottom: 20px;
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 
 export const EditButton = styled.button`
@@ -104,6 +126,53 @@ export const EditButton = styled.button`
 
 export const EditButtonContainer = styled.div`
   display: flex;
-  justify-content: ${({isEditMode}) => isEditMode ? 'space-between' : 'flex-end'};
+  justify-content: ${({ isEditMode }) => (isEditMode ? "space-between" : "flex-end")};
   padding: 10px 0;
+`;
+
+export const StatusCardContainer = styled.div`
+  background-color: #fff;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+  @media (min-width: 768px) {
+    margin: 0;
+  }
+`;
+
+export const StatusTitle = styled.h2`
+  color: #333;
+  margin-top: 10px;
+`;
+
+export const StatusText = styled.p`
+  color: #666;
+  font-size: 1rem;
+`;
+
+export const StatusButton = styled.button`
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 1rem;
+  width: 100%; // Makes the button stretch to the full width of the card
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background-color: #367c39;
+  }
+`;
+
+export const StatusLogo = styled.img`
+  width: 50px; // Set a fixed width for the logo
+  height: auto; // Ensure the aspect ratio is maintained
+  margin-top: 20px; // Add some space above the logo
 `;

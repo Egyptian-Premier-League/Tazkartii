@@ -7,7 +7,7 @@ const ScheduleContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   background: ${({ theme }) => theme.background.primary};
-  
+  margin-bottom: 120px;
 `;
 const Title = styled.h1`
   color: #d32f21;
@@ -16,4 +16,4 @@ const Title = styled.h1`
   margin-bottom: 20px;
 `;
 
-export { ScheduleContainer ,Title};
+export { ScheduleContainer, Title };

@@ -1,29 +1,33 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 
 import Ball from "Assets/Images/ball.ico";
 import {
   ProfileContainer,
-  PhotoContainer,
   InfoContainer,
   PersonalInfoSection,
   AccountInfoSection,
   ProfileHeading,
   ProfileField,
   ProfileInput,
-  ProfileImage,
   FieldRow,
   FieldContainer,
   EditButtonContainer,
+  StatusCardContainer,
+  StatusTitle,
+  StatusText,
+  StatusButton,
+  StatusLogo,
 } from "./Profile.styled";
 
-import MediaProfile from "Components/MediaProfile/MediaProfile";
 import ConfirmModal from "Components/ConfirmModal/ConfirmModal";
 
 const Profile = ({ userId }) => {
+  const navigate = useNavigate();
+
   //* States for user data
   const [user, setUser] = useState(null);
-  const [imageUrl, setImageUrl] = useState(Ball);
   const [isEditMode, setIsEditMode] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
@@ -89,16 +93,27 @@ const Profile = ({ userId }) => {
     });
   };
 
+  const handleFanForm = () => {
+    navigate("/fan-form");
+  };
+
   if (!user) {
     return <ProfileContainer>Loading...</ProfileContainer>;
   }
 
+  const FanId = () => {
+    return (
+      <StatusCardContainer>
+        <StatusLogo src={Ball} alt="Tazkarti Logo" />
+        <StatusTitle>Non-Sports Account</StatusTitle>
+        <StatusText>You are not eligible for Tazkarti ID card. To be able to have one, you need to have a sports account.</StatusText>
+        <StatusButton onClick={handleFanForm}>I want to get Tazkarti Sports ID</StatusButton>
+      </StatusCardContainer>
+    );
+  };
   return (
     <ProfileContainer>
-      <PhotoContainer>
-        <MediaProfile imageUrl={imageUrl} setImageUrl={setImageUrl} />
-        {imageUrl && <ProfileImage src={imageUrl} alt="Profile" />}
-      </PhotoContainer>
+      <FanId />
       <InfoContainer>
         <PersonalInfoSection>
           <EditButtonContainer isEditMode={isEditMode}>
@@ -126,32 +141,17 @@ const Profile = ({ userId }) => {
             </FieldContainer>
             <FieldContainer>
               <ProfileField>Phone Number</ProfileField>
-              <ProfileInput
-                type="tel"
-                value={phoneNumber}
-                readOnly={!isEditMode}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-              />
+              <ProfileInput type="tel" value={phoneNumber} readOnly={!isEditMode} onChange={(e) => setPhoneNumber(e.target.value)} />
             </FieldContainer>
           </FieldRow>
           <FieldRow>
             <FieldContainer>
               <ProfileField>First Name</ProfileField>
-              <ProfileInput
-                type="text"
-                value={firstName}
-                readOnly={!isEditMode}
-                onChange={(e) => setFirstName(e.target.value)}
-              />
+              <ProfileInput type="text" value={firstName} readOnly={!isEditMode} onChange={(e) => setFirstName(e.target.value)} />
             </FieldContainer>
             <FieldContainer>
               <ProfileField>Last Name</ProfileField>
-              <ProfileInput
-                type="text"
-                value={lastName}
-                readOnly={!isEditMode}
-                onChange={(e) => setLastName(e.target.value)}
-              />
+              <ProfileInput type="text" value={lastName} readOnly={!isEditMode} onChange={(e) => setLastName(e.target.value)} />
             </FieldContainer>
           </FieldRow>
         </PersonalInfoSection>
@@ -165,12 +165,7 @@ const Profile = ({ userId }) => {
             </FieldContainer>
             <FieldContainer>
               <ProfileField>Address</ProfileField>
-              <ProfileInput
-                type="text"
-                value={address}
-                readOnly={!isEditMode}
-                onChange={(e) => setAddress(e.target.value)}
-              />
+              <ProfileInput type="text" value={address} readOnly={!isEditMode} onChange={(e) => setAddress(e.target.value)} />
             </FieldContainer>
           </FieldRow>
           <FieldRow>
@@ -198,30 +193,16 @@ const Profile = ({ userId }) => {
           <FieldRow>
             <FieldContainer>
               <ProfileField>City</ProfileField>
-              <ProfileInput
-                type="text"
-                value={city}
-                readOnly={!isEditMode}
-                onChange={(e) => setCity(e.target.value)}
-              />
+              <ProfileInput type="text" value={city} readOnly={!isEditMode} onChange={(e) => setCity(e.target.value)} />
             </FieldContainer>
             <FieldContainer>
               <ProfileField>Language</ProfileField>
-              <ProfileInput
-                type="text"
-                value={language}
-                readOnly={!isEditMode}
-                onChange={(e) => setLanguage(e.target.value)}
-              />
+              <ProfileInput type="text" value={language} readOnly={!isEditMode} onChange={(e) => setLanguage(e.target.value)} />
             </FieldContainer>
           </FieldRow>
         </AccountInfoSection>
       </InfoContainer>
-      <ConfirmModal
-        open={showConfirmModal}
-        handleClose={() => setShowConfirmModal(false)}
-        handleConfirm={handleConfirmSave}
-      />
+      <ConfirmModal open={showConfirmModal} handleClose={() => setShowConfirmModal(false)} handleConfirm={handleConfirmSave} />
     </ProfileContainer>
   );
 };

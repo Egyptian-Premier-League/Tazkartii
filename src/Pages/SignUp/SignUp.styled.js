@@ -25,6 +25,7 @@ export const SignUpContainer = styled(Container)`
   background-color: ${({ theme }) => theme.background.primary};
   border-radius: 10px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  margin-bottom: 120px;
 `;
 export const BoxContainer = styled(Box)`
   display: flex;

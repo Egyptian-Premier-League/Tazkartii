@@ -9,6 +9,7 @@ const StandingsContainer = styled.div`
   max-width: 1000px;
   width: 100%;
   margin: auto;
+  margin-bottom: 120px;
   @media (max-width: 768px) {
     padding: 10px;
   }
