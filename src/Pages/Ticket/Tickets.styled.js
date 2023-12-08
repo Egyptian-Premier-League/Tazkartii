@@ -61,3 +61,25 @@ export const StatusIndicator = styled.span`
   color: ${({ $status }) => ($status === "reserved" ? "#2e7d32" : "#d32f2f")};
   font-size: 0.8rem;
 `;
+
+export const CancelButton = styled.button`
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: 1px solid #f44336;
+  background-color: transparent;
+  color: #f44336;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: #f44336;
+    color: white;
+  }
+
+  &:disabled {
+    border-color: #ccc;
+    color: #ccc;
+    cursor: not-allowed;
+  }
+`;

@@ -28,6 +28,9 @@ import LeagueStandings from "Components/LeagueStandings/LeagueStandings";
 import Stadium from "Components/Stadium/Stadium";
 import PaymentForm from "Components/PaymentForm/PaymentForm";
 import Tickets from "Pages/Ticket/Tickets";
+import MatchEventForm from "Components/MatchEventForm/MatchEventForm";
+import AddStadiumForm from "Components/AddStadiumForm/AddStadiumForm";
+import Drawer from "Layouts/Drawer/Drawer";
 
 function App() {
   const [theme, setTheme] = useLocalStorage(
@@ -55,12 +58,14 @@ function App() {
       );
     }
   };
+ 
 
   return (
     <ThemeProvider theme={JSON.parse(theme)}>
       <AuthContextProvider>
         <Router>
           <Navigation toggleColorMode={handleToggleTheme} />
+          <Drawer  />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<SignUp />} />
@@ -110,6 +115,8 @@ function App() {
                 </RequireAuth>
               }
             />
+            <Route path="/add-match" element={<MatchEventForm />} />
+            <Route path="/add-stadium" element={<AddStadiumForm />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </Router>

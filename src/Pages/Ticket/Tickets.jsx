@@ -1,5 +1,5 @@
-import React from "react";
-import { TicketsContainer, TicketCard, TeamLogo, Details, TicketInfo, MatchDetails, StatusIndicator } from "./Tickets.styled";
+import React, { useState } from "react";
+import { TicketsContainer, TicketCard, TeamLogo, Details, TicketInfo, MatchDetails, CancelButton, StatusIndicator } from "./Tickets.styled";
 
 import ahlyLogo from "Assets/Images/ahly.png";
 import zamalekLogo from "Assets/Images/zamalek.png";
@@ -16,7 +16,7 @@ const mockTickets = [
     match: "Match 1",
     teams: "Ahly vs Zamalek",
     location: "Stadium A",
-    date: "2023-05-15",
+    date: "2023-12-25",
     status: "reserved",
     seat: "A1",
     price: "$30",
@@ -62,6 +62,29 @@ const mockTickets = [
 ];
 
 const Tickets = ({ tickets = mockTickets }) => {
+  const [allTickets, setAllTickets] = useState(tickets);
+
+  const cancelReservation = (ticketId) => {
+    const updatedTickets = allTickets.map((ticket) => {
+      if (ticket.id === ticketId) {
+        const currentDate = new Date();
+        const eventDate = new Date(ticket.date);
+        const differenceInTime = eventDate.getTime() - currentDate.getTime();
+        const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+
+        if (differenceInDays >= 3) {
+          alert("Your reservation has been canceled successfully.");
+          return { ...ticket, status: "canceled" };
+        } else {
+          alert("Cancellation is only allowed up to 3 days before the event.");
+        }
+      }
+      return ticket;
+    });
+
+    setAllTickets(updatedTickets);
+  };
+
   return (
     <TicketsContainer>
       {tickets.map((ticket) => (
@@ -86,6 +109,7 @@ const Tickets = ({ tickets = mockTickets }) => {
               <strong>Price:</strong> {ticket.price}
             </TicketInfo>
           </Details>
+          {ticket.status === "reserved" && <CancelButton onClick={() => cancelReservation(ticket.id)}>Cancel Reservation</CancelButton>}
           <StatusIndicator $status={ticket.status}>{ticket.status}</StatusIndicator>
         </TicketCard>
       ))}
