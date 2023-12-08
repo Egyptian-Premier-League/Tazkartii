@@ -22,6 +22,16 @@ export const NavHeader = styled.nav`
   display: flex;
   gap: 1rem;
   font-size: 1.2rem;
+  @media screen and (max-width: 768px) {
+    display: ${({ $isNavOpen }) => ($isNavOpen ? "flex" : "none")};
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 4rem;
+    left: 0;
+    background-color: #282c34;
+    padding: 1rem;
+  }
 `;
 
 export const NavLinkHeader = styled.a`
@@ -38,4 +48,30 @@ export const NavLinkHeader = styled.a`
 export const AuthLinks = styled.div`
   display: flex;
   gap: 1rem;
+  z-index: 9999;
+  @media screen and (max-width: 768px) {
+    display: ${({ $isNavOpen }) => ($isNavOpen ? "flex" : "none")};
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: ${({ isNavOpen }) => (isNavOpen ? "calc(4rem + 1rem)" : "4rem")};
+    left: 0;
+    background-color: #282c34;
+    padding: 1rem;
+  }
+`;
+
+export const MobileIcon = styled.div`
+  display: none;
+  color: white;
+
+  @media screen and (max-width: 768px) {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-100%, 60%);
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
 `;

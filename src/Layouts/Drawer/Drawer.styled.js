@@ -4,7 +4,7 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 export const SidebarContainer = styled.div`
   position: fixed;
   top: 0;
-  left: ${({ isOpen }) => (isOpen ? "0" : "-250px")};
+  left: ${({ $isOpen }) => ($isOpen ? "0" : "-250px")};
   width: 250px;
   height: 100%;
   background-color: #282c34;
@@ -34,7 +34,7 @@ export const MenuItem = styled.li`
 export const DrawerButton = styled.button`
   position: absolute;
   top: 20px;
-  right: ${({ isOpen }) => (isOpen ? "-40px" : "-25px")};
+  right: ${({ $isOpen }) => ($isOpen ? "-40px" : "-25px")};
   width: 35px;
   height: 35px;
   background-color: #282c34;
@@ -50,7 +50,7 @@ export const DrawerButton = styled.button`
 `;
 
 export const Overlay = styled.div`
-  display: ${({ isOpen }) => (isOpen ? "block" : "none")};
+  display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
   position: fixed;
   top: 0;
   left: 0;
