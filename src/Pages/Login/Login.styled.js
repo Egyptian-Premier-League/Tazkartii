@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 const ContainerLogin = styled(Container)`
   /* background-color: ${({ theme }) => theme.background.primary}; */
   border-radius: 10px;
+  border-color: ${({ theme }) => theme.borderColor.primary};
   margin: auto;
   display: flex;
   flex-direction: column;

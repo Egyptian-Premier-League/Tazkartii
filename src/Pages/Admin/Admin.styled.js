@@ -14,6 +14,33 @@ export const Table = styled.table`
   width: 100%;
   margin-top: 20px;
   border-collapse: collapse;
+
+  @media (max-width: 768px) {
+    border: 0;
+    thead {
+      display: none;
+    }
+    tr {
+      margin-bottom: 10px;
+      display: block;
+      border-bottom: 2px solid #ddd;
+    }
+    td {
+      display: block;
+      align-items: center;
+      position: relative;
+      &:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+      }
+    }
+  }
 `;
 
 export const Th = styled.th`
@@ -40,12 +67,15 @@ export const UserRow = styled.tr`
 export const Button = styled.button`
   padding: 5px 10px;
   margin-right: 5px;
-  color: ${({ $flag }) => ($flag==="true" ? "green" : "red")};
+  color: ${({ $flag }) => ($flag === "true" ? "green" : "red")};
   border: none;
   border-radius: 4px;
   cursor: pointer;
   &:hover {
     background-color: #ddd;
+  }
+  @media (max-width: 768px) {
+    align-items: center;
   }
 `;
 
@@ -53,15 +83,15 @@ export const Section = styled.section`
   margin-bottom: 40px;
 `;
 
-
-
-
 export const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
   margin-bottom: 20px;
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
 `;
 
 export const PaginationButton = styled.button`
@@ -86,10 +116,8 @@ export const PaginationButton = styled.button`
     cursor: not-allowed;
   }
 
-  // Add media queries if you need responsiveness
   @media (max-width: 768px) {
     padding: 8px 12px;
+    margin: 5px;
   }
 `;
-
-

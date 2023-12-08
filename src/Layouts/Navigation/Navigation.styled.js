@@ -31,6 +31,7 @@ export const NavHeader = styled.nav`
     left: 0;
     background-color: #282c34;
     padding: 1rem;
+    z-index: 99;
   }
 `;
 

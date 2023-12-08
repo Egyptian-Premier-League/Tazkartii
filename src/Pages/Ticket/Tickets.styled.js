@@ -21,6 +21,12 @@ export const TicketCard = styled.div`
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    text-align: center;
+  }
 `;
 
 export const TeamLogo = styled.img`
@@ -34,8 +40,11 @@ export const Details = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
-`;
 
+  @media screen and (max-width: 768px) {
+    order: 3;
+  }
+`;
 export const TicketInfo = styled.p`
   color: #333;
   margin: 0;
@@ -52,6 +61,12 @@ export const MatchDetails = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export const StatusIndicator = styled.span`
@@ -60,6 +75,9 @@ export const StatusIndicator = styled.span`
   background-color: ${({ $status }) => ($status === "reserved" ? "#e8f5e9" : "#ffebee")};
   color: ${({ $status }) => ($status === "reserved" ? "#2e7d32" : "#d32f2f")};
   font-size: 0.8rem;
+  @media screen and (max-width: 768px) {
+    order: 2;
+  }
 `;
 
 export const CancelButton = styled.button`
@@ -81,5 +99,9 @@ export const CancelButton = styled.button`
     border-color: #ccc;
     color: #ccc;
     cursor: not-allowed;
+  }
+  @media screen and (max-width: 768px) {
+    order: 1;
+    width: 100%;
   }
 `;
