@@ -10,14 +10,14 @@ const Header = () => {
   return (
     <Container>
       <NavHeader>
-        <NavLinkHeader href="/">Home</NavLinkHeader>
-        <NavLinkHeader href="/matches">Matches</NavLinkHeader>
-        <NavLinkHeader href="/standings">Standings</NavLinkHeader>
-        <NavLinkHeader href="/tickets">Tickets</NavLinkHeader>
+        <NavLinkHeader to="/">Home</NavLinkHeader>
+        <NavLinkHeader to="/matches">Matches</NavLinkHeader>
+        <NavLinkHeader to="/standings">Standings</NavLinkHeader>
+        <NavLinkHeader to="/tickets">Tickets</NavLinkHeader>
       </NavHeader>
       <AuthLinks>
-        <NavLinkHeader href="/login">Login</NavLinkHeader>
-        <NavLinkHeader href="/signup">Signup</NavLinkHeader>
+        <NavLinkHeader to="/login">Login</NavLinkHeader>
+        <NavLinkHeader to="/signup">Signup</NavLinkHeader>
       </AuthLinks>
     </Container>
   );

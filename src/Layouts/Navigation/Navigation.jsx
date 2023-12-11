@@ -20,23 +20,23 @@ const Navigation = ({ toggleColorMode }) => {
         <MdMenu size="24" />
       </MobileIcon>
       <NavHeader $isNavOpen={isNavOpen}>
-        <NavLinkHeader href="/">Home</NavLinkHeader>
-        {auth.isLoggedIn && auth.role === "Admin" && <NavLinkHeader href="/admin">Dashboard</NavLinkHeader>}
-        <NavLinkHeader href="/matches">Matches</NavLinkHeader>
-        <NavLinkHeader href="/standings">Standings</NavLinkHeader>
-        <NavLinkHeader href="/Tickets">Tickets</NavLinkHeader>
+        <NavLinkHeader to="/">Home</NavLinkHeader>
+        {auth.isLoggedIn && auth.role === "Admin" && <NavLinkHeader to="/admin">Dashboard</NavLinkHeader>}
+        <NavLinkHeader to="/matches">Matches</NavLinkHeader>
+        <NavLinkHeader to="/standings">Standings</NavLinkHeader>
+        {auth.role !== "Admin" && <NavLinkHeader to="/tickets">Tickets</NavLinkHeader>}
       </NavHeader>
       <AuthLinks $isNavOpen={isNavOpen}>
         {!auth.isLoggedIn && (
           <>
-            <NavLinkHeader href="/login">Login</NavLinkHeader>
-            <NavLinkHeader href="/signup">Signup</NavLinkHeader>
+            <NavLinkHeader to="/login">Login</NavLinkHeader>
+            <NavLinkHeader to="/signup">Signup</NavLinkHeader>
           </>
         )}
         {auth.isLoggedIn && (
           <>
-            <NavLinkHeader href="/profile">My Profile</NavLinkHeader>
-            <NavLinkHeader href="/login" onClick={auth.logoutUser}>
+            <NavLinkHeader to="/profile">My Profile</NavLinkHeader>
+            <NavLinkHeader to="/login" onClick={auth.logoutUser}>
               Logout
             </NavLinkHeader>
           </>

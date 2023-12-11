@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Container = styled.header`
   display: flex;
@@ -16,7 +17,7 @@ export const NavHeader = styled.nav`
   font-size: 1.2rem;
 `;
 
-export const NavLinkHeader = styled.a`
+export const NavLinkHeader = styled(Link)`
   color: ${({ theme }) => theme.color.primary};
   text-decoration: none;
   padding: 0.5rem 1rem;

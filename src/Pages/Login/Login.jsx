@@ -65,7 +65,7 @@ const SignIn = () => {
       setErrorMessage("Username is not valid. Only alphanumeric and underscores are allowed.");
       return false;
     }
-    if (isPasswordValid) {
+    if (!isPasswordValid) {
       setErrorMessage(
         "Password is not valid. It must contain at least 8 characters, including one letter, one number, and one special character."
       );
