@@ -24,8 +24,8 @@ const Admin = () => {
 
   // effect to fetch data from the backend
   useEffect(() => {
-    getUsers(dataFetchPendingUsersData, auth, currentPagePending, false, "Manager");
-    getUsers(dataFetchApprovedUsersData, auth, currentPageApproved, true, "Manager");
+    getUsers(dataFetchPendingUsersData, auth, currentPagePending, false, "All");
+    getUsers(dataFetchApprovedUsersData, auth, currentPageApproved, true, "All");
   }, [currentPagePending, currentPageApproved]);
 
   // effect to set the users
@@ -43,8 +43,8 @@ const Admin = () => {
   useEffect(() => {
     if (errorOfApprove) setErrorMessages(errorOfApprove);
     else if (responseOfApprove && responseOfApprove.message) {
-      getUsers(dataFetchPendingUsersData, auth, currentPagePending, false, "Manager");
-      getUsers(dataFetchApprovedUsersData, auth, currentPageApproved, true, "Manager");
+      getUsers(dataFetchPendingUsersData, auth, currentPagePending, false, "All");
+      getUsers(dataFetchApprovedUsersData, auth, currentPageApproved, true, "All");
       alert(responseOfApprove.message, "success");
     }
   }, [responseOfApprove, errorOfApprove]);
@@ -84,6 +84,7 @@ const Admin = () => {
               <Th>Username</Th>
               <Th>Name</Th>
               <Th>Email</Th>
+              <Th>Role</Th>
               <Th>Actions</Th>
             </UserRow>
           </thead>
@@ -95,6 +96,7 @@ const Admin = () => {
                   <Td>{user.username}</Td>
                   <Td>{`${user.firstName} ${user.lastName}`}</Td>
                   <Td>{user.email}</Td>
+                  <Td>{user.role}</Td>
                   <Td>
                     <Button onClick={() => handleRemoveUser(user.id)}>Remove</Button>
                   </Td>
@@ -119,6 +121,7 @@ const Admin = () => {
               <Th>Username</Th>
               <Th>Name</Th>
               <Th>Email</Th>
+              <Th>Role</Th>
               <Th>Actions</Th>
             </UserRow>
           </thead>
@@ -130,6 +133,7 @@ const Admin = () => {
                   <Td>{user.username}</Td>
                   <Td>{`${user.firstName} ${user.lastName}`}</Td>
                   <Td>{user.email}</Td>
+                  <Td>{user.role}</Td>
                   <Td>
                     <Button $flag={"true"} onClick={(e) => handleApproveUser(e, user.id)}>
                       Approve

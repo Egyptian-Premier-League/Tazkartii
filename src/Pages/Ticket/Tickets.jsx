@@ -59,18 +59,6 @@ const mockTickets = [
     location: "Stadium D",
     teams: "Ceramica Cleopatra vs Al Esmaily",
   },
-  {
-    id: 5,
-    match: "Match 4",
-    date: "2023-08-30",
-    status: "canceled",
-    seat: "D4",
-    price: "$25",
-    logoTeamOne: ceramica,
-    logoTeamTwo: esmailyLogo,
-    location: "Stadium D",
-    teams: "Ceramica Cleopatra vs Al Esmaily",
-  },
 ];
 
 const Tickets = ({ tickets = mockTickets }) => {
