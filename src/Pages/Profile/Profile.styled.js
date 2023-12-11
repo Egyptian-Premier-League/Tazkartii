@@ -126,18 +126,18 @@ export const EditButton = styled.button`
 
 export const EditButtonContainer = styled.div`
   display: flex;
-  justify-content: ${({ isEditMode }) => (isEditMode ? "space-between" : "flex-end")};
+  justify-content: ${({ $isEditMode }) => ($isEditMode ? "space-between" : "flex-end")};
   padding: 10px 0;
 `;
 
 export const StatusCardContainer = styled.div`
-  background-color: #fff;
+  background-color: #eee;
   padding: 20px;
   text-align: center;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   width: 100%;
-  max-width: 300px;
+  max-width: 500px;
   margin: auto;
   @media (min-width: 768px) {
     margin: 0;

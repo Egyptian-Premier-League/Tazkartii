@@ -116,7 +116,7 @@ const Profile = ({ userId }) => {
       <FanId />
       <InfoContainer>
         <PersonalInfoSection>
-          <EditButtonContainer isEditMode={isEditMode}>
+          <EditButtonContainer $isEditMode={isEditMode}>
             {isEditMode ? (
               <>
                 <Button variant="contained" onClick={handleSave}>
