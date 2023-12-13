@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "Contexts/Auth-Context";
 
 import {
   ModalContainer,
@@ -21,6 +22,7 @@ import {
 
 const MatchModal = ({ match, onClose }) => {
   const navigate = useNavigate();
+  const auth = useAuth();
 
   if (!match) return null;
 
@@ -65,7 +67,7 @@ const MatchModal = ({ match, onClose }) => {
           <ModalDetailLabel>Linesmen:</ModalDetailLabel>
           <ModalDetailValue>{match.linesmen.join(", ")}</ModalDetailValue>
         </ModalDetailItem>
-        <ReserveButton onClick={handleReserveSeat}>Reserve Seat</ReserveButton>
+        {auth.role !== "Admin" && <ReserveButton onClick={handleReserveSeat}>Reserve Seat</ReserveButton>}
       </ModalContent>
     </ModalContainer>
   );

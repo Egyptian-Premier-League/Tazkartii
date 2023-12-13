@@ -35,8 +35,8 @@ const Navigation = ({ toggleColorMode }) => {
         )}
         {auth.isLoggedIn && (
           <>
-            <NavLinkHeader to="/profile">My Profile</NavLinkHeader>
-            <NavLinkHeader to="/login" onClick={auth.logoutUser}>
+{          auth.role !== "Admin" &&   <NavLinkHeader to="/profile">My Profile</NavLinkHeader>
+}            <NavLinkHeader to="/login" onClick={auth.logoutUser}>
               Logout
             </NavLinkHeader>
           </>

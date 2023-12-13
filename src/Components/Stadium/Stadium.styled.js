@@ -1,6 +1,6 @@
-import styled, { css } from "styled-components";
-import stadiumImage from "Assets/Images/stadium.png";
-import stadiumImage2 from "Assets/Images/ground.jpg";
+import styled from "styled-components";
+import greenGround from "Assets/Images/ground.jpg";
+
 export const StadiumContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -19,7 +19,7 @@ export const Row = styled.div`
   margin: 5px 0;
 `;
 export const Ground = styled.div`
-  background-image: url(${stadiumImage2});
+  background-image: url(${greenGround});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

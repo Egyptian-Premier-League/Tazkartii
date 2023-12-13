@@ -182,6 +182,8 @@ export const RoleBadge = styled.span`
   background-color: ${({ $role }) => ($role === "Manager" ? "#4caf50" : "#007bff")};
   color: white;
   max-width: 60px;
+  font-size: 0.9rem;
+  font-weight: bold;
   text-align: center;
   align-items: center;
   padding: 5px 10px;

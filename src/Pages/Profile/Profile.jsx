@@ -60,7 +60,7 @@ const Profile = ({ userId }) => {
 
   useEffect(() => {
     getProfie(dataFetch, auth);
-  }, []);
+  }, [auth, dataFetch]);
 
   useEffect(() => {
     if (error) return;
