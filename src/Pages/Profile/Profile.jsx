@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "Contexts/Auth-Context";
 import Button from "@mui/material/Button";
 import ConfirmModal from "Components/ConfirmModal/ConfirmModal";
-import getProfie from "Services/Users/Profile";
+import getProfie, { editProfile } from "Services/Users/Profile";
+import changePassword from "Services/Users/ChangePassword";
 import useFetchFunction from "Hooks/useFetchFunction";
 import Progress from "Components/Progress/Progress";
 
@@ -31,6 +32,8 @@ const Profile = ({ userId }) => {
   const navigate = useNavigate();
   const auth = useAuth();
   const [profileData, error, isLoading, dataFetch] = useFetchFunction();
+  const [editProfileData, errorEditProfile, isLoadingEditProfile, dataFetchEditProfile] = useFetchFunction();
+  const [changePasswordData, errorChangePassword, isLoadingChangePassword, dataFetchChangePassword] = useFetchFunction();
 
   //* States for user data
   const [user, setUser] = useState({
@@ -60,7 +63,7 @@ const Profile = ({ userId }) => {
 
   useEffect(() => {
     getProfie(dataFetch, auth);
-  }, [auth, dataFetch]);
+  }, []);
 
   useEffect(() => {
     if (error) return;
@@ -94,6 +97,15 @@ const Profile = ({ userId }) => {
   };
 
   const handleConfirmSave = () => {
+    editProfile(dataFetchEditProfile, auth, {
+      firstName: firstName,
+      lastName: lastName,
+      address: address,
+      language: language,
+      birthdate: profileData?.birthdate,
+      city: profileData?.city,
+      gender: profileData?.gender,
+    });
     setShowConfirmModal(false);
     setIsEditMode(false);
     console.log("Saving Data:", {
@@ -104,6 +116,24 @@ const Profile = ({ userId }) => {
       city,
       language,
     });
+  };
+
+  useEffect(() => {
+    if (errorEditProfile) return;
+    else if (editProfileData) {
+      // console.log("editProfileData", editProfileData);
+      getProfie(dataFetch, auth);
+    }
+  }, [errorEditProfile, editProfileData]);
+
+  const handlePasswordChange = () => {
+    if (password !== confirmPassword) {
+      alert("Passwords don't match");
+      return;
+    }
+    changePassword(dataFetchChangePassword, auth, password);
+    setPassword("");
+    setConfirmPassword("");
   };
 
   const handleFanForm = () => {

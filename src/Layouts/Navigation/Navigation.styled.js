@@ -38,6 +38,7 @@ export const NavHeader = styled.nav`
 
 export const NavLinkHeader = styled(Link)`
   color: ${({ theme }) => theme.color.primary};
+  font-size: 1.2rem;
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -51,7 +52,7 @@ export const AuthLinks = styled.div`
   display: flex;
   gap: 1rem;
   z-index: 9999;
-  @media screen and (max-width:  822px) {
+  @media screen and (max-width: 822px) {
     display: ${({ $isNavOpen }) => ($isNavOpen ? "flex" : "none")};
     flex-direction: column;
     width: 100%;
@@ -67,7 +68,7 @@ export const MobileIcon = styled.div`
   display: none;
   color: white;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 822px) {
     display: block;
     position: absolute;
     top: 0;

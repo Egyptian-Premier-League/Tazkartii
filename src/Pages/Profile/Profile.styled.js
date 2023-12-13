@@ -179,7 +179,7 @@ export const StatusLogo = styled.img`
 
 export const RoleBadge = styled.span`
   display: inline-block;
-  background-color: ${({ $role }) => ($role === "Manager" ? "#4caf50" : "#007bff")};
+  background-color: ${({ $role }) => ($role === "Fan" ? "#4caf50" : "#007bff")};
   color: white;
   max-width: 60px;
   font-size: 0.9rem;
