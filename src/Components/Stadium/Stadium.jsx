@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import Seat from "Components/Seat/Seat";
 import { useNavigate } from "react-router-dom";
-import { StadiumContainer, Row, StageArea, SeatContainer, Pitch, SeatSummary, ConfirmButton } from "./Stadium.styled";
+import { StadiumContainer, Row, StageArea, SeatContainer, Ground, SeatSummary, ConfirmButton } from "./Stadium.styled";
 
 const Stadium = ({ rows, cols, onSeatsConfirmed }) => {
   const navigate = useNavigate();
-  const [seats, setSeats] = useState(Array.from({ length: rows }, () => Array(cols).fill("vacant")));
+
+  const initialSeats = Array.from({ length: rows }, () =>
+    Array(cols)
+      .fill("vacant")
+      .map((seat, index) => (index % 3 === 0 ? "reserved" : seat))
+  );
+
+  const [seats, setSeats] = useState(initialSeats);
   const [selectedSeats, setSelectedSeats] = useState([]);
 
   const handleSeatClick = (row, col) => {
@@ -44,7 +51,7 @@ const Stadium = ({ rows, cols, onSeatsConfirmed }) => {
             ))}
           </Row>
         ))}
-        <Pitch>PITCH</Pitch>
+        <Ground />
       </SeatContainer>
       <SeatSummary>
         Selected Seats:{" "}

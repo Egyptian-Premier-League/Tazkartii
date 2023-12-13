@@ -1,5 +1,6 @@
-import styled from "styled-components";
-
+import styled, { css } from "styled-components";
+import stadiumImage from "Assets/Images/stadium.png";
+import stadiumImage2 from "Assets/Images/ground.jpg";
 export const StadiumContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -17,14 +18,18 @@ export const Row = styled.div`
   justify-content: center;
   margin: 5px 0;
 `;
-export const Pitch = styled.div`
-  grid-column: 2;
-  grid-row: 2 / span 1;
-  background-color: #006400;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  border-radius: 10px;
+export const Ground = styled.div`
+  background-image: url(${stadiumImage2});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 270px;
+  height: 200px;
+  z-index: 1;
 `;
 
 export const StageArea = styled.div`
@@ -40,6 +45,7 @@ export const SeatContainer = styled.div`
   border-radius: 15px;
   padding: 20px;
   box-shadow: 8px 0px 8px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
 `;
 
 export const SeatSummary = styled.div`

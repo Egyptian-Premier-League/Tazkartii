@@ -14,6 +14,14 @@ const reservedStyle = css`
   cursor: not-allowed;
 `;
 
+const selectedStyle = css`
+  background-color: #ffc107;
+  cursor: pointer;
+  &:hover {
+    background-color: lightyellow;
+  }
+`;
+
 export const StyledSeat = styled(MdChair)`
   width: 30px;
   height: 30px;
@@ -24,5 +32,16 @@ export const StyledSeat = styled(MdChair)`
   align-items: center;
   transition: background-color 0.3s ease;
 
-  ${({ $status }) => ($status === "vacant" ? vacantStyle : reservedStyle)}
+  ${({ $status }) => {
+    switch ($status) {
+      case "vacant":
+        return vacantStyle;
+      case "selected":
+        return selectedStyle;
+      case "reserved":
+        return reservedStyle;
+      default:
+        return null;
+    }
+  }}
 `;
