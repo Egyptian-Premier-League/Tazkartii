@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { MdChair } from "react-icons/md";
 
 const vacantStyle = css`
   background-color: green;
@@ -13,7 +14,7 @@ const reservedStyle = css`
   cursor: not-allowed;
 `;
 
-export const StyledSeat = styled.div`
+export const StyledSeat = styled(MdChair)`
   width: 30px;
   height: 30px;
   margin: 5px;

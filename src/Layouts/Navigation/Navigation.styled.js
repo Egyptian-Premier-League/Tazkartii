@@ -23,7 +23,7 @@ export const NavHeader = styled.nav`
   display: flex;
   gap: 1rem;
   font-size: 1.2rem;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 822px) {
     display: ${({ $isNavOpen }) => ($isNavOpen ? "flex" : "none")};
     flex-direction: column;
     width: 100%;
@@ -51,7 +51,7 @@ export const AuthLinks = styled.div`
   display: flex;
   gap: 1rem;
   z-index: 9999;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width:  822px) {
     display: ${({ $isNavOpen }) => ($isNavOpen ? "flex" : "none")};
     flex-direction: column;
     width: 100%;

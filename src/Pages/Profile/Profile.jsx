@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "Contexts/Auth-Context";
 import Button from "@mui/material/Button";
+import ConfirmModal from "Components/ConfirmModal/ConfirmModal";
+import getProfie from "Services/Users/Profile";
+import useFetchFunction from "Hooks/useFetchFunction";
+import Progress from "Components/Progress/Progress";
 
 import Ball from "Assets/Images/ball.ico";
 import {
@@ -19,62 +24,70 @@ import {
   StatusText,
   StatusButton,
   StatusLogo,
+  RoleBadge,
 } from "./Profile.styled";
-
-import ConfirmModal from "Components/ConfirmModal/ConfirmModal";
 
 const Profile = ({ userId }) => {
   const navigate = useNavigate();
+  const auth = useAuth();
+  const [profileData, error, isLoading, dataFetch] = useFetchFunction();
 
   //* States for user data
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    phoneNumber: "",
+    firstName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    language: "",
+  });
   const [isEditMode, setIsEditMode] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   //* States for editable fields
-  const [phoneNumber, setPhoneNumber] = useState("01146188908");
-  const [firstName, setFirstName] = useState("Ziad");
-  const [lastName, setLastName] = useState("Sherif");
-  const [address, setAddress] = useState("El Haram");
-  const [city, setCity] = useState("Giza");
-  const [language, setLanguage] = useState("Arabic");
+  const [phoneNumber, setPhoneNumber] = useState(profileData?.phoneNumber || "");
+  const [firstName, setFirstName] = useState(profileData?.firstName || "");
+  const [lastName, setLastName] = useState(profileData?.lastName || "");
+  const [address, setAddress] = useState(profileData?.address || "");
+  const [city, setCity] = useState(profileData?.city || "");
+  const [language, setLanguage] = useState(profileData?.language || "");
 
   //! Password and confirm password
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      const userData = await getUserDataById(userId);
-      setUser(userData);
-    };
+    getProfie(dataFetch, auth);
+  }, []);
 
-    fetchUserData();
-  }, [userId]);
-
-  const getUserDataById = async (id) => {
-    return {
-      id: id,
-      username: "zsherif",
-      firstName: "Ziad",
-      lastName: "Sherif",
-      phoneNumber: "01146188908",
-      email: "zsherif308@example.com",
-      city: "Giza",
-      address: "El Haram",
-      language: "English",
-      authority: true,
-    };
-  };
+  useEffect(() => {
+    if (error) return;
+    else if (profileData) {
+      setUser({
+        username: profileData.username || "",
+        email: profileData.email || "",
+        role: profileData.role || "",
+        phoneNumber: profileData.phoneNumber || "",
+        firstName: profileData?.firstName || "",
+        lastName: profileData.lastName || "",
+        address: profileData.address || "",
+        city: profileData.city || "",
+        language: profileData.language || "",
+      });
+      setPhoneNumber(profileData.phoneNumber || "");
+      setFirstName(profileData.firstName || "");
+      setLastName(profileData.lastName || "");
+      setAddress(profileData.address || "");
+      setCity(profileData.city || "");
+      setLanguage(profileData.language || "");
+    }
+  }, [error, profileData]);
 
   const handleCancel = () => {
-    setPhoneNumber(user.phoneNumber);
-    setFirstName(user.firstName);
-    setLastName(user.lastName);
-    setAddress(user.address);
-    setCity(user.city);
-    setLanguage(user.language);
     setIsEditMode(false);
+    getProfie(dataFetch, auth);
   };
   const handleSave = () => {
     setShowConfirmModal(true);
@@ -97,8 +110,12 @@ const Profile = ({ userId }) => {
     navigate("/fan-form");
   };
 
-  if (!user) {
-    return <ProfileContainer>Loading...</ProfileContainer>;
+  if (!user && !isLoading) {
+    return (
+      <ProfileContainer>
+        Loading... <Progress />
+      </ProfileContainer>
+    );
   }
 
   const FanId = () => {
@@ -116,6 +133,10 @@ const Profile = ({ userId }) => {
       <FanId />
       <InfoContainer>
         <PersonalInfoSection>
+          <FieldContainer>
+            <ProfileField>Role</ProfileField>
+            <RoleBadge $role={user.role}>{user.role || "User"}</RoleBadge>
+          </FieldContainer>
           <EditButtonContainer $isEditMode={isEditMode}>
             {isEditMode ? (
               <>

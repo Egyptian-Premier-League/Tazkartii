@@ -163,7 +163,7 @@ export const StatusButton = styled.button`
   cursor: pointer;
   margin-top: 20px;
   font-size: 1rem;
-  width: 100%; // Makes the button stretch to the full width of the card
+  width: 100%;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 
   &:hover {
@@ -172,7 +172,20 @@ export const StatusButton = styled.button`
 `;
 
 export const StatusLogo = styled.img`
-  width: 50px; // Set a fixed width for the logo
-  height: auto; // Ensure the aspect ratio is maintained
-  margin-top: 20px; // Add some space above the logo
+  width: 50px;
+  height: auto;
+  margin-top: 20px;
+`;
+
+export const RoleBadge = styled.span`
+  display: inline-block;
+  background-color: ${({ $role }) => ($role === "Manager" ? "#4caf50" : "#007bff")};
+  color: white;
+  max-width: 60px;
+  text-align: center;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  margin-top: 5px;
 `;

@@ -45,10 +45,10 @@ export const SeatContainer = styled.div`
 export const SeatSummary = styled.div`
   margin-top: 20px;
   padding: 15px;
-  background-color: #e3f2fd; // Light blue background for visual appeal
+  background-color: #e3f2fd;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color: #0d47a1; // Dark blue for contrast
+  color: #0d47a1;
   font-size: 1rem;
   font-weight: bold;
   display: flex;
@@ -58,7 +58,7 @@ export const SeatSummary = styled.div`
   align-items: center;
 
   span {
-    background-color: #ffffff; // White background for individual seat tags
+    background-color: #ffffff;
     border: 1px solid #0d47a1;
     border-radius: 5px;
     padding: 5px 10px;
