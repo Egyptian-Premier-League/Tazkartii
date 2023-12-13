@@ -3,6 +3,7 @@ import { Form, Input, Button, FormTitle } from "./AddStadiumForm.styled";
 import createStadium from "Services/General/CreateStadium";
 import useFetchFunction from "Hooks/useFetchFunction";
 import { useAuth } from "Contexts/Auth-Context";
+import Progress from "Components/Progress/Progress";
 
 const AddStadiumForm = () => {
   const auth = useAuth();
@@ -37,7 +38,9 @@ const AddStadiumForm = () => {
     else if (stadiumData && stadiumData.message) {
       alert(stadiumData.message, "success");
     }
-  }, [stadiumData]);
+  }, [error, stadiumData]);
+  
+  if (isLoading) return <Progress />;
 
   return (
     <Form>

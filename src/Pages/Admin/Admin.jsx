@@ -4,6 +4,7 @@ import getUsers from "Services/Admins/GetUsers";
 import approveUser from "Services/Admins/ApproveUser";
 import deleteUsers from "Services/Admins/DeleteUser";
 import { useAuth } from "Contexts/Auth-Context";
+import Progress from "Components/Progress/Progress";
 import { AdminContainer, Heading, Table, Th, Td, UserRow, Button, Section, PaginationButton, PaginationContainer } from "./Admin.styled";
 
 const Admin = () => {
@@ -59,15 +60,15 @@ const Admin = () => {
     setUsers([...approvedUsersData, ...pendingUsersData]);
   };
 
-useEffect(() => {
- if (errorOfDelete) setErrorMessages(errorOfDelete);
- else if (responseOfDelete && responseOfDelete.message) {
- console.log("responseOfDelete", responseOfDelete);
-   getUsers(dataFetchPendingUsersData, auth, currentPagePending, false, "All");
-   getUsers(dataFetchApprovedUsersData, auth, currentPageApproved, true, "All");
-   alert(responseOfDelete.message, "success");
- }
-}, [errorOfDelete, responseOfDelete]);
+  useEffect(() => {
+    if (errorOfDelete) setErrorMessages(errorOfDelete);
+    else if (responseOfDelete && responseOfDelete.message) {
+      console.log("responseOfDelete", responseOfDelete);
+      getUsers(dataFetchPendingUsersData, auth, currentPagePending, false, "All");
+      getUsers(dataFetchApprovedUsersData, auth, currentPageApproved, true, "All");
+      alert(responseOfDelete.message, "success");
+    }
+  }, [errorOfDelete, responseOfDelete]);
 
   // handler to remove the user
   const handleRemoveUser = (event, userId) => {
@@ -87,6 +88,12 @@ useEffect(() => {
   const goToNextPagePending = () => setCurrentPagePending((prev) => prev + 1);
   const goToPreviousPagePending = () => setCurrentPagePending((prev) => prev - 1);
 
+  if (isLoadingApprovedUsers || isLoadingPendingUsers)
+    return (
+      <AdminContainer>
+        <Progress />
+      </AdminContainer>
+    );
   return (
     <AdminContainer>
       <Heading>Admin Page</Heading>
@@ -112,7 +119,7 @@ useEffect(() => {
                   <Td>{user.email}</Td>
                   <Td>{user.role}</Td>
                   <Td>
-                    <Button onClick={(e) => handleRemoveUser(e,user.id)}>Remove</Button>
+                    <Button onClick={(e) => handleRemoveUser(e, user.id)}>Remove</Button>
                   </Td>
                 </UserRow>
               ))}
@@ -152,7 +159,7 @@ useEffect(() => {
                     <Button $flag={"true"} onClick={(e) => handleApproveUser(e, user.id)}>
                       Approve
                     </Button>
-                    <Button $flag={"false"} onClick={(e) => handleRemoveUser(e,user.id)}>
+                    <Button $flag={"false"} onClick={(e) => handleRemoveUser(e, user.id)}>
                       Remove
                     </Button>
                   </Td>
