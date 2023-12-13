@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import useFetchFunction from "Hooks/useFetchFunction";
 import getUsers from "Services/Admins/GetUsers";
 import approveUser from "Services/Admins/ApproveUser";
+import deleteUsers from "Services/Admins/DeleteUser";
 import { useAuth } from "Contexts/Auth-Context";
 import { AdminContainer, Heading, Table, Th, Td, UserRow, Button, Section, PaginationButton, PaginationContainer } from "./Admin.styled";
 
@@ -10,6 +11,7 @@ const Admin = () => {
   const [approvedUsersData, errorApprovedUsers, isLoadingApprovedUsers, dataFetchApprovedUsersData] = useFetchFunction();
   const [pendingUsersData, errorPendingUsers, isLoadingPendingUsers, dataFetchPendingUsersData] = useFetchFunction();
   const [responseOfApprove, errorOfApprove, isLoadingApprovement, dataFetchOfApprovement] = useFetchFunction();
+  const [responseOfDelete, errorOfDelete, isLoadingDelete, dataFetchOfDelete] = useFetchFunction();
 
   // use this snippet to get the user from the context
   const auth = useAuth();
@@ -57,8 +59,20 @@ const Admin = () => {
     setUsers([...approvedUsersData, ...pendingUsersData]);
   };
 
+useEffect(() => {
+ if (errorOfDelete) setErrorMessages(errorOfDelete);
+ else if (responseOfDelete && responseOfDelete.message) {
+ console.log("responseOfDelete", responseOfDelete);
+   getUsers(dataFetchPendingUsersData, auth, currentPagePending, false, "All");
+   getUsers(dataFetchApprovedUsersData, auth, currentPageApproved, true, "All");
+   alert(responseOfDelete.message, "success");
+ }
+}, [errorOfDelete, responseOfDelete]);
+
   // handler to remove the user
-  const handleRemoveUser = (userId) => {
+  const handleRemoveUser = (event, userId) => {
+    deleteUsers(dataFetchOfDelete, auth, userId);
+
     const updatedUsers = users.filter((user) => user.id !== userId);
     setUsers(updatedUsers);
   };
@@ -98,7 +112,7 @@ const Admin = () => {
                   <Td>{user.email}</Td>
                   <Td>{user.role}</Td>
                   <Td>
-                    <Button onClick={() => handleRemoveUser(user.id)}>Remove</Button>
+                    <Button onClick={(e) => handleRemoveUser(e,user.id)}>Remove</Button>
                   </Td>
                 </UserRow>
               ))}
@@ -138,7 +152,7 @@ const Admin = () => {
                     <Button $flag={"true"} onClick={(e) => handleApproveUser(e, user.id)}>
                       Approve
                     </Button>
-                    <Button $flag={"false"} onClick={() => handleRemoveUser(user.id)}>
+                    <Button $flag={"false"} onClick={(e) => handleRemoveUser(e,user.id)}>
                       Remove
                     </Button>
                   </Td>

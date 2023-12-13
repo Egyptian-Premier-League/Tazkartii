@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "Contexts/Auth-Context";
 import useFetchFunction from "Hooks/useFetchFunction";
 import signup from "Services/Authentication/Signup";
-import getCities from "Services/GetCities";
+import getCities from "Services/General/GetCities";
 import Progress from "Components/Progress/Progress";
 
 // stylesd components
