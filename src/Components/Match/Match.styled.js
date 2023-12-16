@@ -103,6 +103,46 @@ const LinesmanIcon = styled(FaFlagCheckered)`
   color: #2196f3;
 `;
 
+const EditButton = styled.button`
+  padding: 8px 16px;
+  margin: 5px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s, transform 0.2s;
+
+  &:hover {
+    background-color: #45a049;
+  }
+
+  &:active {
+    transform: translateY(2px);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.5);
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+`;
+const ViewMatchDetailsButton = styled.button`
+  padding: 8px 16px;
+  margin: 5px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s, transform 0.2s;
+`;
 export {
   MatchCard,
   MatchHeader,
@@ -120,4 +160,6 @@ export {
   VenueIcon,
   RefereeIcon,
   LinesmanIcon,
+  EditButton,
+  ViewMatchDetailsButton,
 };

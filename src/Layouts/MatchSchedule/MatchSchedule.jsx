@@ -1,64 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getMatches } from "Services/General/Match";
+import useFetchFunction from "Hooks/useFetchFunction";
 import Match from "Components/Match/Match";
 import MatchModal from "Components/MatchModal/MatchModal";
+import EditMatchModal from "Components/EditMatchModal/EditMatchModal";
+import { formatDateAndTime } from "Utils/FormatDate";
 import { ScheduleContainer, Title } from "./MatchSchedule.styled";
 
-const matchData = [
-  {
-    id: 1,
-    homeTeam: "Al Ahly",
-    awayTeam: "Zamalek",
-    venue: "Education City Stadium, Al Rayyan, Doha",
-    date: "Today",
-    time: "21:00",
-    mainReferee: "Fahem Omar",
-    linesmen: ["Linesman One", "Linesman Two"],
-  },
-  {
-    id: 2,
-    homeTeam: "Pyramids",
-    awayTeam: "Ceramica Cleopatra",
-    venue: "Cairo Stadium",
-    date: "Today",
-    time: "19:00",
-    mainReferee: "Referee Name",
-    linesmen: ["Linesman One", "Linesman Two"],
-  },
-  {
-    id: 3,
-    homeTeam: "Future FC",
-    awayTeam: "Al Esmaily",
-    venue: "Borg El Arab",
-    date: "Tomorrow",
-    time: "22:00",
-    mainReferee: "Samir Osman",
-    linesmen: ["Linesman One", "Linesman Two"],
-  },
-];
 const MatchSchedule = () => {
+  const [matchesData, error, isLoading, dataFetch] = useFetchFunction();
+  const [matches, setMatchesData] = useState([]);
+
+  useEffect(() => {
+    getMatches(dataFetch, 1);
+  }, []);
+
+  useEffect(() => {
+    if (error) return;
+    else if (matchesData && matchesData.length > 0) setMatchesData(matchesData);
+  }, [error, matchesData]);
+
   const [selectedMatch, setSelectedMatch] = useState(null);
+  const [editingMatch, setEditingMatch] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const handleCloseModal = () => {
     setSelectedMatch(null);
+    setEditingMatch(null);
+    setIsEditMode(false);
   };
 
   return (
     <ScheduleContainer>
       <Title>Football Schedule Fixtures</Title>
-      {matchData.map((match) => (
-        <Match
-          key={match.id}
-          homeTeam={match.homeTeam}
-          awayTeam={match.awayTeam}
-          venue={match.venue}
-          date={match.date}
-          time={match.time}
-          mainReferee={match.mainReferee}
-          linesmen={match.linesmen}
-          setSelectedMatch={setSelectedMatch}
-        />
-      ))}
+      {matchesData &&
+        matchesData.length !== 0 &&
+        matchesData.map((match) => (
+          <Match
+            key={match.id}
+            matchId={match.id}
+            homeTeamId={match.homeTeam.id}
+            awayTeamId={match.awayTeam.id}
+            homeTeam={match.homeTeam.name}
+            awayTeam={match.awayTeam.name}
+            logoOfHome={match.homeTeam.photoUrl}
+            logoOfAway={match.awayTeam.photoUrl}
+            venue={match.stadium.name}
+            date={formatDateAndTime(match.date)[0]}
+            time={formatDateAndTime(match.date)[1]}
+            mainReferee={match.mainReferee}
+            linesmen={[match.firstLineMan, match.secondLineMan]}
+            setSelectedMatch={setSelectedMatch}
+            setEditingMatch={setEditingMatch}
+            setIsEditMode={setIsEditMode}
+          />
+        ))}
       <MatchModal match={selectedMatch} onClose={handleCloseModal} />
+      <EditMatchModal match={editingMatch} onClose={handleCloseModal} isEditMode={isEditMode} />
     </ScheduleContainer>
   );
 };

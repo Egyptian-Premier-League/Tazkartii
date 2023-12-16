@@ -1,13 +1,6 @@
 import React from "react";
-
-import ahlyLogo from "Assets/Images/ahly.png";
-import zamalekLogo from "Assets/Images/zamalek.png";
-import wadiDeglaLogo from "Assets/Images/wadiDegla.png";
-import moqawloonLogo from "Assets/Images/mokawlon.png";
-import pyramidsLogo from "Assets/Images/pyramids.png";
-import ceramica from "Assets/Images/ceramica.png";
-import esmailyLogo from "Assets/Images/esmaily.png";
-import futureLogo from "Assets/Images/future.png";
+import { useAuth } from "Contexts/Auth-Context";
+import Progress from "Components/Progress/Progress";
 import leagueLogo from "Assets/Images/EPL.png";
 
 import {
@@ -27,27 +20,33 @@ import {
   VenueIcon,
   RefereeIcon,
   LinesmanIcon,
+  EditButton,
+  ViewMatchDetailsButton,
 } from "./Match.styled";
 
-const getTeamLogo = (teamName) => {
-  const logos = {
-    "Al Ahly": ahlyLogo,
-    Zamalek: zamalekLogo,
-    Pyramids: pyramidsLogo,
-    "Wadi Degla": wadiDeglaLogo,
-    "Ceramica Cleopatra": ceramica,
-    "Al Esmaily": esmailyLogo,
-    "Al Moqawloon Al Arab": moqawloonLogo,
-    "Future FC": futureLogo,
-  };
-  return logos[teamName];
-};
 const handleMatchClick = (match, setSelectedMatch) => {
   console.log("Match clicked:", match);
   setSelectedMatch(match);
 };
 
-const Match = ({ homeTeam, awayTeam, venue, date, time, mainReferee, linesmen, setSelectedMatch }) => {
+const Match = ({
+  homeTeamId,
+  awayTeamId,
+  homeTeam,
+  awayTeam,
+  venue,
+  date,
+  time,
+  mainReferee,
+  linesmen,
+  setSelectedMatch,
+  setEditingMatch,
+  logoOfHome,
+  logoOfAway,
+  matchId,
+  setIsEditMode,
+}) => {
+  const auth = useAuth();
   const matchData = {
     homeTeam,
     awayTeam,
@@ -56,11 +55,17 @@ const Match = ({ homeTeam, awayTeam, venue, date, time, mainReferee, linesmen, s
     time,
     mainReferee,
     linesmen,
-    logoOfHome: getTeamLogo(homeTeam),
-    logoOfAway: getTeamLogo(awayTeam),
+    logoOfHome,
+    logoOfAway,
+    homeTeamId,
+    awayTeamId,
+    matchId,
   };
+  // if (matchData) console.log("matchData", matchData);
+
+  if (!matchData) return <Progress>...Loading</Progress>;
   return (
-    <MatchCard onClick={() => handleMatchClick(matchData, setSelectedMatch)}>
+    <MatchCard>
       <MatchHeader>
         <LeagueLogo src={leagueLogo} alt="Egyptian Premier League" />
         <span>Egyptian Premier League 2023</span>
@@ -70,12 +75,12 @@ const Match = ({ homeTeam, awayTeam, venue, date, time, mainReferee, linesmen, s
       </MatchHeader>
       <MatchTeams>
         <TeamContainer>
-          <TeamLogo src={getTeamLogo(homeTeam)} alt={homeTeam} />
+          <TeamLogo src={logoOfHome} alt={homeTeam} />
           <Team>{homeTeam}</Team>
         </TeamContainer>
         <Versus>vs</Versus>
         <TeamContainer>
-          <TeamLogo src={getTeamLogo(awayTeam)} alt={awayTeam} />
+          <TeamLogo src={logoOfAway} alt={awayTeam} />
           <Team>{awayTeam}</Team>
         </TeamContainer>
       </MatchTeams>
@@ -103,6 +108,17 @@ const Match = ({ homeTeam, awayTeam, venue, date, time, mainReferee, linesmen, s
           <DetailValue>{linesmen.join(", ")}</DetailValue>
         </DetailItem>
       </MatchDetails>
+      {auth.role === "Manager" && (
+        <EditButton
+          onClick={() => {
+            setEditingMatch(matchData);
+            setIsEditMode(true);
+          }}
+        >
+          Edit
+        </EditButton>
+      )}
+      <ViewMatchDetailsButton onClick={() => handleMatchClick(matchData, setSelectedMatch)}>View Details</ViewMatchDetailsButton>
     </MatchCard>
   );
 };

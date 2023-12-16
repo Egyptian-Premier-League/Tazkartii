@@ -67,7 +67,9 @@ const MatchModal = ({ match, onClose }) => {
           <ModalDetailLabel>Linesmen:</ModalDetailLabel>
           <ModalDetailValue>{match.linesmen.join(", ")}</ModalDetailValue>
         </ModalDetailItem>
-        {auth.role !== "Admin" && <ReserveButton onClick={handleReserveSeat}>Reserve Seat</ReserveButton>}
+        {auth.role !== "Admin" && (
+          <ReserveButton onClick={handleReserveSeat}>{auth.role === "Manager" ? "View Seats" : "Reserve Seat"}</ReserveButton>
+        )}
       </ModalContent>
     </ModalContainer>
   );
