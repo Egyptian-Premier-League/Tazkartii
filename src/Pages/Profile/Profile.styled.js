@@ -90,6 +90,8 @@ export const ProfileField = styled.span`
   justify-content: center;
   color: #555;
   margin-bottom: 5px;
+  font-size: 1rem;
+  font-weight: bold;
 `;
 
 export const ProfileValue = styled.span`
@@ -181,13 +183,12 @@ export const RoleBadge = styled.span`
   display: inline-block;
   background-color: ${({ $role }) => ($role === "Fan" ? "#4caf50" : "#007bff")};
   color: white;
-  max-width: 60px;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  max-width: 100px;
   font-weight: bold;
   text-align: center;
   align-items: center;
   padding: 5px 10px;
   border-radius: 15px;
-  font-size: 0.9rem;
   margin-top: 5px;
 `;

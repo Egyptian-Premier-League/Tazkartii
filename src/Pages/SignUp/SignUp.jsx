@@ -90,7 +90,7 @@ const SignUp = () => {
     if (error) {
       setErrorMessage("Username or Email are in use");
     } else if (userData && userData.accessToken) {
-      auth.loginUser(username, userData.role, userData.accessToken);
+      auth.loginUser(username, userData.role, userData.accessToken, userData.approved);
       navigate("/");
     }
   }, [userData, error, auth, navigate, username]);

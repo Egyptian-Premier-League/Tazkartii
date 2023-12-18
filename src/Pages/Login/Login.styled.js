@@ -37,7 +37,7 @@ const BackgroundContainer = styled.div`
   background-image: url(${EPFLLogo});
   background-repeat: no-repeat;
   background-position: center left;
-  background-size: contain;
+  /* background-size: cover; */
 `;
 
 export { ErrorMsg, ProgressContainer, ContainerLogin, BackgroundContainer };

@@ -45,6 +45,7 @@ const Profile = ({ userId }) => {
     address: "",
     city: "",
     language: "",
+    isApproved: false,
   });
   const [isEditMode, setIsEditMode] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -80,9 +81,10 @@ const Profile = ({ userId }) => {
         phoneNumber: profileData.phoneNumber || "",
         firstName: profileData?.firstName || "",
         lastName: profileData.lastName || "",
-        address: profileData.address || "",
-        city: profileData.city || "",
-        language: profileData.language || "",
+        address: profileData?.address || "",
+        city: profileData?.city || "",
+        language: profileData?.language || "",
+        isApproved: profileData?.approved || false,
       });
       setPhoneNumber(profileData.phoneNumber || "");
       setFirstName(profileData.firstName || "");
@@ -179,6 +181,8 @@ const Profile = ({ userId }) => {
           <FieldContainer>
             <ProfileField>Role</ProfileField>
             <RoleBadge $role={user.role}>{user.role || "User"}</RoleBadge>
+            <ProfileField>Status</ProfileField>
+            <RoleBadge $status={user.isApproved}>{user.isApproved ? "Approved" : "Pending"}</RoleBadge>
           </FieldContainer>
           <EditButtonContainer $isEditMode={isEditMode}>
             {isEditMode ? (

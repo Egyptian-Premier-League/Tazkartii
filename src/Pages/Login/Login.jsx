@@ -22,12 +22,6 @@ const SignIn = () => {
   const auth = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (userData) {
-      console.log("User Data: ", userData);
-    }
-  }, [userData]);
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -49,7 +43,7 @@ const SignIn = () => {
     if (error) {
       setErrorMessage(badRequestMsg);
     } else if (userData && userData.accessToken) {
-      auth.loginUser(username, userData.role, userData.accessToken);
+      auth.loginUser(username, userData.role, userData.accessToken, userData.approved);
       navigate("/");
     }
   }, [userData, error, auth, navigate, username]);
@@ -76,60 +70,60 @@ const SignIn = () => {
   };
 
   return (
-  <BackgroundContainer>
-    <ContainerLogin component="main" maxWidth="xs">
-      <BoxContainer>
-        <Typography component="h1" variant="h5" sx={{ marginTop: "15px" }}>
-          Login
-        </Typography>
-        <Box component="form" noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="User Name"
-            name="username"
-            autoComplete="username"
-            autoFocus
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
-          {isLoading ? (
-            <ProgressContainer>
-              <Progress />
-            </ProgressContainer>
-          ) : (
-            <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={(e) => handleSubmit(e)}>
-              Sign In
-            </Button>
-          )}
-          <ErrorMsg>{errorMessage}</ErrorMsg>
-          <Grid container>
-            <Grid item xs></Grid>
-            <Grid item>
-              <Link href="signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+    <BackgroundContainer>
+      <ContainerLogin component="main" maxWidth="xs">
+        <BoxContainer>
+          <Typography component="h1" variant="h5" sx={{ marginTop: "15px" }}>
+            Login
+          </Typography>
+          <Box component="form" noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="User Name"
+              name="username"
+              autoComplete="username"
+              autoFocus
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
+            {isLoading ? (
+              <ProgressContainer>
+                <Progress />
+              </ProgressContainer>
+            ) : (
+              <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={(e) => handleSubmit(e)}>
+                Sign In
+              </Button>
+            )}
+            <ErrorMsg>{errorMessage}</ErrorMsg>
+            <Grid container>
+              <Grid item xs></Grid>
+              <Grid item>
+                <Link href="signup" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
-      </BoxContainer>
-      <CopyRight sx={{ mt: 8, mb: 4 }} />
-    </ContainerLogin>
+          </Box>
+        </BoxContainer>
+        <CopyRight sx={{ mt: 8, mb: 4 }} />
+      </ContainerLogin>
     </BackgroundContainer>
   );
 };

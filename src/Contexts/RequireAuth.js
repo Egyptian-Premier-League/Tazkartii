@@ -11,6 +11,9 @@ const RequireAuth = ({ children }) => {
   //     auth.logoutUser();
   //   }
   
+  
+  // if route tickets and user is  admin , but write in url tickets .. redirect to admin
+
   // if route tickets and user is  admin , but write in url tickets .. redirect to admin
   if (auth.isLoggedIn && auth.role === "Admin" && (window.location.pathname === "/tickets" || window.location.pathname === "/profile")) {
     return <Navigate to="/admin"></Navigate>;

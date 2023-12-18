@@ -10,6 +10,7 @@ const AuthContext = createContext({
   role: null,
   accessToken: null,
   expirationDate: null,
+  isApproved: false,
 });
 
 const AuthContextProvider = (props) => {
@@ -28,14 +29,16 @@ const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn);
 
   const loginUserHandler = useCallback(
-    (username, role, accessToken) => {
+    (username, role, accessToken,isApproved) => {
       // const expirationDate = AddMinutes(new Date(), expiresIn).toISOString();
       const userInfo = {
         username: username,
         role: role,
         accessToken: accessToken,
+        isApproved: isApproved,
         // expiresIn: expirationDate,
       };
+      console.log("userInfo", userInfo);
 
       setUser(JSON.stringify(userInfo));
       setIsLoggedIn(true);
@@ -56,6 +59,7 @@ const AuthContextProvider = (props) => {
     role: user && JSON.parse(user)?.role,
     accessToken: user && JSON.parse(user)?.accessToken,
     expirationDate: user && JSON.parse(user)?.expiresIn,
+    isApproved: user && JSON.parse(user)?.isApproved,
   };
 
   return <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>;

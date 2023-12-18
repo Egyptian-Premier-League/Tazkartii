@@ -24,7 +24,7 @@ const Navigation = ({ toggleColorMode }) => {
         {auth.isLoggedIn && auth.role === "Admin" && <NavLinkHeader to="/admin">Dashboard</NavLinkHeader>}
         <NavLinkHeader to="/matches">Matches</NavLinkHeader>
         <NavLinkHeader to="/standings">Standings</NavLinkHeader>
-        {auth.role !== "Admin" && <NavLinkHeader to="/tickets">Tickets</NavLinkHeader>}
+        {auth.role === "Fan" && auth.isApproved && <NavLinkHeader to="/tickets">Tickets</NavLinkHeader>}
       </NavHeader>
       <AuthLinks $isNavOpen={isNavOpen}>
         {!auth.isLoggedIn && (
@@ -35,8 +35,8 @@ const Navigation = ({ toggleColorMode }) => {
         )}
         {auth.isLoggedIn && (
           <>
-{          auth.role !== "Admin" &&   <NavLinkHeader to="/profile">My Profile</NavLinkHeader>
-}            <NavLinkHeader to="/login" onClick={auth.logoutUser}>
+            {auth.role !== "Admin" && <NavLinkHeader to="/profile">My Profile</NavLinkHeader>}{" "}
+            <NavLinkHeader to="/login" onClick={auth.logoutUser}>
               Logout
             </NavLinkHeader>
           </>

@@ -20,7 +20,7 @@ const Stadium = () => {
   const handleSeatClick = (row, col) => {
     let newSeats = [...seats];
     let newSelectedSeats = [...selectedSeats];
-    if (auth.role === "Manager") return;
+    if (auth.role !== "Fan" || !auth.isApproved) return;
 
     if (newSeats[row][col] === "vacant") {
       newSeats[row][col] = "selected";
@@ -56,7 +56,6 @@ const Stadium = () => {
       // Initialize seats data
       const newSeats = Array.from({ length: matchData?.stadium?.rowsNumber }, () => Array(matchData?.stadium?.seatsNumber).fill("vacant"));
 
-      // Mark reserved seats
       matchData?.seats?.forEach((seat) => {
         const rowIndex = seat.seatRow - 1; // adjust for zero-based indexing
         const colIndex = seat.seatNumber - 1;
@@ -96,7 +95,7 @@ const Stadium = () => {
           </Row>
         ))}
       </SeatContainer>
-      {auth.role === "Fan" && (
+      {auth.role === "Fan" && auth.isApproved && (
         <>
           <SeatSummary>
             Selected Seats:{" "}
