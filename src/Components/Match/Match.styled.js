@@ -5,7 +5,7 @@ import { GiWhistle } from "react-icons/gi";
 import { FaFlagCheckered } from "react-icons/fa";
 
 const MatchCard = styled.div`
-  background: #fff;
+  background: #eeeff1;
   border-radius: 8px;
   /* border: 8px solid #e0e0e0;  */
   cursor: pointer;
@@ -42,7 +42,7 @@ const MatchDetails = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
-  background: #f8f8f8;
+  background: #fff;
   padding: 10px;
   border-radius: 8px;
 `;
@@ -105,7 +105,7 @@ const LinesmanIcon = styled(FaFlagCheckered)`
 
 const EditButton = styled.button`
   padding: 8px 16px;
-  margin: 5px;
+  margin: 15px 5px;
   background-color: red;
   color: white;
   border: none;
@@ -115,7 +115,7 @@ const EditButton = styled.button`
   transition: background-color 0.2s, transform 0.2s;
 
   &:hover {
-    background-color: #45a049;
+    background-color: #d32f2f;
   }
 
   &:active {
@@ -134,7 +134,7 @@ const EditButton = styled.button`
 `;
 const ViewMatchDetailsButton = styled.button`
   padding: 8px 16px;
-  margin: 5px;
+  margin: 15px 5px;
   background-color: #2196f3;
   color: white;
   border: none;
@@ -142,6 +142,9 @@ const ViewMatchDetailsButton = styled.button`
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.2s, transform 0.2s;
+  &:hover {
+    background-color: #0d47a1;
+  }
 `;
 export {
   MatchCard,

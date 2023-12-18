@@ -60,6 +60,11 @@ const Profile = ({ userId }) => {
   //! Password and confirm password
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isPasswordEditMode, setIsPasswordEditMode] = useState(false);
+
+  const togglePasswordEditMode = () => {
+    setIsPasswordEditMode(!isPasswordEditMode);
+  };
 
   useEffect(() => {
     getProfie(dataFetch, auth);
@@ -131,10 +136,18 @@ const Profile = ({ userId }) => {
       alert("Passwords don't match");
       return;
     }
-    changePassword(dataFetchChangePassword, auth, password);
+    changePassword(dataFetchChangePassword, auth, { password: password, confirmPassword: confirmPassword });
     setPassword("");
     setConfirmPassword("");
+    setIsPasswordEditMode(false);
   };
+
+  useEffect(() => {
+    if (errorChangePassword) return;
+    else if (changePasswordData?.message) {
+      alert("Password changed successfully");
+    }
+  }, [errorChangePassword, changePasswordData]);
 
   const handleFanForm = () => {
     navigate("/fan-form");
@@ -239,6 +252,27 @@ const Profile = ({ userId }) => {
                 placeholder="Confirm Password"
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
+              {isPasswordEditMode ? (
+                <>
+                  <ProfileInput type="password" value={password} placeholder="New Password" onChange={(e) => setPassword(e.target.value)} />
+                  <ProfileInput
+                    type="password"
+                    value={confirmPassword}
+                    placeholder="Confirm New Password"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                  <Button sx={{ marginBottom: "3px" }} variant="contained" onClick={handlePasswordChange}>
+                    Change Password
+                  </Button>
+                  <Button variant="contained" onClick={togglePasswordEditMode}>
+                    Cancel
+                  </Button>
+                </>
+              ) : (
+                <Button variant="contained" onClick={togglePasswordEditMode}>
+                  Edit Password
+                </Button>
+              )}
             </FieldContainer>
           </FieldRow>
           <FieldRow>

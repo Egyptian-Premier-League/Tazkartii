@@ -4,7 +4,7 @@ const changePassword = (dataFetch, auth, data) => {
   dataFetch({
     axiosInstance: axios,
     method: "POST",
-    url: "/users/my-data",
+    url: "/users/edit-my-password",
     requestConfig: {
       data: data,
       headers: {
