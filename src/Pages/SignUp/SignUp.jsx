@@ -18,7 +18,7 @@ import getCities from "Services/General/GetCities";
 import Progress from "Components/Progress/Progress";
 
 // stylesd components
-import { ErrorMsg, ProgressContainer, SignUpContainer, BoxContainer } from "./SignUp.styled";
+import { ErrorMsg, ProgressContainer, SignUpContainer, BoxContainer, BackgroundContainer } from "./SignUp.styled";
 
 const roles = [
   { value: "Manager", label: "Manager" },
@@ -152,172 +152,174 @@ const SignUp = () => {
   };
 
   return (
-    <SignUpContainer maxWidth="xs">
-      {errorMessage && <ErrorMsg>{errorMessage}</ErrorMsg>}
+    <BackgroundContainer>
+      <SignUpContainer maxWidth="xs">
+        {errorMessage && <ErrorMsg>{errorMessage}</ErrorMsg>}
 
-      <BoxContainer>
-        <Typography component="h1" variant="h5" sx={{ marginTop: "10px" }}>
-          Register
-        </Typography>
-        <BoxContainer component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                autoComplete="username"
-                name="username"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                autoFocus
-              />
+        <BoxContainer>
+          <Typography component="h1" variant="h5" sx={{ marginTop: "10px" }}>
+            Register
+          </Typography>
+          <BoxContainer component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  autoComplete="username"
+                  name="username"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  autoComplete="given-name"
+                  name="firstName"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  value={birthDate}
+                  onChange={(e) => setBirthDate(e.target.value)}
+                  id="birthDate"
+                  label="Birth Date"
+                  required
+                  type="date"
+                  fullWidth
+                  name="birthDate"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  id="gender"
+                  required
+                  select
+                  label="Gender"
+                  fullWidth
+                  name="gender"
+                >
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
+                </TextField>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField value={city} onChange={handleCityChange} required select fullWidth id="city" label="City" name="city">
+                  {cityOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  fullWidth
+                  id="address"
+                  label="Address"
+                  name="address"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="role"
+                  select
+                  required
+                  label="Role"
+                  fullWidth
+                  name="role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                >
+                  {roles.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  label="I want to receive inspiration, marketing promotions and updates via email."
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
+            {isLoading ? (
+              <ProgressContainer>
+                {" "}
+                <Progress />
+              </ProgressContainer>
+            ) : (
+              <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={(e) => handleSubmit(e)}>
+                Sign Up
+              </Button>
+            )}
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="/login" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="new-password"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                autoComplete="given-name"
-                name="firstName"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="family-name"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                value={birthDate}
-                onChange={(e) => setBirthDate(e.target.value)}
-                id="birthDate"
-                label="Birth Date"
-                required
-                type="date"
-                fullWidth
-                name="birthDate"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-                id="gender"
-                required
-                select
-                label="Gender"
-                fullWidth
-                name="gender"
-              >
-                <MenuItem value="Male">Male</MenuItem>
-                <MenuItem value="Female">Female</MenuItem>
-              </TextField>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField value={city} onChange={handleCityChange} required select fullWidth id="city" label="City" name="city">
-                {cityOptions.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                fullWidth
-                id="address"
-                label="Address"
-                name="address"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                id="role"
-                select
-                required
-                label="Role"
-                fullWidth
-                name="role"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-              >
-                {roles.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid>
-          </Grid>
-          {isLoading ? (
-            <ProgressContainer>
-              {" "}
-              <Progress />
-            </ProgressContainer>
-          ) : (
-            <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={(e) => handleSubmit(e)}>
-              Sign Up
-            </Button>
-          )}
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="/login" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
+          </BoxContainer>
         </BoxContainer>
-      </BoxContainer>
-      <CopyRight sx={{ mt: 3, mb: 2 }} />
-    </SignUpContainer>
+        <CopyRight sx={{ mt: 3, mb: 2 }} />
+      </SignUpContainer>
+    </BackgroundContainer>
   );
 };
 

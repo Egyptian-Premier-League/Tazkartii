@@ -35,8 +35,9 @@ const Tickets = () => {
   };
 
   useEffect(() => {
-    if (errorCancelReservation ) {
+    if (errorCancelReservation) {
       alert("You can't cancel reservation before 3 days of the match");
+      return;
     } else if (cancelReservationData?.message) {
       getReservations(dataFetch, auth);
 

@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import useFetchFunction from "Hooks/useFetchFunction";
 import login from "Services/Authentication/Login";
 import Progress from "Components/Progress/Progress";
-import { ErrorMsg, ProgressContainer, ContainerLogin, BoxContainer } from "./Login.styled";
+import { ErrorMsg, ProgressContainer, ContainerLogin, BoxContainer, BackgroundContainer } from "./Login.styled";
 
 const SignIn = () => {
   const [userData, error, isLoading, dataFetch] = useFetchFunction();
@@ -76,6 +76,7 @@ const SignIn = () => {
   };
 
   return (
+  <BackgroundContainer>
     <ContainerLogin component="main" maxWidth="xs">
       <BoxContainer>
         <Typography component="h1" variant="h5" sx={{ marginTop: "15px" }}>
@@ -129,6 +130,7 @@ const SignIn = () => {
       </BoxContainer>
       <CopyRight sx={{ mt: 8, mb: 4 }} />
     </ContainerLogin>
+    </BackgroundContainer>
   );
 };
 

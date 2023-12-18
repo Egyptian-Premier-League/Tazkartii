@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
+import EPFLLogo from "Assets/Images/EFL.jpg";
 
 export const ErrorMsg = styled.p`
   color: red;
@@ -19,7 +20,7 @@ export const ProgressContainer = styled.div`
 export const SignUpContainer = styled(Container)`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   margin-top: 50px;
   background-color: ${({ theme }) => theme.background.primary};
@@ -36,4 +37,12 @@ export const BoxContainer = styled(Box)`
   background-color: ${({ theme }) => theme.background.primary};
   border-radius: 10px;
   margin: auto;
+`;
+
+export const BackgroundContainer = styled.div`
+  flex: 1;
+  background-image: url(${EPFLLogo});
+  background-repeat: no-repeat;
+  background-position: center left;
+  background-size: contain;
 `;

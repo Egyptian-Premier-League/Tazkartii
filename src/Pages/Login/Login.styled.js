@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
+import EPFLLogo from "Assets/Images/Egyptian_Premier_League.png";
 
 const ContainerLogin = styled(Container)`
   /* background-color: ${({ theme }) => theme.background.primary}; */
@@ -31,5 +32,12 @@ export const BoxContainer = styled(Box)`
   background-color: ${({ theme }) => theme.background.primary};
   border-radius: 10px;
 `;
+const BackgroundContainer = styled.div`
+  flex: 1;
+  background-image: url(${EPFLLogo});
+  background-repeat: no-repeat;
+  background-position: center left;
+  background-size: contain;
+`;
 
-export { ErrorMsg, ProgressContainer, ContainerLogin };
+export { ErrorMsg, ProgressContainer, ContainerLogin, BackgroundContainer };
