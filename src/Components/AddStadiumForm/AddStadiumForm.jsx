@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, Button, FormTitle } from "./AddStadiumForm.styled";
+import { useNavigate } from "react-router-dom";
 import createStadium from "Services/General/CreateStadium";
 import useFetchFunction from "Hooks/useFetchFunction";
 import { useAuth } from "Contexts/Auth-Context";
@@ -7,6 +8,7 @@ import Progress from "Components/Progress/Progress";
 
 const AddStadiumForm = () => {
   const auth = useAuth();
+  const navigate = useNavigate();
   const [stadiumData, error, isLoading, dataFetch] = useFetchFunction();
 
   const [stadiumDetails, setStadiumDetails] = useState({
@@ -30,17 +32,24 @@ const AddStadiumForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     createStadium(dataFetch, auth, { name: stadiumDetails.stadiumName, length: stadiumDetails.length, width: stadiumDetails.width });
-    // console.log("Stadium Details:", stadiumDetails);
   };
 
   useEffect(() => {
     if (error) return;
     else if (stadiumData && stadiumData.message) {
       alert(stadiumData.message, "success");
+      navigate("/");
     }
   }, [error, stadiumData]);
-  
-  if (isLoading) return <Progress />;
+
+  if (isLoading)
+    return (
+      <Form>
+        <Progress>
+          <p>....is Loading</p>
+        </Progress>
+      </Form>
+    );
 
   return (
     <Form>

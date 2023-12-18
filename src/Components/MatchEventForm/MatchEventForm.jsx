@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Input, Button, FormTitle, Label, Select } from "./MatchEventForm.styled";
 import getStadiums from "Services/General/GetStadiums";
 import getTeams from "Services/General/GetTeams";
+import { createMatch } from "Services/General/Match";
 import useFetchFunction from "Hooks/useFetchFunction";
 import { useAuth } from "Contexts/Auth-Context";
 
@@ -13,6 +14,7 @@ const MatchEventForm = () => {
   const auth = useAuth();
   const [stadiumsData, error, isLoading, dataFetch] = useFetchFunction();
   const [teamsData, errorTeams, isLoadingTeams, dataFetchTeams] = useFetchFunction();
+  const [matchData, errorMatch, isLoadingMatch, dataFetchMatch] = useFetchFunction();
   // use states
   const [stadtiumsData, setStadiumsData] = useState([]);
   const [teams, setTeamsData] = useState([]);
@@ -73,17 +75,37 @@ const MatchEventForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    for (const [key, value] of Object.entries(matchDetails)) {
-      if (Array.isArray(value) ? !value.length : !value) {
-        alert(`Please fill out the ${key} field.`);
-        return;
-      }
-    }
+    // for (const [key, value] of Object.entries(matchDetails)) {
+    //   if (Array.isArray(value) ? !value.length : !value) {
+    //     alert(`Please fill out the ${key} field.`);
+    //     return;
+    //   }
+    // }
+    console.log("Match Details:", matchDetails);
+
+    createMatch(
+      dataFetchMatch,
+      {
+        homeTeamId: 11,
+        awayTeamId: 12,
+        matchDate: "2023-12-30T07:30:00",
+        stadiumId: 11,
+        mainReferee: "Samir Osman",
+        firstLineMan: "Ahmed",
+        secondLineMan: "Mohamed",
+      },
+      auth
+    );
 
     console.log("Match Details:", matchDetails);
     // On successful submission here
     resetForm();
   };
+
+  useEffect(() => {
+    if (errorMatch) return;
+    else if (matchData && matchData.length > 0) alert("Match created successfully.");
+  }, [matchData, errorMatch]);
 
   return (
     <Form>

@@ -62,7 +62,7 @@ export const MatchDetails = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  min-width: 200px;
   @media screen and (max-width: 768px) {
     flex-direction: column;
     justify-content: center;

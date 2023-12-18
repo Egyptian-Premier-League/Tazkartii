@@ -1,19 +1,20 @@
 import axios from "API/axios";
 
-const createStadium = (dataFetch, auth, data) => {
+const reserveSeat = (dataFetch, auth, data) => {
   if (!auth.isLoggedIn) return;
-  if (data.length === null || data.length === undefined) return;
+  if (auth.role !== "Fan") return;
+  if (data === undefined || data === null) return;
 
   const payload = {
+    matchId: data.matchId,
     ...data,
-    seatsNumber: Number(data.length),
-    rowsNumber: Number(data.width),
   };
+  console.log("payload: ", payload);
 
   dataFetch({
     axiosInstance: axios,
     method: "POST",
-    url: "/general/stadium",
+    url: "/general/reserve-seat",
     requestConfig: {
       data: payload,
       headers: {
@@ -24,4 +25,4 @@ const createStadium = (dataFetch, auth, data) => {
   });
 };
 
-export default createStadium;
+export default reserveSeat;

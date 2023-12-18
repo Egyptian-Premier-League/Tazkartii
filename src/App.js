@@ -79,14 +79,16 @@ function App() {
               }
             />
             <Route path="/matches" element={<MatchSchedule />} />
-            <Route
-              path="/reservation"
-              element={
-                <RequireAuth>
-                  <Stadium rows={8} cols={15} />
-                </RequireAuth>
-              }
-            />
+            <Route path="/reservation">
+              <Route
+                path=":matchId"
+                element={
+                  <RequireAuth>
+                    <Stadium />
+                  </RequireAuth>
+                }
+              />
+            </Route>
             {/* <Route path=":userId" element={<PaymentForm />} /> */}
 
             <Route

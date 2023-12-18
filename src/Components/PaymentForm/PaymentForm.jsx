@@ -1,17 +1,20 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FormContainer, StyledForm, FormLabel, StyledInput, SubmitButton, FormHeader, SponsorLogo } from "./PaymentForm.styled";
 
 import sponsorLogo1 from "Assets/Images/mastercard.jpg";
 import sponsorLogo2 from "Assets/Images/paypal.png";
 
-const PaymentForm = ({ onConfirmPayment }) => {
+const PaymentForm = () => {
+  const navigate = useNavigate();
   const [creditCardNumber, setCreditCardNumber] = useState("");
   const [pinNumber, setPinNumber] = useState("");
 
   const handleSubmit = (e) => {
     console.log("creditCardNumber", creditCardNumber);
     e.preventDefault();
-    // onConfirmPayment(creditCardNumber, pinNumber);
+    alert("Payment confirmed successfully.");
+    navigate("/tickets");
   };
 
   return (

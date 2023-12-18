@@ -27,7 +27,7 @@ const MatchModal = ({ match, onClose }) => {
   if (!match) return null;
 
   const handleReserveSeat = () => {
-    navigate("/reservation");
+    navigate(`/reservation/match?id=${match.matchId}`);
   };
 
   return (
