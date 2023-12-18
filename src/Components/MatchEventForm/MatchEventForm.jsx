@@ -6,9 +6,15 @@ import { createMatch } from "Services/General/Match";
 import useFetchFunction from "Hooks/useFetchFunction";
 import { useAuth } from "Contexts/Auth-Context";
 
-// const teamsList = ["Al Ahly", "El Zamalek", "Pyrmaids FC", "El Gouna FC", "El Masry", "El Entag El Harby"];
-const refereesList = ["Ahmed El Ghandour", "Ahmed El Shenawy", "Ahmed El Maghraby", "Ahmed El Saadany"];
-// const venuesList = ["Cairo Stadium", "Borg El Arab Stadium", "El Salam Stadium", "El Gouna Stadium"];
+const refereesList = ["Samir Othman", "Mohamed Farouk", "Ibrahim Nour El Din", "Gehad Grisha", "Sami Halhal", "Mohamed El Hanafy"];
+const linesManList = [
+  ["Ahmed El Ghandour", "Ahmed El Shenawy"],
+  ["Ahmed El Maghraby", "Ahmed El Saadany"],
+  ["Ahmed El Ghandour", "Ahmed El Saadany"],
+  ["Ahmed El Shenawy", "Ahmed El Maghraby"],
+];
+// Calculate today's date in YYYY-MM-DD format
+const today = new Date().toISOString().split("T")[0];
 
 const MatchEventForm = () => {
   const auth = useAuth();
@@ -17,18 +23,19 @@ const MatchEventForm = () => {
   const [matchData, errorMatch, isLoadingMatch, dataFetchMatch] = useFetchFunction();
   // use states
   const [stadtiumsData, setStadiumsData] = useState([]);
-  const [teams, setTeamsData] = useState([]);
+  const [stadiumsOptions, setStadiumsOptions] = useState([]);
+  const [teamsOptions, setTeamsOptions] = useState([]);
   const [matchDetails, setMatchDetails] = useState({
-    homeTeam: teams[0]?.name,
-    awayTeam: teams[1]?.name,
-    venue: stadtiumsData[0]?.name,
+    homeTeamId: teamsOptions[0]?.id,
+    awayTeamId: teamsOptions[1]?.id,
+    stadiumId: stadtiumsData[0]?.id,
+    stadium: stadtiumsData[0]?.name,
     date: "",
     time: "",
     mainReferee: refereesList[0],
     linesmen: [],
   });
 
-  // useeffects to fetch data from the backend
   useEffect(() => {
     getStadiums(dataFetch, auth);
     getTeams(dataFetchTeams, auth);
@@ -36,35 +43,67 @@ const MatchEventForm = () => {
 
   useEffect(() => {
     if (errorTeams) return;
-    else if (teamsData && teamsData.length > 0) {
-      setTeamsData(teamsData);
+    if (teamsData && teamsData.length > 1) {
+      setTeamsOptions(teamsData);
       setMatchDetails((prevDetails) => ({
         ...prevDetails,
-        homeTeam: teamsData[0]?.name,
-        awayTeam: teamsData[1]?.name,
+        homeTeamId: teamsData[0].id,
+        awayTeamId: teamsData[1].id,
       }));
     }
   }, [teamsData]);
 
   useEffect(() => {
-    if (error) return;
-    else if (stadiumsData && stadiumsData.length > 0) setStadiumsData(stadiumsData);
+    if (stadiumsData && stadiumsData.length > 0) {
+      setStadiumsOptions(stadiumsData);
+      setMatchDetails((prevDetails) => ({
+        ...prevDetails,
+        stadiumId: stadiumsData[0].id,
+      }));
+    }
   }, [stadiumsData]);
 
-  // functions to handle the change of the input fields
+  const renderTeamOptions = (selectedTeamId) => {
+    return teamsOptions
+      .filter((team) => team.id !== selectedTeamId)
+      .map((team) => (
+        <option key={team.id} value={team.id}>
+          {team.name}
+        </option>
+      ));
+  };
+
+  const renderStadiumOptions = () => {
+    return stadiumsOptions.map((stadium) => (
+      <option key={stadium.id} value={stadium.id}>
+        {stadium.name}
+      </option>
+    ));
+  };
+
   const handleChange = (e) => {
-    setMatchDetails({ ...matchDetails, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === "homeTeamId" || name === "awayTeamId") {
+      const selectedTeam = teamsOptions.find((team) => team.id.toString() === value);
+      setMatchDetails({
+        ...matchDetails,
+        [name]: selectedTeam.id, // Store the ID
+        [name === "homeTeamId" ? "homeTeamName" : "awayTeamName"]: selectedTeam.name, // Store the name
+      });
+    } else {
+      setMatchDetails({ ...matchDetails, [name]: value });
+    }
   };
 
   const handleLinesmenChange = (e) => {
-    setMatchDetails({ ...matchDetails, linesmen: e.target.value.split(",") });
+    setMatchDetails({ ...matchDetails, linesmen: e.target.value.split(", ") });
   };
 
   const resetForm = () => {
     setMatchDetails({
-      homeTeam: teams[0]?.name,
-      awayTeam: teams[1]?.name,
-      venue: stadtiumsData[0]?.name,
+      homeTeam: teamsOptions[0]?.name,
+      awayTeam: teamsOptions[1]?.name,
+      stadiumId: stadtiumsData[0]?.name,
       date: "",
       time: "",
       mainReferee: refereesList[0],
@@ -75,36 +114,55 @@ const MatchEventForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // for (const [key, value] of Object.entries(matchDetails)) {
-    //   if (Array.isArray(value) ? !value.length : !value) {
-    //     alert(`Please fill out the ${key} field.`);
-    //     return;
-    //   }
-    // }
-    console.log("Match Details:", matchDetails);
+    if (matchDetails.homeTeamId === matchDetails.awayTeamId) {
+      alert("Home team and away team cannot be the same.");
+      return;
+    }
 
-    createMatch(
-      dataFetchMatch,
-      {
-        homeTeamId: 11,
-        awayTeamId: 12,
-        matchDate: "2023-12-30T07:30:00",
-        stadiumId: 11,
-        mainReferee: "Samir Osman",
-        firstLineMan: "Ahmed",
-        secondLineMan: "Mohamed",
-      },
-      auth
-    );
+    if (!validateData()) return;
 
-    console.log("Match Details:", matchDetails);
-    // On successful submission here
+    if (matchDetails.linesmen.length < 2) {
+      alert("Please select two linesmen.");
+      return;
+    }
+
+    const matchDateTime = new Date(`${matchDetails.date}T${matchDetails.time}`).toISOString();
+
+    const payload = {
+      homeTeamId: matchDetails.homeTeamId,
+      awayTeamId: matchDetails.awayTeamId,
+      matchDate: matchDateTime,
+      stadiumId: matchDetails.stadiumId,
+      mainReferee: matchDetails.mainReferee,
+      firstLineMan: matchDetails.linesmen[0],
+      secondLineMan: matchDetails.linesmen[1],
+    };
+
+    // Submit the payload
+    createMatch(dataFetchMatch, payload, auth);
+
+    // Reset the form after submission
     resetForm();
   };
 
+  const validateData = () => {
+    if (
+      !matchDetails.homeTeamId ||
+      !matchDetails.awayTeamId ||
+      !matchDetails.stadiumId ||
+      !matchDetails.date ||
+      !matchDetails.time ||
+      !matchDetails.mainReferee ||
+      !matchDetails.linesmen
+    ) {
+      alert("Please fill all fields");
+      return false;
+    }
+    return true;
+  };
   useEffect(() => {
     if (errorMatch) return;
-    else if (matchData && matchData.length > 0) alert("Match created successfully.");
+    else if (matchData && matchData.matchId) alert("Match created successfully.");
   }, [matchData, errorMatch]);
 
   return (
@@ -112,37 +170,22 @@ const MatchEventForm = () => {
       <FormTitle>Create New Match Event</FormTitle>
       <Label>
         <div>Home Team:</div>{" "}
-        <Select name="homeTeam" onChange={handleChange} value={matchDetails.homeTeam}>
-          {teamsData !== undefined &&
-            teams.map((team) => (
-              <option key={team.id} value={team.name}>
-                {team.name}
-              </option>
-            ))}
+        <Select name="homeTeamId" onChange={handleChange} value={matchDetails.homeTeamId}>
+          {renderTeamOptions(matchDetails.awayTeamId)}
         </Select>
       </Label>
       <Label>
         <div>Away Team:</div>
 
-        <Select name="awayTeam" onChange={handleChange} value={matchDetails.awayTeam}>
-          {teamsData !== undefined &&
-            teams.map((team) => (
-              <option key={team.id} value={team.name}>
-                {team.name}
-              </option>
-            ))}
+        <Select name="awayTeamId" onChange={handleChange} value={matchDetails.awayTeamId}>
+          {renderTeamOptions(matchDetails.homeTeamId)}
         </Select>
       </Label>
 
       <Label>
         <div>Venue</div>{" "}
-        <Select name="venue" onChange={handleChange} value={matchDetails.venue}>
-          {stadiumsData !== undefined &&
-            stadtiumsData.map((venu) => (
-              <option key={venu.id} value={venu.name}>
-                {venu.name}
-              </option>
-            ))}
+        <Select name="stadiumId" onChange={handleChange} value={matchDetails.stadiumId}>
+          {renderStadiumOptions()}
         </Select>
       </Label>
       <Label>
@@ -150,7 +193,7 @@ const MatchEventForm = () => {
       </Label>
       <Label>
         <div>Time:</div>
-        <Input type="time" name="time" onChange={handleChange} />
+        <Input type="time" name="time" min={today} onChange={handleChange} />
       </Label>
       <Label>
         <div>Main Referee:</div>
@@ -164,7 +207,13 @@ const MatchEventForm = () => {
       </Label>
       <Label>
         <div>Linesmen (comma separated):</div>
-        <Input name="linesmen" placeholder="Linesmen" onChange={handleLinesmenChange} />
+        <Select name="linesmen" onChange={handleLinesmenChange} value={`${matchDetails.linesmen[0]}, ${matchDetails.linesmen[1]}`}>
+          {linesManList.map((pair, index) => (
+            <option key={index} value={pair.join(", ")}>
+              {pair.join(" & ")}
+            </option>
+          ))}
+        </Select>
       </Label>
       <Button onClick={(e) => handleSubmit(e)}>Create Match</Button>
       <Button type="button" onClick={resetForm}>

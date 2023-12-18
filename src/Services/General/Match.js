@@ -57,23 +57,14 @@ const createMatch = (dataFetch, data, auth) => {
     stadiumId: Number(data.stadiumId),
   };
 
-  // data.map((key) => console.log(typeof key));
   console.log("Payload: ", payload);
 
   dataFetch({
     axiosInstance: axios,
     method: "POST",
     url: `/general/create-match`,
-    data: {
-      homeTeamId: 2,
-      awayTeamId: 12,
-      matchDate: "2023-12-30T07:30:00",
-      stadiumId: 11,
-      mainReferee: "Samir Osman",
-      firstLineMan: "Ahmed",
-      secondLineMan: "Mohamed",
-    },
     requestConfig: {
+      data: payload,
       headers: {
         "Content-Language": "en-US",
         Authorization: `Bearer ${auth.accessToken}`,
