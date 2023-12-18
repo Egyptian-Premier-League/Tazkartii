@@ -34,6 +34,7 @@ const Match = ({
   awayTeamId,
   homeTeam,
   awayTeam,
+  stadiumId,
   venue,
   date,
   time,
@@ -60,6 +61,7 @@ const Match = ({
     homeTeamId,
     awayTeamId,
     matchId,
+    stadiumId,
   };
   // if (matchData) console.log("matchData", matchData);
 

@@ -29,14 +29,15 @@ const getMatchDetails = (dataFetch, matchId) => {
 const editMatch = (dataFetch, data, matchId, auth) => {
   if (!auth.isLoggedIn) return;
   if (auth.role !== "Manager") return;
-  console.log("data: ", data);
 
+  const payload = { ...data, homeTeamId: Number(data.homeTeamId), awayTeamId: Number(data.awayTeamId), stadiumId: Number(data.stadiumId) };
+  console.log("Payload: ", payload);
   dataFetch({
     axiosInstance: axios,
     method: "PUT",
     url: `/general/edit-match/${matchId}`,
-    data: data,
     requestConfig: {
+      data: payload,
       headers: {
         "Content-Language": "en-US",
         authorization: `Bearer ${auth.accessToken}`,

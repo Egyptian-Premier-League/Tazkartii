@@ -40,6 +40,7 @@ const MatchSchedule = () => {
             key={match.id}
             matchId={match.id}
             homeTeamId={match.homeTeam.id}
+            stadiumId={match.stadium.id}
             awayTeamId={match.awayTeam.id}
             homeTeam={match.homeTeam.name}
             awayTeam={match.awayTeam.name}
