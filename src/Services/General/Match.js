@@ -13,6 +13,19 @@ const getMatches = (dataFetch, pageNumber) => {
   });
 };
 
+const getAllMatches = (dataFetch) => {
+  dataFetch({
+    axiosInstance: axios,
+    method: "GET",
+    url: `/general/all-matches`,
+    requestConfig: {
+      headers: {
+        "Content-Language": "en-US",
+      },
+    },
+  });
+};
+
 const getMatchDetails = (dataFetch, matchId) => {
   console.log("matchId in services: ", matchId);
   dataFetch({
@@ -74,4 +87,4 @@ const createMatch = (dataFetch, data, auth) => {
   });
 };
 
-export { getMatches, editMatch, getMatchDetails, createMatch };
+export { getMatches, editMatch, getMatchDetails, createMatch, getAllMatches };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getMatches } from "Services/General/Match";
+import { getAllMatches } from "Services/General/Match";
 import useFetchFunction from "Hooks/useFetchFunction";
 import Match from "Components/Match/Match";
 import MatchModal from "Components/MatchModal/MatchModal";
@@ -12,7 +12,7 @@ const MatchSchedule = () => {
   const [matches, setMatchesData] = useState([]);
 
   useEffect(() => {
-    getMatches(dataFetch, 2);
+    getAllMatches(dataFetch);
   }, []);
 
   useEffect(() => {

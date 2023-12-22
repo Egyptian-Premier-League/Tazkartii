@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { editMatch, getMatchDetails } from "Services/General/Match";
+import { editMatch } from "Services/General/Match";
 import getStadiums from "Services/General/GetStadiums";
 import getTeams from "Services/General/GetTeams";
 import { useAuth } from "Contexts/Auth-Context";

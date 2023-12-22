@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const ScheduleContainer = styled.div`
   padding: 40px;
-  /* width: 80%; */
   display: flex;
   justify-content: center;
   flex-direction: column;
