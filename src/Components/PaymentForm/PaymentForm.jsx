@@ -31,6 +31,8 @@ const PaymentForm = () => {
             type="text"
             value={creditCardNumber}
             pattern="[0-9]+"
+            maxLength={16}
+            minLength={16}
             title="Please enter a valid credit card number (digits only)"
             onChange={(e) => setCreditCardNumber(e.target.value)}
             required
@@ -38,7 +40,14 @@ const PaymentForm = () => {
         </FormLabel>
         <FormLabel>
           PIN Number:
-          <StyledInput type="password" value={pinNumber} onChange={(e) => setPinNumber(e.target.value)} required />
+          <StyledInput
+            type="password"
+            maxLength={6}
+            minLength={4}
+            value={pinNumber}
+            onChange={(e) => setPinNumber(e.target.value)}
+            required
+          />
         </FormLabel>
         <SubmitButton type="submit">Confirm Payment</SubmitButton>
       </StyledForm>

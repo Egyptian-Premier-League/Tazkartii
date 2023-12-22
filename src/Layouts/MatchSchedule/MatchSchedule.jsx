@@ -12,7 +12,7 @@ const MatchSchedule = () => {
   const [matches, setMatchesData] = useState([]);
 
   useEffect(() => {
-    getMatches(dataFetch, 1);
+    getMatches(dataFetch, 2);
   }, []);
 
   useEffect(() => {

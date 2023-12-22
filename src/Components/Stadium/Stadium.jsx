@@ -69,10 +69,21 @@ const Stadium = () => {
   }, [matchData, errorMatch]);
 
   useEffect(() => {
+    let finalMsg = "";
+    let reservedSeat = false;
     if (error) return;
     else if (stadiumData && stadiumData.length > 0) {
-      alert(`Reservation is Done! ❤ in match with seats ${"A" + stadiumData[0]?.seatRow},${"B" + stadiumData[0]?.seatNumber} `);
-      navigate("/payment");
+      stadiumData?.forEach((seat) => {
+        if (seat?.error) {
+          finalMsg += `⛔Seat with Row: ${seat.seatRow} & Number: ${seat.seatNumber} is Reserved Before⛔\n`;
+        } else {
+          finalMsg += `Seat with Row: ${seat.seatRow} & Number: ${seat.seatNumber} is Reserved Successfully ❤\n`;
+          reservedSeat = true;
+        }
+      });
+      alert(finalMsg);
+      if (reservedSeat) navigate("/payment");
+      else navigate("/matches");
     }
   }, [stadiumData, error]);
 

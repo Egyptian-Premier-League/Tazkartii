@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import CopyRight from "Components/CopyRight/CopyRight";
 import { useNavigate } from "react-router-dom";
-
 import { useAuth } from "Contexts/Auth-Context";
 import useFetchFunction from "Hooks/useFetchFunction";
 import signup from "Services/Authentication/Signup";
