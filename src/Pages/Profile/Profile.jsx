@@ -173,6 +173,21 @@ const Profile = ({ userId }) => {
       </StatusCardContainer>
     );
   };
+
+  // if fan is pending .. show role and status only
+
+  if (auth.isLoggedIn && !auth.isApproved)
+    return (
+      <ProfileContainer>
+        {" "}
+        <FieldContainer>
+          <ProfileField>Role</ProfileField>
+          <RoleBadge $role={user.role}>{user.role || "User"}</RoleBadge>
+          <ProfileField>Status</ProfileField>
+          <RoleBadge $status={user.isApproved}>{user.isApproved ? "Approved" : "Pending"}</RoleBadge>
+        </FieldContainer>
+      </ProfileContainer>
+    );
   return (
     <ProfileContainer>
       <FanId />

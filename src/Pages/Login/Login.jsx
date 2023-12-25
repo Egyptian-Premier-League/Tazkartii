@@ -26,14 +26,14 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
 
   const [errorMessage, setErrorMessage] = useState("");
-  const badRequestMsg = "Wrong username and password";
+  const [errorKey, setErrorKey] = useState(0);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // Clear any previous error messages
-    setErrorMessage("");
+    setErrorKey((prevKey) => prevKey + 1);
 
-    if (!validateData()) return;
+    setErrorMessage("");
 
     // Start the login process
     login(dataFetch, { username, password });
@@ -41,33 +41,12 @@ const SignIn = () => {
 
   useEffect(() => {
     if (error) {
-      setErrorMessage(badRequestMsg);
+      setErrorMessage(`Wrong username or password. Attempt: ${errorKey}`);
     } else if (userData && userData.accessToken) {
       auth.loginUser(username, userData.role, userData.accessToken, userData.approved);
       navigate("/");
     }
-  }, [userData, error, auth, navigate, username]);
-
-  const validateData = () => {
-    const usernameRegex = /^[a-zA-Z0-9_]+$/;
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-
-    const isUsernameValid = usernameRegex.test(username);
-    const isPasswordValid = passwordRegex.test(password);
-
-    if (!isUsernameValid) {
-      setErrorMessage("Username is not valid. Only alphanumeric and underscores are allowed.");
-      return false;
-    }
-    if (!isPasswordValid) {
-      setErrorMessage(
-        "Password is not valid. It must contain at least 8 characters, including one letter, one number, and one special character."
-      );
-      return false;
-    }
-
-    return true;
-  };
+  }, [userData, error, auth, navigate, username, errorKey]);
 
   return (
     <BackgroundContainer>
@@ -111,7 +90,7 @@ const SignIn = () => {
                 Sign In
               </Button>
             )}
-            <ErrorMsg>{errorMessage}</ErrorMsg>
+            <ErrorMsg key={errorKey}>{errorMessage}</ErrorMsg>
             <Grid container>
               <Grid item xs></Grid>
               <Grid item>
