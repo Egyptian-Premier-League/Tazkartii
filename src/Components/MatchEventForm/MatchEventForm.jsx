@@ -87,8 +87,8 @@ const MatchEventForm = () => {
       const selectedTeam = teamsOptions.find((team) => team.id.toString() === value);
       setMatchDetails({
         ...matchDetails,
-        [name]: selectedTeam.id, // Store the ID
-        [name === "homeTeamId" ? "homeTeamName" : "awayTeamName"]: selectedTeam.name, // Store the name
+        [name]: selectedTeam.id,
+        [name === "homeTeamId" ? "homeTeamName" : "awayTeamName"]: selectedTeam.name,
       });
     } else {
       setMatchDetails({ ...matchDetails, [name]: value });
@@ -138,10 +138,8 @@ const MatchEventForm = () => {
       secondLineMan: matchDetails.linesmen[1],
     };
 
-    // Submit the payload
     createMatch(dataFetchMatch, payload, auth);
 
-    // Reset the form after submission
     resetForm();
   };
 
@@ -189,7 +187,7 @@ const MatchEventForm = () => {
         </Select>
       </Label>
       <Label>
-        <div>Date:</div> <Input type="date" name="date" onChange={handleChange} />
+        <div>Date:</div> <Input type="date" min={today} name="date" onChange={handleChange} />
       </Label>
       <Label>
         <div>Time:</div>

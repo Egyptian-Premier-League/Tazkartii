@@ -60,7 +60,7 @@ const Tickets = () => {
                 <TeamLogo src={ticket?.match?.awayTeam?.photoUrl} alt={`${ticket?.match?.awayTeam?.name}`} />
               )}
               <TicketInfo>
-                <strong>Match:</strong> {index + 1}
+                <strong>Ticket:</strong> {ticket?.ticketNumber}
                 <br />
                 <strong>Teams:</strong> {ticket?.match?.homeTeam?.name} vs {ticket?.match?.awayTeam?.name}
               </TicketInfo>

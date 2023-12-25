@@ -28,7 +28,7 @@ const PaymentForm = () => {
         <FormLabel>
           Credit Card Number:
           <StyledInput
-            type="text"
+            type="number"
             value={creditCardNumber}
             pattern="[0-9]+"
             maxLength={16}
