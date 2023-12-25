@@ -36,7 +36,7 @@ const Admin = () => {
     if (errorApprovedUsers && errorPendingUsers) {
       setErrorMessages(errorApprovedUsers);
       return;
-    } else if (approvedUsersData && approvedUsersData.length > 0 && pendingUsersData && pendingUsersData.length > 0) {
+    } else if ((approvedUsersData && approvedUsersData.length > 0) || (pendingUsersData && pendingUsersData.length > 0)) {
       const combinedUsers = [...approvedUsersData, ...pendingUsersData];
       setUsers(combinedUsers);
     }

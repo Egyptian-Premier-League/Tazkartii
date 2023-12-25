@@ -70,7 +70,7 @@ const Tickets = () => {
                 <strong>Date:</strong> {formatDateAndTime(ticket?.match?.date)[0]} at {formatDateAndTime(ticket?.match?.date)[1]}
               </TicketInfo>
               <TicketInfo>
-                <strong>Seat:</strong> {ticket?.seatNumber}
+                <strong>Seat Row:</strong> {ticket?.seatRow} && <strong>Seat Number:</strong> {ticket?.seatNumber}
               </TicketInfo>
               <TicketInfo>
                 <strong>Price:</strong> 10EGP

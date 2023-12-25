@@ -51,7 +51,7 @@ const Profile = ({ userId }) => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   //* States for editable fields
-  const [phoneNumber, setPhoneNumber] = useState(profileData?.phoneNumber || "");
+  const [phoneNumber, setPhoneNumber] = useState("01146188908");
   const [firstName, setFirstName] = useState(profileData?.firstName || "");
   const [lastName, setLastName] = useState(profileData?.lastName || "");
   const [address, setAddress] = useState(profileData?.address || "");
@@ -86,7 +86,6 @@ const Profile = ({ userId }) => {
         language: profileData?.language || "",
         isApproved: profileData?.approved || false,
       });
-      setPhoneNumber(profileData.phoneNumber || "");
       setFirstName(profileData.firstName || "");
       setLastName(profileData.lastName || "");
       setAddress(profileData.address || "");

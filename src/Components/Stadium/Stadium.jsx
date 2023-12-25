@@ -36,7 +36,7 @@ const Stadium = () => {
 
   const confirmSeats = () => {
     if (selectedSeats.length > 0) {
-      reserveSeat(dataFetch, auth, { matchId: matchId, seats: selectedSeats });
+      navigate(`/payment?payload=${encodeURIComponent(JSON.stringify({ matchId: matchId, seats: selectedSeats }))}`);
     } else {
       alert("Please select at least one seat.");
     }
@@ -67,25 +67,6 @@ const Stadium = () => {
       setSeats(newSeats);
     }
   }, [matchData, errorMatch]);
-
-  useEffect(() => {
-    let finalMsg = "";
-    let reservedSeat = false;
-    if (error) return;
-    else if (stadiumData && stadiumData.length > 0) {
-      stadiumData?.forEach((seat) => {
-        if (seat?.error) {
-          finalMsg += `⛔Seat with Row: ${seat.seatRow} & Number: ${seat.seatNumber} is Reserved Before⛔\n`;
-        } else {
-          finalMsg += `Seat with Row: ${seat.seatRow} & Number: ${seat.seatNumber} is Reserved Successfully ❤\n`;
-          reservedSeat = true;
-        }
-      });
-      alert(finalMsg);
-      if (reservedSeat) navigate("/payment");
-      else navigate("/matches");
-    }
-  }, [stadiumData, error]);
 
   // get match id from url
   useEffect(() => {

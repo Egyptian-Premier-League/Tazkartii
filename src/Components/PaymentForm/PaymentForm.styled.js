@@ -67,3 +67,20 @@ export const SubmitButton = styled.button`
     transform: scale(0.98);
   }
 `;
+
+export const ErrorMessage = styled.p`
+  color: #d32f2f;
+  background-color: #fdecea;
+  border-left: 5px solid #d32f2f;
+  padding: 10px 20px;
+  border-radius: 4px;
+  margin: 10px 0;
+  font-size: 0.9rem;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  svg {
+    margin-right: 8px;
+  }
+`;
