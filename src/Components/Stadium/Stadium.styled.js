@@ -11,13 +11,18 @@ export const StadiumContainer = styled.div`
   border-radius: 15px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
 `;
 
 export const Row = styled.div`
   display: flex;
   justify-content: center;
   margin: 5px 0;
+  flex-wrap: wrap;
 `;
+
 export const Ground = styled.div`
   background-image: url(${greenGround});
   background-size: contain;
@@ -39,6 +44,7 @@ export const StageArea = styled.div`
   font-weight: bold;
   margin-bottom: 20px;
 `;
+
 export const SeatContainer = styled.div`
   align-items: center;
   justify-content: center;
@@ -46,6 +52,7 @@ export const SeatContainer = styled.div`
   padding: 20px;
   box-shadow: 8px 0px 8px 8px rgba(0, 0, 0, 0.2);
   position: relative;
+  overflow-x: auto;
 `;
 
 export const SeatSummary = styled.div`
