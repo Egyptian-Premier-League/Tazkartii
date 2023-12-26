@@ -62,7 +62,6 @@ const editMatch = (dataFetch, data, matchId, auth) => {
 const createMatch = (dataFetch, data, auth) => {
   if (!auth.isLoggedIn) return;
   if (auth.role !== "Manager") return;
-  console.log("data: ", data);
 
   const payload = {
     ...data,

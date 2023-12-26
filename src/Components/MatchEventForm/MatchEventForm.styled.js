@@ -91,3 +91,11 @@ export const Label = styled.label`
     margin-bottom: 8px;
   }
 `;
+
+export const ErrorMessage = styled.div`
+  color: #d32f2f;
+  margin: 5px 0 15px;
+  font-size: 0.8rem;
+  text-align: left;
+  width: 100%;
+`;

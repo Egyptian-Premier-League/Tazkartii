@@ -20,30 +20,11 @@ const Drawer = () => {
 
   const toggleDrawer = () => setIsOpen(!isOpen);
 
-  const handleStadiumCreate = () => {
+  const handleNavigation = (path) => {
     setIsOpen(false);
-    navigate("/add-stadium");
+    navigate(path);
   };
 
-  const handleMatchCreate = () => {
-    setIsOpen(false);
-    navigate("/add-match");
-  };
-
-  const handleLogout = () => {
-    setIsOpen(false);
-    auth.logoutUser();
-    navigate("/login");
-  };
-
-  const handleLogin = () => {
-    setIsOpen(false);
-    navigate("/login");
-  };
-  const handleSignup = () => {
-    setIsOpen(false);
-    navigate("/signup");
-  };
   return (
     <>
       <Overlay $isOpen={isOpen} onClick={toggleDrawer} />
@@ -52,22 +33,29 @@ const Drawer = () => {
           <IconWrapper>{isOpen ? <MdChevronLeftStyled size={30} /> : <MdChevronRightStyled size={30} />}</IconWrapper>
         </DrawerButton>
         <MenuList>
-          {auth.isLoggedIn && auth.role === "Manager" && (
+          <MenuItem onClick={() => handleNavigation("/")}>Home</MenuItem>
+          {auth.isLoggedIn && auth.role === "Admin" && (
             <>
-              <MenuItem onClick={handleStadiumCreate}>Create Stadium</MenuItem>
-              <MenuItem onClick={handleMatchCreate}>Create Match</MenuItem>
-            </>
-          )}
-          <MenuItem onClick={() => navigate("/about")}>About</MenuItem>
-          {!auth.isLoggedIn && (
-            <>
-              {" "}
-              <MenuItem onClick={handleLogin}>Login</MenuItem>
-              <MenuItem onClick={handleSignup}>Signup</MenuItem>
+              <MenuItem onClick={() => handleNavigation("/admin")}>Dashboard</MenuItem>
             </>
           )}
 
-          {auth.isLoggedIn && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
+          {auth.isLoggedIn && auth.role === "Manager" && (
+            <>
+              <MenuItem onClick={() => handleNavigation("/add-stadium")}>Create Stadium</MenuItem>
+              <MenuItem onClick={() => handleNavigation("/add-match")}>Create Match</MenuItem>
+            </>
+          )}
+          <MenuItem onClick={() => handleNavigation("/matches")}>Matches</MenuItem>
+          <MenuItem onClick={() => handleNavigation("/standings")}>Standings</MenuItem>
+          {!auth.isLoggedIn && (
+            <>
+              <MenuItem onClick={() => handleNavigation("/login")}>Login</MenuItem>
+              <MenuItem onClick={() => handleNavigation("/signup")}>Signup</MenuItem>
+            </>
+          )}
+
+          {auth.isLoggedIn && <MenuItem onClick={() => handleNavigation("/login", auth.logoutUser())}>Logout</MenuItem>}
         </MenuList>
       </SidebarContainer>
     </>
