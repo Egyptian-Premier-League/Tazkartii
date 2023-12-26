@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import useFetchFunction from "Hooks/useFetchFunction";
 import { useAuth } from "Contexts/Auth-Context";
@@ -25,7 +25,11 @@ const PaymentForm = () => {
 
   const [stadiumData, error, isLoading, dataFetch] = useFetchFunction();
 
-  const [creditCardNumber, setCreditCardNumber] = useState("");
+  const cardPart1Ref = useRef(null);
+  const cardPart2Ref = useRef(null);
+  const cardPart3Ref = useRef(null);
+  const cardPart4Ref = useRef(null);
+
   const [pinNumber, setPinNumber] = useState("");
   const [cardError, setCardError] = useState("");
   const [pinError, setPinError] = useState("");
@@ -60,8 +64,15 @@ const PaymentForm = () => {
     return isValid;
   };
 
+  const handleCardInput = (e, setCardPartFunction, nextRef) => {
+    const { value } = e.target;
+    setCardPartFunction(value);
+    if (value.length === 4 && nextRef) {
+      nextRef.current.focus();
+    }
+  };
+
   const handleSubmit = (e) => {
-    console.log("creditCardNumber", creditCardNumber);
     e.preventDefault();
 
     if (!validateForm()) return;
@@ -75,7 +86,6 @@ const PaymentForm = () => {
 
     if (payload) {
       const parsedPayload = JSON.parse(decodeURIComponent(payload));
-      // console.log("Payload: ", parsedPayload);
       setPayloadSeats(parsedPayload);
     }
   }, []);
@@ -110,10 +120,38 @@ const PaymentForm = () => {
         <FormLabel>
           Credit Card Number:
           <SpliteDigit>
-            <StyledInput type="text" maxLength="4" value={cardPart1} onChange={(e) => setCardPart1(e.target.value)} required />
-            <StyledInput type="text" maxLength="4" value={cardPart2} onChange={(e) => setCardPart2(e.target.value)} required />
-            <StyledInput type="text" maxLength="4" value={cardPart3} onChange={(e) => setCardPart3(e.target.value)} required />
-            <StyledInput type="text" maxLength="4" value={cardPart4} onChange={(e) => setCardPart4(e.target.value)} required />
+            <StyledInput
+              type="text"
+              maxLength="4"
+              ref={cardPart1Ref}
+              value={cardPart1}
+              onChange={(e) => handleCardInput(e, setCardPart1, cardPart2Ref)}
+              required
+            />
+            <StyledInput
+              type="text"
+              maxLength="4"
+              ref={cardPart2Ref}
+              value={cardPart2}
+              onChange={(e) => handleCardInput(e, setCardPart2, cardPart3Ref)}
+              required
+            />
+            <StyledInput
+              type="text"
+              maxLength="4"
+              ref={cardPart3Ref}
+              value={cardPart3}
+              onChange={(e) => handleCardInput(e, setCardPart3, cardPart4Ref)}
+              required
+            />
+            <StyledInput
+              type="text"
+              maxLength="4"
+              ref={cardPart4Ref}
+              value={cardPart4}
+              onChange={(e) => handleCardInput(e, setCardPart4, null)}
+              required
+            />
           </SpliteDigit>
         </FormLabel>
         {cardError && (
