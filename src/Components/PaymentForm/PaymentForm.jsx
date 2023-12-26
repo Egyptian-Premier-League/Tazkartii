@@ -13,6 +13,7 @@ import {
   FormHeader,
   SponsorLogo,
   ErrorMessage,
+  SpliteDigit,
 } from "./PaymentForm.styled";
 
 import sponsorLogo1 from "Assets/Images/mastercard.jpg";
@@ -30,9 +31,19 @@ const PaymentForm = () => {
   const [pinError, setPinError] = useState("");
   const [payloadSeats, setPayloadSeats] = useState({});
 
+  const [cardPart1, setCardPart1] = useState("");
+  const [cardPart2, setCardPart2] = useState("");
+  const [cardPart3, setCardPart3] = useState("");
+  const [cardPart4, setCardPart4] = useState("");
+
   const validateForm = () => {
     let isValid = true;
-    if (!/^\d{16}$/.test(creditCardNumber)) {
+    const cardNumber = `${cardPart1}${cardPart2}${cardPart3}${cardPart4}`;
+
+    if (!/^\d{4}$/.test(cardPart1) || !/^\d{4}$/.test(cardPart2) || !/^\d{4}$/.test(cardPart3) || !/^\d{4}$/.test(cardPart4)) {
+      setCardError("Each part of the credit card number must be 4 digits.");
+      isValid = false;
+    } else if (!/^\d{16}$/.test(cardNumber)) {
       setCardError("Credit card number must be 16 digits.");
       isValid = false;
     } else {
@@ -64,7 +75,7 @@ const PaymentForm = () => {
 
     if (payload) {
       const parsedPayload = JSON.parse(decodeURIComponent(payload));
-      console.log("Payload: ", parsedPayload);
+      // console.log("Payload: ", parsedPayload);
       setPayloadSeats(parsedPayload);
     }
   }, []);
@@ -98,14 +109,12 @@ const PaymentForm = () => {
       <StyledForm onSubmit={handleSubmit}>
         <FormLabel>
           Credit Card Number:
-          <StyledInput
-            type="text"
-            value={creditCardNumber}
-            pattern="[0-9]+"
-            title="Please enter a valid credit card number (digits only)"
-            onChange={(e) => setCreditCardNumber(e.target.value)}
-            required
-          />
+          <SpliteDigit>
+            <StyledInput type="text" maxLength="4" value={cardPart1} onChange={(e) => setCardPart1(e.target.value)} required />
+            <StyledInput type="text" maxLength="4" value={cardPart2} onChange={(e) => setCardPart2(e.target.value)} required />
+            <StyledInput type="text" maxLength="4" value={cardPart3} onChange={(e) => setCardPart3(e.target.value)} required />
+            <StyledInput type="text" maxLength="4" value={cardPart4} onChange={(e) => setCardPart4(e.target.value)} required />
+          </SpliteDigit>
         </FormLabel>
         {cardError && (
           <ErrorMessage>
@@ -116,7 +125,7 @@ const PaymentForm = () => {
 
         <FormLabel>
           PIN Number:
-          <StyledInput type="password" value={pinNumber} onChange={(e) => setPinNumber(e.target.value)} required />
+          <StyledInput type="password" value={pinNumber} maxLength="4" onChange={(e) => setPinNumber(e.target.value)} required />
         </FormLabel>
         {pinError && (
           <ErrorMessage>

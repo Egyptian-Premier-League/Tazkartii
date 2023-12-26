@@ -42,6 +42,8 @@ export const StyledInput = styled.input`
   border: 1px solid #ccc;
   font-size: 1rem;
   outline-color: #007bff;
+  width: 50px;
+  text-align: center;
 
   &:focus {
     border-color: #007bff;
@@ -83,4 +85,12 @@ export const ErrorMessage = styled.p`
   svg {
     margin-right: 8px;
   }
+`;
+
+export const SpliteDigit = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
 `;
