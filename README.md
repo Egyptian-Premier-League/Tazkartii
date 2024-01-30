@@ -109,6 +109,9 @@ npm start
   <img src="./src/screenshots/admin.jpg">
   <h3 align="left">Pending Users</h3>
   <img src="./src/screenshots/dashboard.jpg">
+  <h3 align="left">Responsivity</h3>
+  <img src="./src/screenshots/mobile.jpg">
+  <img src="./src/screenshots/responsive.jpg">
 </div>
 
 
