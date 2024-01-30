@@ -99,6 +99,8 @@ npm start
   <img src="./src/screenshots/5.jpg" >
   <h3 align="left">Edit Match</h3>
   <img src="./src/screenshots/6.jpg" >
+    <h3 align="left">Sidebar</h3>
+  <img src="./src/screenshots/sidebar.jpg">
   <h3 align="left">Match's seats</h3>
   <img src="./src/screenshots/7.jpg" >
   <h3 align="left">Payment</h3>
