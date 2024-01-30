@@ -80,33 +80,37 @@ npm start
 
 - **ReactJs**
 - **MUI**
-
 ## 📸 Demo Screens <a name="screens"></a>
 
 <div align="center">
-  <h3 align='left'>Login</h3>
-  <img src="screenshots/login.jpg">
-    <h3 align='left'>Singup</h3>
-  <img src="screenshots/signup.jpg">
-  <h3 align='left'>Schedule Fixture</h3>
-  <img src="screenshots/1.jpg">
-  <img src="screenshots/2.jpg">
+  <h3 align="left">Login</h3>
+<img src="./src/screenshots/login.jpg">
+  <h3 align="left">Signup</h3>
+  <img src="./src/screenshots/signup.jpg">
+  <h3 align="left">Schedule Fixture</h3>
+  <img src="./src/screenshots/1.jpg" >
+  <img src="./src/screenshots/2.jpg">
 
-  <h3 align='left'>Match details</h3>
-  <img src="screenshots/3.jpg">
-  <h3 align='left'>Manager's prfofile</h3>
-  <img src="screenshots/4.jpg">
-  <h3 align='left'>League Standing</h3>
-  <img src="screenshots/5.jpg">
-  <h3 align='left'>Edit Match</h3>
-  <img src="screenshots/6.jpg">
-  <h3 align='left'>Match's seats</h3>
-  <img src="screenshots/7.jpg">
-  <h3 align='left'>Payment</h3>
-  <img src="screenshots/8.jpg">
-    <h3 align='left'>Tickets</h3>
-  <img src="screenshots/9.jpg">
+  <h3 align="left">Match details</h3>
+  <img src="./src/screenshots/3.jpg" >
+  <h3 align="left">Manager's profile</h3>
+  <img src="./src/screenshots/4.jpg" >
+  <h3 align="left">League Standing</h3>
+  <img src="./src/screenshots/5.jpg" >
+  <h3 align="left">Edit Match</h3>
+  <img src="./src/screenshots/6.jpg" >
+  <h3 align="left">Match's seats</h3>
+  <img src="./src/screenshots/7.jpg" >
+  <h3 align="left">Payment</h3>
+  <img src="./src/screenshots/8.jpg" ">
+  <h3 align="left">Tickets</h3>
+  <img src="./src/screenshots/9.jpg">
+  <h3 align="left">Approved Users</h3>
+  <img src="./src/screenshots/admin.jpg">
+  <h3 align="left">Pending Users</h3>
+  <img src="./src/screenshots/dashboard.jpg">
 </div>
+
 
 
 ## 📃 License <a name = "license"></a>
